@@ -1,14 +1,13 @@
 package com.example.backend.Bean;
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name="User")
+@Table(name="USER")
 public class User {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name="Id")
     private int id;
 
     @Column(name="Fname")
@@ -26,14 +25,28 @@ public class User {
     @Column(name="PhotoURL")
     private String photo_url;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
-    private ArrayList<Patient> profiles;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Patient> profiles;
 
-    public ArrayList<Patient> getProfiles() {
+    public User(){
+
+    }
+    public User(int id, String fname, String lname, String phone_no, String email, String photo_url, List<Patient> profiles) {
+        this.id = id;
+        this.fname = fname;
+        this.lname = lname;
+        this.phone_no = phone_no;
+        this.email = email;
+        this.photo_url = photo_url;
+        this.profiles = profiles;
+    }
+
+
+    public List<Patient> getProfiles() {
         return profiles;
     }
 
-    public void setProfiles(ArrayList<Patient> profiles) {
+    public void setProfiles(List<Patient> profiles) {
         this.profiles = profiles;
     }
 

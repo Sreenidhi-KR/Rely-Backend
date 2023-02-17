@@ -14,7 +14,7 @@ public class Prescription {
     @Column(name="PrescriptionURL")
     private String prescription_url;
 
-    @OneToOne(mappedBy = "consultation")
+    @OneToOne()
     private Consultation consultation;
 
     public int getId() {
