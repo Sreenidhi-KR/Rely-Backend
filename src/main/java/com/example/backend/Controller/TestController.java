@@ -2,7 +2,7 @@ package com.example.backend.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/test")
 public class TestController {
 
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
