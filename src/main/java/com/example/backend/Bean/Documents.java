@@ -25,6 +25,10 @@ public class Documents {
     @JoinColumn(name="patient_id")
     private Patient patient;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="consultation_id")
+    private Consultation consultation;
+
     public Patient getPatient() {
         return patient;
     }
