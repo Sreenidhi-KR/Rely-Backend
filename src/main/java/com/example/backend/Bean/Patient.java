@@ -1,7 +1,7 @@
 package com.example.backend.Bean;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 
 @Entity
@@ -10,11 +10,7 @@ public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="Id")
     private int Id;
-
-    @Column(name="UserId")
-    private int user_id;
 
     @Column(name="Fname")
     private String fname;
@@ -46,8 +42,8 @@ public class Patient {
     @Column(name="Relationship")
     private String relationship;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
-    private ArrayList<Documents> documents;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Documents> documents;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
@@ -73,11 +69,11 @@ public class Patient {
         this.queue = queue;
     }
 
-    public ArrayList<Documents> getDocuments() {
+    public List<Documents> getDocuments() {
         return documents;
     }
 
-    public void setDocuments(ArrayList<Documents> documents) {
+    public void setDocuments(List<Documents> documents) {
         this.documents = documents;
     }
 
@@ -87,14 +83,6 @@ public class Patient {
 
     public void setId(int id) {
         Id = id;
-    }
-
-    public int getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
     }
 
     public String getFname() {

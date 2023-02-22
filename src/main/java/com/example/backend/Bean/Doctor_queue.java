@@ -1,7 +1,7 @@
 package com.example.backend.Bean;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Doctor_queue {
@@ -14,11 +14,11 @@ public class Doctor_queue {
     @JoinColumn(name="DoctorId", referencedColumnName = "Id")
     private Doctor doctor_id;
 
-    @OneToMany(fetch=FetchType.LAZY, mappedBy = "patient")
-    private ArrayList<Patient> patient_list;
+    @OneToMany(fetch=FetchType.LAZY)
+    private List<Patient> patient_list;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "consultation")
-    private ArrayList<Consultation> consultation_list;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Consultation> consultation_list;
 
     public int getId() {
         return id;
@@ -36,19 +36,19 @@ public class Doctor_queue {
         this.doctor_id = doctor_id;
     }
 
-    public ArrayList<Patient> getPatient_list() {
+    public List<Patient> getPatient_list() {
         return patient_list;
     }
 
-    public void setPatient_list(ArrayList<Patient> patient_list) {
+    public void setPatient_list(List<Patient> patient_list) {
         this.patient_list = patient_list;
     }
 
-    public ArrayList<Consultation> getConsultation_list() {
+    public List<Consultation> getConsultation_list() {
         return consultation_list;
     }
 
-    public void setConsultation_list(ArrayList<Consultation> consultation_list) {
+    public void setConsultation_list(List<Consultation> consultation_list) {
         this.consultation_list = consultation_list;
     }
 }

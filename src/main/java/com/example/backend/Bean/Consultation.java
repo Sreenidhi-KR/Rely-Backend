@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="Consultation")
@@ -26,8 +27,8 @@ public class Consultation {
     @Column(name="EndTime")
     private Timestamp end_time;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "consultation")
-    private ArrayList<Documents> documents;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Documents> documents;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="PrescriptionId", referencedColumnName = "id")
@@ -80,11 +81,11 @@ public class Consultation {
         this.end_time = end_time;
     }
 
-    public ArrayList<Documents> getDocuments() {
+    public List<Documents> getDocuments() {
         return documents;
     }
 
-    public void setDocuments(ArrayList<Documents> documents) {
+    public void setDocuments(List<Documents> documents) {
         this.documents = documents;
     }
 
