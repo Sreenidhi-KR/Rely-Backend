@@ -25,11 +25,11 @@ public class User {
     @Column(name="PhotoURL")
     private String photo_url;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = Patient.class, mappedBy = "Id", cascade = CascadeType.ALL, fetch = FetchType.LAZY) //over
     private List<Patient> profiles;
 
-    public User(){
 
+    public User(){
     }
     public User(int id, String fname, String lname, String phone_no, String email, String photo_url, List<Patient> profiles) {
         this.id = id;
