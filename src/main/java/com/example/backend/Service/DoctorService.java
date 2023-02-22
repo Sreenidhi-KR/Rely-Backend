@@ -17,7 +17,10 @@ public class DoctorService {
     public List<Doctor> list() {
         return doctorRepository.findAll();
     }
-
     public void addDoctor(Doctor doctor){ doctorRepository.save(doctor);}
+    public void deleteDoctorById(int doctor_id){ doctorRepository.deleteDoctorById(doctor_id);}
+    public void updateDoctor(Doctor doctor){
+        doctorRepository.save(doctor);
+    }
     public List<Doctor> listBySpec(String specialization) { return doctorRepository.findDocBySpec(specialization);}
 }
