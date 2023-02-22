@@ -17,4 +17,5 @@ public class DoctorService {
     public List<Doctor> list() {
         return doctorRepository.findAll();
     }
+    public List<Doctor> listBySpec(String specialization) { return doctorRepository.findDocBySpec(specialization);}
 }
