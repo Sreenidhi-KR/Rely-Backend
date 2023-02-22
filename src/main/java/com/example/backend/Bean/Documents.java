@@ -21,12 +21,12 @@ public class Documents {
     @Column(name="DocumentURL")
     private String document_url;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="patient_id")
+    @ManyToOne(fetch = FetchType.LAZY) //Over
+    @JoinColumn(name="patient_id", referencedColumnName = "Id", updatable = true, insertable = true)
     private Patient patient;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="consultation_id")
+    @ManyToOne(fetch = FetchType.LAZY) //Over
+    @JoinColumn(name="consultation_id", referencedColumnName = "Id", updatable = true, insertable = true)
     private Consultation consultation;
 
     public Patient getPatient() {
@@ -67,5 +67,17 @@ public class Documents {
 
     public void setDocument_url(String document_url) {
         this.document_url = document_url;
+    }
+
+    public Documents(int id, Date date_time, String document_type, String document_url, Patient patient, Consultation consultation) {
+        Id = id;
+        this.date_time = date_time;
+        this.document_type = document_type;
+        this.document_url = document_url;
+        this.patient = patient;
+        this.consultation = consultation;
+    }
+
+    public Documents() {
     }
 }

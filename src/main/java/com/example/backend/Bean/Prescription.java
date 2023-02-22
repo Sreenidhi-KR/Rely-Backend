@@ -14,9 +14,6 @@ public class Prescription {
     @Column(name="PrescriptionURL")
     private String prescription_url;
 
-    @OneToOne()
-    private Consultation consultation;
-
     public int getId() {
         return id;
     }
@@ -33,11 +30,11 @@ public class Prescription {
         this.prescription_url = prescription_url;
     }
 
-    public Consultation getConsultation() {
-        return consultation;
+    public Prescription(int id, String prescription_url) {
+        this.id = id;
+        this.prescription_url = prescription_url;
     }
 
-    public void setConsultation(Consultation consultation) {
-        this.consultation = consultation;
+    public Prescription() {
     }
 }

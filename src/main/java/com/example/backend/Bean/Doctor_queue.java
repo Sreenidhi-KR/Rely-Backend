@@ -10,14 +10,14 @@ public class Doctor_queue {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL) //over
     @JoinColumn(name="DoctorId", referencedColumnName = "Id")
     private Doctor doctor_id;
 
-    @OneToMany(fetch=FetchType.LAZY)
+    @OneToMany(targetEntity = Patient.class, mappedBy = "Id", cascade = CascadeType.ALL, fetch=FetchType.LAZY) //over
     private List<Patient> patient_list;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = Consultation.class, mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY) //over
     private List<Consultation> consultation_list;
 
     public int getId() {
@@ -50,5 +50,15 @@ public class Doctor_queue {
 
     public void setConsultation_list(List<Consultation> consultation_list) {
         this.consultation_list = consultation_list;
+    }
+
+    public Doctor_queue(int id, Doctor doctor_id, List<Patient> patient_list, List<Consultation> consultation_list) {
+        this.id = id;
+        this.doctor_id = doctor_id;
+        this.patient_list = patient_list;
+        this.consultation_list = consultation_list;
+    }
+
+    public Doctor_queue() {
     }
 }

@@ -173,4 +173,25 @@ public class Doctor {
     public void setOnline_status(boolean online_status) {
         this.online_status = online_status;
     }
+
+    public Doctor(int id, String fname, String lname, Date DOB, char sex, String specialization, String qualification, String description, int rating, String available_timimgs, String city, String state, String clinic_address, String photo_url, boolean online_status) {
+        this.id = id;
+        this.fname = fname;
+        this.lname = lname;
+        this.DOB = DOB;
+        this.sex = sex;
+        this.specialization = specialization;
+        this.qualification = qualification;
+        this.description = description;
+        this.rating = rating;
+        this.available_timimgs = available_timimgs;
+        this.city = city;
+        this.state = state;
+        this.clinic_address = clinic_address;
+        this.photo_url = photo_url;
+        this.online_status = online_status;
+    }
+
+    public Doctor() {
+    }
 }

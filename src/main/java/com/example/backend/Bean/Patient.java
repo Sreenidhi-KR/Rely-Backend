@@ -42,15 +42,15 @@ public class Patient {
     @Column(name="Relationship")
     private String relationship;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = Documents.class, mappedBy = "Id",cascade = CascadeType.ALL, fetch = FetchType.LAZY) //over
     private List<Documents> documents;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
+    @ManyToOne(fetch = FetchType.LAZY) //over
+    @JoinColumn(name="user_id",referencedColumnName = "id", updatable = true, insertable = true)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="queue_id")
+    @ManyToOne(fetch = FetchType.LAZY) //over
+    @JoinColumn(name="queue_id", referencedColumnName = "id", updatable = true, insertable = true)
     private Doctor_queue queue;
 
     public User getUser() {
@@ -164,4 +164,26 @@ public class Patient {
     public void setRelationship(String relationship) {
         this.relationship = relationship;
     }
+
+    public Patient(int id, String fname, String lname, Date DOB, char sex, String blood_group, String city, String state, String abdm_no, String photo_url, String relationship, List<Documents> documents, User user, Doctor_queue queue) {
+        Id = id;
+        this.fname = fname;
+        this.lname = lname;
+        this.DOB = DOB;
+        this.sex = sex;
+        this.blood_group = blood_group;
+        this.city = city;
+        this.state = state;
+        this.abdm_no = abdm_no;
+        this.photo_url = photo_url;
+        this.relationship = relationship;
+        this.documents = documents;
+        this.user = user;
+        this.queue = queue;
+    }
+
+    public Patient() {
+    }
+
+
 }
