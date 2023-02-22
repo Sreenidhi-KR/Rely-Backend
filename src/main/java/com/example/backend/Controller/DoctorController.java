@@ -23,4 +23,9 @@ public class DoctorController {
         return Doctors;
     }
 
+    @RequestMapping(value = "/addDoctor", method = RequestMethod.POST)
+    public void addDoctor(@RequestBody Doctor doctor) {
+        doctorService.addDoctor(doctor);
+    }
+
 }
