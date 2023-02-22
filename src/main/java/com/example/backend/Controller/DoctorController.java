@@ -17,4 +17,15 @@ public class DoctorController {
         List<Doctor> Doctors = doctorService.list();
         return Doctors;
     }
+    @RequestMapping(value = "/getAllDoctorsBySpec/{specialization}", method = RequestMethod.GET)
+    public List<Doctor> getAllDoctorsBySpec(@PathVariable String specialization) {
+        List<Doctor> Doctors = doctorService.listBySpec(specialization);
+        return Doctors;
+    }
+
+    @RequestMapping(value = "/addDoctor", method = RequestMethod.POST)
+    public void addDoctor(@RequestBody Doctor doctor) {
+        doctorService.addDoctor(doctor);
+    }
+
 }
