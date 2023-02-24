@@ -12,6 +12,7 @@ import static javax.security.auth.callback.ConfirmationCallback.OK;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/v1/admin")
 public class AdminController {
     @Resource(name = "adminService")
