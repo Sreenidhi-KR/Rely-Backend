@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/v1/doctor")
 public class DoctorController {
     @Resource(name = "doctorService")
