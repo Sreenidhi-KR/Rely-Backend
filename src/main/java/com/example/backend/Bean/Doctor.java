@@ -8,9 +8,9 @@ import java.sql.Date;
 public class Doctor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="Id")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="Id", nullable = false)
+    private Long id;
 
     @Column(name="Fname")
     private String fname;
@@ -54,11 +54,11 @@ public class Doctor {
     @Column(name="OnlineStatus")
     private boolean online_status;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -174,7 +174,7 @@ public class Doctor {
         this.online_status = online_status;
     }
 
-    public Doctor(int id, String fname, String lname, Date DOB, char sex, String specialization, String qualification, String description, int rating, String available_timimgs, String city, String state, String clinic_address, String photo_url, boolean online_status) {
+    public Doctor(Long id, String fname, String lname, Date DOB, char sex, String specialization, String qualification, String description, int rating, String available_timimgs, String city, String state, String clinic_address, String photo_url, boolean online_status) {
         this.id = id;
         this.fname = fname;
         this.lname = lname;
