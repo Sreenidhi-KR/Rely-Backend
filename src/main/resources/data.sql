@@ -1,4 +1,6 @@
-INSERT INTO doctor VALUES (1,'20120618',"123","123","123","AAA","A","B",true,"123","123",5,'M',"Lungs","123");
-INSERT INTO doctor VALUES (2,'20120618',"123","123","123","BBB","A","B",true,"123","123",5,'M',"Heart","123");
-INSERT INTO doctor VALUES (3,'20120618',"123","123","123","CCC","A","B",true,"123","123",5,'M',"Kidney","123");
-INSERT INTO doctor VALUES (4,'20120618',"123","123","123","DDD","A","B",true,"123","123",5,'M',"Kidney","123");
+INSERT INTO doctor(Fname, Lname, DOB, Sex, Specialization, Qualification, Description, Rating, Available_Timings, City, State, Clinic_Address, Photo_Url, Online_Status) values("123","123",'20120618',"M","Heart","BBB","A",4,"123","123","123","123","123", true);
+INSERT INTO doctor(Fname, Lname, DOB, Sex, Specialization, Qualification, Description, Rating, Available_Timings, City, State, Clinic_Address, Photo_Url, Online_Status) values("123","123",'20120618',"M","Heart","BBB","A",4,"123","123","123","123","123", true);
+INSERT INTO doctor(Fname, Lname, DOB, Sex, Specialization, Qualification, Description, Rating, Available_Timings, City, State, Clinic_Address, Photo_Url, Online_Status) values("123","123",'20120618',"M","Kidney","BBB","A",4,"123","123","123","123","123", true);
+INSERT INTO doctor(Fname, Lname, DOB, Sex, Specialization, Qualification, Description, Rating, Available_Timings, City, State, Clinic_Address, Photo_Url, Online_Status) values("123","123",'20120618',"M","Lungs","BBB","A",4,"123","123","123","123","123", true);
+
+INSERT INTO admin(username, password) VALUES ("user", "pwd");

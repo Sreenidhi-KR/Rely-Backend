@@ -8,9 +8,9 @@ import java.sql.Date;
 public class Doctor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="Id")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="Id", nullable = false)
+    private Long id;
 
     @Column(name="Fname")
     private String fname;
@@ -37,7 +37,7 @@ public class Doctor {
     private int rating;
 
     @Column(name="AvailableTimings")
-    private String available_timimgs;
+    private String available_timings;
 
     @Column(name="City")
     private String city;
@@ -54,11 +54,11 @@ public class Doctor {
     @Column(name="OnlineStatus")
     private boolean online_status;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -126,12 +126,12 @@ public class Doctor {
         this.rating = rating;
     }
 
-    public String getAvailable_timimgs() {
-        return available_timimgs;
+    public String getAvailable_timings() {
+        return available_timings;
     }
 
-    public void setAvailable_timimgs(String available_timimgs) {
-        this.available_timimgs = available_timimgs;
+    public void setAvailable_timings(String available_timings) {
+        this.available_timings = available_timings;
     }
 
     public String getCity() {
@@ -174,7 +174,7 @@ public class Doctor {
         this.online_status = online_status;
     }
 
-    public Doctor(int id, String fname, String lname, Date DOB, char sex, String specialization, String qualification, String description, int rating, String available_timimgs, String city, String state, String clinic_address, String photo_url, boolean online_status) {
+    public Doctor(Long id, String fname, String lname, Date DOB, char sex, String specialization, String qualification, String description, int rating, String available_timimgs, String city, String state, String clinic_address, String photo_url, boolean online_status) {
         this.id = id;
         this.fname = fname;
         this.lname = lname;
@@ -184,7 +184,7 @@ public class Doctor {
         this.qualification = qualification;
         this.description = description;
         this.rating = rating;
-        this.available_timimgs = available_timimgs;
+        this.available_timings = available_timimgs;
         this.city = city;
         this.state = state;
         this.clinic_address = clinic_address;
