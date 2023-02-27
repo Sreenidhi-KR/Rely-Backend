@@ -37,7 +37,7 @@ public class Doctor {
     private int rating;
 
     @Column(name="AvailableTimings")
-    private String available_timimgs;
+    private String available_timings;
 
     @Column(name="City")
     private String city;
@@ -126,12 +126,12 @@ public class Doctor {
         this.rating = rating;
     }
 
-    public String getAvailable_timimgs() {
-        return available_timimgs;
+    public String getAvailable_timings() {
+        return available_timings;
     }
 
-    public void setAvailable_timimgs(String available_timimgs) {
-        this.available_timimgs = available_timimgs;
+    public void setAvailable_timings(String available_timings) {
+        this.available_timings = available_timings;
     }
 
     public String getCity() {
@@ -184,7 +184,7 @@ public class Doctor {
         this.qualification = qualification;
         this.description = description;
         this.rating = rating;
-        this.available_timimgs = available_timimgs;
+        this.available_timings = available_timimgs;
         this.city = city;
         this.state = state;
         this.clinic_address = clinic_address;
