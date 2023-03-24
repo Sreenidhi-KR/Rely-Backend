@@ -54,6 +54,10 @@ public class Doctor {
     @Column(name="OnlineStatus")
     private boolean online_status;
 
+    @Column(name="ChannelName")
+    private String channel_name;
+
+
     public Long getId() {
         return id;
     }
@@ -174,7 +178,7 @@ public class Doctor {
         this.online_status = online_status;
     }
 
-    public Doctor(Long id, String fname, String lname, Date DOB, char sex, String specialization, String qualification, String description, int rating, String available_timimgs, String city, String state, String clinic_address, String photo_url, boolean online_status) {
+    public Doctor(Long id, String fname, String lname, Date DOB, char sex, String channel_name, String specialization, String qualification, String description, int rating, String available_timimgs, String city, String state, String clinic_address, String photo_url, boolean online_status) {
         this.id = id;
         this.fname = fname;
         this.lname = lname;
@@ -190,8 +194,17 @@ public class Doctor {
         this.clinic_address = clinic_address;
         this.photo_url = photo_url;
         this.online_status = online_status;
+        this.channel_name = channel_name;
     }
 
     public Doctor() {
+    }
+
+    public String getChannel_name() {
+        return channel_name;
+    }
+
+    public void setChannel_name(String channel_name) {
+        this.channel_name = channel_name;
     }
 }

@@ -23,4 +23,5 @@ public class DoctorService {
         doctorRepository.save(doctor);
     }
     public List<Doctor> listBySpec(String specialization) { return doctorRepository.findDocBySpec(specialization);}
+    public Doctor findById(int doctor_id) { return doctorRepository.findDocById(doctor_id);}
 }
