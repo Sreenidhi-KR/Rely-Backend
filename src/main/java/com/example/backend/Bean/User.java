@@ -37,16 +37,6 @@ public class User {
     public User(){
     }
 
-
-//    public User(int id, String userName, String phone_no, String email, String password, List<Patient> profiles) {
-//        this.id = id;
-//        this.userName = userName;
-//        this.phone_no = phone_no;
-//        this.email = email;
-//        this.password = password;
-//        this.profiles = profiles;
-//    }
-
     public User(String userName,String email, String password) {
         this.userName = userName;
         this.email = email;

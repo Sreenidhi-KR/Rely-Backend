@@ -1,96 +1,57 @@
-package com.example.backend.Bean;
+package com.example.backend.Payload.Request;
 
-import javax.persistence.*;
 import java.sql.Date;
-import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name="Doctor")
-public class Doctor {
+import javax.persistence.Column;
+import javax.validation.constraints.*;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="Id", nullable = false)
-    private int id;
-
-    @Column(name="Fname")
+public class DoctorSignUp {
     private String fname;
-
-    @Column(name="Lname")
     private String lname;
-
-    @Column(name="DOB")
     private Date DOB;
-
-    @Column(name="Sex")
     private char sex;
-
-    @Column(name="Specialization")
     private String specialization;
-
-    @Column(name="Qualification")
     private String qualification;
-
-    @Column(name="Description")
     private String description;
-
-    @Column(name="Rating")
     private int rating;
-
-    @Column(name="AvailableTimings")
     private String available_timings;
-
-    @Column(name="City")
     private String city;
-
-    @Column(name="State")
     private String state;
-
-    @Column(name="ClinicAddress")
     private String clinic_address;
-
-    @Column(name="PhotoUrl")
     private String photo_url;
-
-    @Column(name="OnlineStatus")
     private boolean online_status;
-
-    @Column(name="ChannelName")
     private String channel_name;
 
-    @Column(name="Token")
-    private String token;
-
-    @Column(name="UserName")
-    private String userName;
-
-    @Column(name="password")
+    private String username;
     private String password;
-
-    @Column(name="Email")
     private String email;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(  name = "doctor_roles",
-            joinColumns = @JoinColumn(name = "doctor_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    private String token;
+    private Set<String> role;
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Set<String> getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(Set<String> role) {
+        this.role = role;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getToken() {
+        return token;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -107,14 +68,6 @@ public class Doctor {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getFname() {
@@ -229,31 +182,6 @@ public class Doctor {
         this.online_status = online_status;
     }
 
-    public Doctor(String fname, String lname, Date DOB, char sex, String channel_name, String specialization, String qualification, String description, int rating, String available_timimgs, String city, String state, String clinic_address, String photo_url, boolean online_status, String userName, String password, String email, String token) {
-        this.fname = fname;
-        this.lname = lname;
-        this.DOB = DOB;
-        this.sex = sex;
-        this.specialization = specialization;
-        this.qualification = qualification;
-        this.description = description;
-        this.rating = rating;
-        this.available_timings = available_timimgs;
-        this.city = city;
-        this.state = state;
-        this.clinic_address = clinic_address;
-        this.photo_url = photo_url;
-        this.online_status = online_status;
-        this.channel_name = channel_name;
-        this.userName=userName;
-        this.password=password;
-        this.email=email;
-        this.token = token;
-    }
-
-    public Doctor() {
-    }
-
     public String getChannel_name() {
         return channel_name;
     }
@@ -261,12 +189,5 @@ public class Doctor {
     public void setChannel_name(String channel_name) {
         this.channel_name = channel_name;
     }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 }
+
