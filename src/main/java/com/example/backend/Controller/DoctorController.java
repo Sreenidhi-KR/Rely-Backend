@@ -1,6 +1,7 @@
 package com.example.backend.Controller;
 import com.example.backend.Bean.Doctor;
 import com.example.backend.Service.DoctorService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -41,6 +42,7 @@ public class DoctorController {
     }
 
     @RequestMapping(value = "/getDoctorById/{doctor_id}", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('USER')")
     public Doctor getDoctorById(@PathVariable int doctor_id) {
         Doctor doctor = doctorService.findById(doctor_id);
         return doctor;
