@@ -1,10 +1,16 @@
 package com.example.backend.Repository;
 
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
+import com.example.backend.Bean.User;
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByUserName(String username);
 
-//@Repository
-//@Transactional
-//public interface UserRepository {
-//}
+    Boolean existsByUserName(String username);
+
+    Boolean existsByEmail(String email);
+}
