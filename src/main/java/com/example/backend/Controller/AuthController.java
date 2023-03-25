@@ -5,7 +5,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.example.backend.Bean.Doctor;
+import com.example.backend.Payload.Request.DoctorLogin;
+import com.example.backend.Payload.Request.DoctorSignUp;
+import com.example.backend.Repository.DoctorRepository;
 import com.example.backend.Security.Jwt.AuthEntryPointJwt;
+import com.example.backend.Service.DoctorDetailsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +47,9 @@ public class AuthController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    DoctorRepository doctorRepository;
 
     @Autowired
     RoleRepository roleRepository;
@@ -108,10 +116,10 @@ public class AuthController {
                         roles.add(adminRole);
 
                         break;
-                    case "mod":
-                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+                    case "doc":
+                        Role docRole = roleRepository.findByName(ERole.ROLE_DOCTOR)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(modRole);
+                        roles.add(docRole);
 
                         break;
                     default:
@@ -126,5 +134,75 @@ public class AuthController {
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+    @PostMapping("/doctor/signup")
+    public ResponseEntity<?> registerUser(@RequestBody DoctorSignUp signUp) {
+
+        if (doctorRepository.existsByUserName(signUp.getUsername())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Username is already taken!"));
+        }
+
+        if (doctorRepository.existsByEmail(signUp.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Email is already in use!"));
+        }
+        Doctor doctor = new Doctor(signUp.getFname(),
+                signUp.getLname(),
+                signUp.getDOB(),
+                signUp.getSex(),
+                signUp.getChannel_name(),
+                signUp.getSpecialization(),
+                signUp.getQualification(),
+                signUp.getDescription(),
+                signUp.getRating(),
+                signUp.getAvailable_timings(),
+                signUp.getCity(),
+                signUp.getState(),
+                signUp.getClinic_address(),
+                signUp.getPhoto_url(),
+                signUp.isOnline_status(),
+                signUp.getUsername(),
+                encoder.encode(signUp.getPassword()),
+                signUp.getEmail(),
+                signUp.getToken()
+        );
+
+
+
+        // Create new Doctor's account
+        Set<String> strRoles = signUp.getRole();
+        Set<Role> roles = new HashSet<>();
+        Role userRole = roleRepository.findByName(ERole.ROLE_DOCTOR)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+        roles.add(userRole);
+
+        doctor.setRoles(roles);
+        doctorRepository.save(doctor);
+        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+    @PostMapping("/doctor/signin")
+    public ResponseEntity<?> authenticateUser(@RequestBody DoctorLogin loginRequest) {
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+        DoctorDetailsImpl doctorDetails = (DoctorDetailsImpl) authentication.getPrincipal();
+        List<String> roles = doctorDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(new JwtResponse(jwt,
+                doctorDetails.getId(),
+                doctorDetails.getUsername(),
+                doctorDetails.getEmail(),
+                roles));
     }
 }
