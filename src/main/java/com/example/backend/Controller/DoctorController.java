@@ -36,8 +36,15 @@ public class DoctorController {
     }
 
     @RequestMapping(value = "/updateDoctor", method = RequestMethod.POST)
-    public void deleteDoctor(@RequestBody Doctor doctor) {
+    public void updateDoctor(@RequestBody Doctor doctor) {
         doctorService.updateDoctor(doctor);
     }
+
+    @RequestMapping(value = "/getDoctorById/{doctor_id}", method = RequestMethod.GET)
+    public Doctor getDoctorById(@PathVariable int doctor_id) {
+        Doctor doctor = doctorService.findById(doctor_id);
+        return doctor;
+    }
+
 
 }

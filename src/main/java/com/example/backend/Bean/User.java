@@ -28,7 +28,6 @@ public class User {
     @OneToMany(targetEntity = Patient.class, mappedBy = "Id", cascade = CascadeType.ALL, fetch = FetchType.LAZY) //over
     private List<Patient> profiles;
 
-
     public User(){
     }
     public User(int id, String fname, String lname, String phone_no, String email, String photo_url, List<Patient> profiles) {
@@ -40,7 +39,6 @@ public class User {
         this.photo_url = photo_url;
         this.profiles = profiles;
     }
-
 
     public List<Patient> getProfiles() {
         return profiles;
