@@ -27,7 +27,7 @@ public class Consultation {
     @Column(name="EndTime")
     private Timestamp end_time;
 
-    @OneToMany(targetEntity = Documents.class, cascade = CascadeType.ALL, mappedBy = "Id", fetch = FetchType.LAZY) //over
+    @ManyToMany(targetEntity = Documents.class, cascade = CascadeType.ALL, mappedBy = "Id", fetch = FetchType.LAZY) //over
     private List<Documents> documents;
 
     @OneToOne(cascade = CascadeType.ALL)

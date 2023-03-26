@@ -2,6 +2,7 @@ package com.example.backend.Bean;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="Documents")
@@ -25,9 +26,8 @@ public class Documents {
     @JoinColumn(name="patient_id", referencedColumnName = "Id", updatable = true, insertable = true)
     private Patient patient;
 
-    @ManyToOne(fetch = FetchType.LAZY) //Over
-    @JoinColumn(name="consultation_id", referencedColumnName = "Id", updatable = true, insertable = true)
-    private Consultation consultation;
+    @ManyToMany(fetch = FetchType.LAZY) //Over
+    private List<Consultation> consultations;
 
     public Patient getPatient() {
         return patient;
@@ -69,13 +69,12 @@ public class Documents {
         this.document_url = document_url;
     }
 
-    public Documents(int id, Date date_time, String document_type, String document_url, Patient patient, Consultation consultation) {
+    public Documents(int id, Date date_time, String document_type, String document_url, Patient patient) {
         Id = id;
         this.date_time = date_time;
         this.document_type = document_type;
         this.document_url = document_url;
         this.patient = patient;
-        this.consultation = consultation;
     }
 
     public Documents() {
