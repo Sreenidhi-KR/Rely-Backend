@@ -26,8 +26,8 @@ public class Documents {
     @JoinColumn(name="patient_id", referencedColumnName = "Id", updatable = true, insertable = true)
     private Patient patient;
 
-    @ManyToMany(fetch = FetchType.LAZY) //Over
-    private List<Consultation> consultations;
+//    @ManyToMany(targetEntity = Consultation.class,cascade = CascadeType.ALL,mappedBy = "consultations",fetch = FetchType.LAZY) //Over
+//    private List<Consultation> consultations;
 
     public Patient getPatient() {
         return patient;
