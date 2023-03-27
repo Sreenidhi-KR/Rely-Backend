@@ -13,6 +13,9 @@ public class Documents {
     @Column(name="Id")
     private int Id;
 
+    @Column(name="Name")
+    private String name;
+
     @Column(name="DateTime")
     private Date date_time;
 
@@ -30,20 +33,16 @@ public class Documents {
 //    @ManyToMany(targetEntity = Consultation.class,cascade = CascadeType.ALL,mappedBy = "consultations",fetch = FetchType.LAZY) //Over
 //    private List<Consultation> consultations;
 
+    public String getName(){return name;}
+
+    public void setName(String name){this.name=name;
+    }
     public Patient getPatient() {
         return patient;
     }
 
     public void setPatient(Patient patient) {
         this.patient = patient;
-    }
-
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int id) {
-        Id = id;
     }
 
     public Date getDate_time() {
@@ -55,7 +54,7 @@ public class Documents {
     }
 
     public String getDocument_type() {
-        return document_type;
+        return this.document_type;
     }
 
     public void setDocument_type(String document_type) {
@@ -70,12 +69,13 @@ public class Documents {
         this.data= data;
     }
 
-    public Documents(int id, Date date_time, String document_type, byte[] data, Patient patient) {
-        Id = id;
+    public Documents(Date date_time, String document_type, byte[] data, Patient patient,String name) {
+        //this.Id = id;
         this.date_time = date_time;
         this.document_type = document_type;
         this.data = data;
         this.patient = patient;
+        this.name=name;
     }
 
     public Documents() {
