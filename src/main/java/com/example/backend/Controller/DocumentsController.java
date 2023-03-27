@@ -1,5 +1,6 @@
 package com.example.backend.Controller;
 
+import com.example.backend.DocumentDetails;
 import com.example.backend.ResponseData;
 import com.example.backend.Bean.Documents;
 import com.example.backend.Service.DocumentsService;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.core.io.Resource;
 import javax.swing.text.Document;
+import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -51,6 +53,14 @@ public class DocumentsController {
     }
 
 
+    @DeleteMapping("/delete/{Id}")
+    public void deleteDocuments(@PathVariable int Id){
+        documentsService.delDocument(Id);
+    }
 
+    @GetMapping("/getAll/{Id}")
+    public List<DocumentDetails> getAll(@PathVariable int Id){
+        return documentsService.getAll(Id);//get all documents given user ID
+    }
 
 }

@@ -43,7 +43,7 @@ public class Patient {
     @Column(name="Relationship")
     private String relationship;
 
-    @OneToMany(targetEntity = Documents.class, mappedBy = "Id",cascade = CascadeType.ALL, fetch = FetchType.LAZY) //over
+    @OneToMany(targetEntity = Documents.class, mappedBy = "id",cascade = CascadeType.ALL, fetch = FetchType.LAZY) //over
     private List<Documents> documents;
 
     @ManyToOne(fetch = FetchType.LAZY) //over
