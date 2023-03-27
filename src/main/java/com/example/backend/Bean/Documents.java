@@ -19,8 +19,9 @@ public class Documents {
     @Column(name="DocumentType")
     private String document_type;
 
-    @Column(name="DocumentURL")
-    private String document_url;
+    @Lob
+    @Column(name="Data")
+    private byte[] data;
 
     @ManyToOne(fetch = FetchType.LAZY) //Over
     @JoinColumn(name="patient_id", referencedColumnName = "Id", updatable = true, insertable = true)
@@ -61,19 +62,19 @@ public class Documents {
         this.document_type = document_type;
     }
 
-    public String getDocument_url() {
-        return document_url;
+    public byte[] getData() {
+        return this.data;
     }
 
-    public void setDocument_url(String document_url) {
-        this.document_url = document_url;
+    public void setData(byte[] data) {
+        this.data= data;
     }
 
-    public Documents(int id, Date date_time, String document_type, String document_url, Patient patient) {
+    public Documents(int id, Date date_time, String document_type, byte[] data, Patient patient) {
         Id = id;
         this.date_time = date_time;
         this.document_type = document_type;
-        this.document_url = document_url;
+        this.data = data;
         this.patient = patient;
     }
 
