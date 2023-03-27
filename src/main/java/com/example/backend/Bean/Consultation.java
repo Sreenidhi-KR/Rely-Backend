@@ -37,9 +37,6 @@ public class Consultation {
     @Column(name="FollowUp")
     private Date follow_up_date;
 
-    @ManyToOne(fetch = FetchType.LAZY) //over
-    @JoinColumn(name="queue_id", referencedColumnName = "id", updatable = true, insertable = true)
-    private Doctor_queue queue;
 
     public int getId() {
         return id;
@@ -105,15 +102,8 @@ public class Consultation {
         this.follow_up_date = follow_up_date;
     }
 
-    public Doctor_queue getQueue() {
-        return queue;
-    }
 
-    public void setQueue(Doctor_queue queue) {
-        this.queue = queue;
-    }
-
-    public Consultation(int id, int patient_id, int doctor_id, Timestamp start_time, Timestamp end_time, List<Documents> documents, Prescription prescription_id, Date follow_up_date, Doctor_queue queue) {
+    public Consultation(int id, int patient_id, int doctor_id, Timestamp start_time, Timestamp end_time, List<Documents> documents, Prescription prescription_id, Date follow_up_date) {
         this.id = id;
         this.patient_id = patient_id;
         this.doctor_id = doctor_id;
@@ -122,7 +112,6 @@ public class Consultation {
         this.documents = documents;
         this.prescription_id = prescription_id;
         this.follow_up_date = follow_up_date;
-        this.queue = queue;
     }
 
     public Consultation() {

@@ -251,6 +251,11 @@ public class Doctor {
         this.token = token;
     }
 
+    public Doctor(String fname, String lname){
+        this.fname = fname;
+        this.lname = lname;
+    }
+
     public Doctor() {
     }
 

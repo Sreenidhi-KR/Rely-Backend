@@ -43,8 +43,8 @@ public class DoctorController {
 
     @RequestMapping(value = "/getDoctorById/{doctor_id}", method = RequestMethod.GET)
     @PreAuthorize("hasRole('DOCTOR')")
-    public List<Doctor> getDoctorById(@PathVariable int doctor_id) {
-        List<Doctor> doctor = doctorService.findById(doctor_id);
+    public Doctor getDoctorById(@PathVariable int doctor_id) {
+        Doctor doctor = doctorService.findById(doctor_id);
         return doctor;
     }
 
