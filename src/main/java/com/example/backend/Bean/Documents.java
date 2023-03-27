@@ -10,8 +10,8 @@ public class Documents {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="Id")
-    private int Id;
+    @Column(name="id")
+    private int id;
 
     @Column(name="Name")
     private String name;
@@ -32,11 +32,11 @@ public class Documents {
 
 
     public int getId() {
-        return Id;
+        return this.id;
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getName(){return name;}

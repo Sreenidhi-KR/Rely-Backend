@@ -2,9 +2,10 @@ package com.example.backend.Bean;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="Consultation")
@@ -12,7 +13,7 @@ public class Consultation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="Id")
+    @Column(name="id")
     private int id;
 
     @Column(name="PatientId")
@@ -27,8 +28,15 @@ public class Consultation {
     @Column(name="EndTime")
     private Timestamp end_time;
 
-    @OneToMany(targetEntity = Documents.class, cascade = CascadeType.ALL, mappedBy = "Id", fetch = FetchType.LAZY) //over
-    private List<Documents> documents;
+    @ManyToMany(targetEntity = Documents.class, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY) //over
+    @JoinTable(name="consultation_documents",
+            joinColumns = {
+                    @JoinColumn(name="consultation_id",referencedColumnName="id",nullable = false,updatable = false)
+            },
+            inverseJoinColumns ={
+                    @JoinColumn(name="documents_id",referencedColumnName="id",nullable = false,updatable = false)
+            })
+    private Set<Documents> documents = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="PrescriptionId", referencedColumnName = "id")
@@ -37,9 +45,6 @@ public class Consultation {
     @Column(name="FollowUp")
     private Date follow_up_date;
 
-    @ManyToOne(fetch = FetchType.LAZY) //over
-    @JoinColumn(name="queue_id", referencedColumnName = "id", updatable = true, insertable = true)
-    private Doctor_queue queue;
 
     public int getId() {
         return id;
@@ -81,11 +86,11 @@ public class Consultation {
         this.end_time = end_time;
     }
 
-    public List<Documents> getDocuments() {
+    public Set<Documents> getDocuments() {
         return documents;
     }
 
-    public void setDocuments(List<Documents> documents) {
+    public void setDocuments(Set<Documents> documents) {
         this.documents = documents;
     }
 
@@ -105,16 +110,8 @@ public class Consultation {
         this.follow_up_date = follow_up_date;
     }
 
-    public Doctor_queue getQueue() {
-        return queue;
-    }
 
-    public void setQueue(Doctor_queue queue) {
-        this.queue = queue;
-    }
-
-    public Consultation(int id, int patient_id, int doctor_id, Timestamp start_time, Timestamp end_time, List<Documents> documents, Prescription prescription_id, Date follow_up_date, Doctor_queue queue) {
-        this.id = id;
+    public Consultation(int patient_id, int doctor_id, Timestamp start_time, Timestamp end_time, Set<Documents> documents, Prescription prescription_id, Date follow_up_date) {
         this.patient_id = patient_id;
         this.doctor_id = doctor_id;
         this.start_time = start_time;
@@ -122,7 +119,6 @@ public class Consultation {
         this.documents = documents;
         this.prescription_id = prescription_id;
         this.follow_up_date = follow_up_date;
-        this.queue = queue;
     }
 
     public Consultation() {
