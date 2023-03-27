@@ -30,8 +30,14 @@ public class Documents {
     @JoinColumn(name="patient_id", referencedColumnName = "Id", updatable = true, insertable = true)
     private Patient patient;
 
-//    @ManyToMany(targetEntity = Consultation.class,cascade = CascadeType.ALL,mappedBy = "consultations",fetch = FetchType.LAZY) //Over
-//    private List<Consultation> consultations;
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
 
     public String getName(){return name;}
 
