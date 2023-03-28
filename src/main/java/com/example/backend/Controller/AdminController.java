@@ -15,11 +15,11 @@ public class AdminController {
     @Resource(name = "adminService")
     private AdminService adminService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity addDoctor(@RequestBody Admin admin) {
-        Boolean status = adminService.login(admin);
-        if (status == Boolean.FALSE)
-            return ResponseEntity.notFound().build();
-        return ResponseEntity.ok().build();
-    }
+//    @RequestMapping(value = "/login", method = RequestMethod.POST)
+//    public ResponseEntity addDoctor(@RequestBody Admin admin) {
+//        Boolean status = adminService.login(admin);
+//        if (status == Boolean.FALSE)
+//            return ResponseEntity.notFound().build();
+//        return ResponseEntity.ok().build();
+//    }
 }

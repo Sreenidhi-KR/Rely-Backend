@@ -2,6 +2,8 @@ package com.example.backend.Security.Jwt;
 
 import java.util.Date;
 
+import com.example.backend.Service.AdminDetailsImpl;
+import com.example.backend.Service.AdminDetailsServiceImpl;
 import com.example.backend.Service.DoctorDetailsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +25,6 @@ public class JwtUtils {
     private int jwtExpirationMs;
 
     public String generateJwtToken(Authentication authentication) {
-        //System.out.println(authentication.getPrincipal());
         if(authentication.getPrincipal().toString().matches(".*UserDetailsImpl.*")){
             UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
@@ -34,11 +35,21 @@ public class JwtUtils {
                     .signWith(SignatureAlgorithm.HS512, jwtSecret)
                     .compact();
         }
-        else {
+        else if(authentication.getPrincipal().toString().matches(".*DoctorDetailsImpl.*")){
             DoctorDetailsImpl userPrincipal = (DoctorDetailsImpl) authentication.getPrincipal();
 
             return Jwts.builder()
                     .setSubject((userPrincipal.getUsername()))
+                    .setIssuedAt(new Date())
+                    .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                    .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                    .compact();
+        }
+        else{
+            AdminDetailsImpl adminPrincipal = (AdminDetailsImpl) authentication.getPrincipal();
+
+            return Jwts.builder()
+                    .setSubject((adminPrincipal.getUsername()))
                     .setIssuedAt(new Date())
                     .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                     .signWith(SignatureAlgorithm.HS512, jwtSecret)
