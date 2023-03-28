@@ -1,16 +1,28 @@
 package com.example.backend.Payload.Request;
 
-public class LoginRequest {
-    private String username;
+import java.util.Set;
 
+public class AdminSignUp {
+
+    private String Username;
     private String password;
 
+    private Set<String> role;
+
+    public Set<String> getRole() {
+        return role;
+    }
+
+    public void setRole(Set<String> role) {
+        this.role = role;
+    }
+
     public String getUsername() {
-        return username;
+        return Username;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        Username = username;
     }
 
     public String getPassword() {

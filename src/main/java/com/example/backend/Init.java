@@ -79,7 +79,7 @@ public class Init implements CommandLineRunner {
             List<Patient> patientList = dQueueService.getAllPatientsFromDQueue(1);
 
             for (Patient p: patientList
-                 ) {
+            ) {
                 System.out.println(p.getFname());
             }
 
