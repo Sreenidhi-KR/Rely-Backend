@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 public class AdminService {
     @Autowired
     private AdminRepository adminRepository;
-
-    public Boolean login(Admin admin){
-        Admin newAdmin = adminRepository.findByUsername(admin.getUsername());
-        if(admin.getPassword().equals(newAdmin.getPassword())) return Boolean.TRUE;
-        else return Boolean.FALSE;
-    }
+//
+//    public Boolean login(Admin admin){
+//        Admin newAdmin = adminRepository.findByUserName(admin.getUsername());
+//        if(admin.getPassword().equals(newAdmin.getPassword())) return Boolean.TRUE;
+//        else return Boolean.FALSE;
+//    }
 }

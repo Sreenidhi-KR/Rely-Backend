@@ -1,6 +1,8 @@
 package com.example.backend.Bean;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "ADMIN")
@@ -10,19 +12,24 @@ public class Admin {
     @Column(nullable = false)
     private int id;
 
-    @Column(name="username")
-    private String username;
+    @Column(name="UserName")
+    private String userName;
 
     @Column(name="password")
     private String password;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(  name = "admin_roles",
+            joinColumns = @JoinColumn(name = "admin_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     public Admin(){
 
     }
 
-    public Admin(int id, String username, String password) {
-        this.id = id;
-        this.username = username;
+    public Admin(String username, String password) {
+        this.userName = username;
         this.password = password;
     }
 
@@ -36,11 +43,11 @@ public class Admin {
     }
 
     public String getUsername() {
-        return username;
+        return userName;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.userName = username;
     }
 
     public String getPassword() {
@@ -49,5 +56,13 @@ public class Admin {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

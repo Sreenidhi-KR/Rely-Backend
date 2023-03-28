@@ -4,7 +4,7 @@ import java.util.Set;
 
 import javax.validation.constraints.*;
 
-public class SignUpRequest {
+public class UserSignUp {
     @NotBlank
     @Size(min = 3, max = 20)
     private String username;

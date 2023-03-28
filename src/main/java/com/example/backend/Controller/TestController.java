@@ -21,14 +21,14 @@ public class TestController {
         return "User Content.";
     }
 
-    @GetMapping("/mod")
-    @PreAuthorize("hasRole('DOCTOR')")
+    @GetMapping("/doc")
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
     public String moderatorAccess() {
-        return "Moderator Board.";
+        return "Doctor Board.";
     }
 
     @GetMapping("/admin")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
     public String adminAccess() {
         return "Admin Board.";
     }
