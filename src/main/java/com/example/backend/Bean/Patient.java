@@ -10,7 +10,8 @@ public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int Id;
+    @Column(name = "Id")
+    private int id;
 
     @Column(name="Fname")
     private String fname;
@@ -42,16 +43,13 @@ public class Patient {
     @Column(name="Relationship")
     private String relationship;
 
-    @OneToMany(targetEntity = Documents.class, mappedBy = "Id",cascade = CascadeType.ALL, fetch = FetchType.LAZY) //over
+    @OneToMany(targetEntity = Documents.class, mappedBy = "id",cascade = CascadeType.ALL, fetch = FetchType.LAZY) //over
     private List<Documents> documents;
 
     @ManyToOne(fetch = FetchType.LAZY) //over
     @JoinColumn(name="user_id",referencedColumnName = "id", updatable = true, insertable = true)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY) //over
-    @JoinColumn(name="queue_id", referencedColumnName = "id", updatable = true, insertable = true)
-    private Doctor_queue queue;
 
     public User getUser() {
         return user;
@@ -61,13 +59,6 @@ public class Patient {
         this.user = user;
     }
 
-    public Doctor_queue getQueue() {
-        return queue;
-    }
-
-    public void setQueue(Doctor_queue queue) {
-        this.queue = queue;
-    }
 
     public List<Documents> getDocuments() {
         return documents;
@@ -77,12 +68,16 @@ public class Patient {
         this.documents = documents;
     }
 
+    public void addDocument(Documents document){
+        this.documents.add(document);
+    }
+
     public int getId() {
-        return Id;
+        return id;
     }
 
     public void setId(int id) {
-        Id = id;
+        id = id;
     }
 
     public String getFname() {
@@ -165,8 +160,7 @@ public class Patient {
         this.relationship = relationship;
     }
 
-    public Patient(int id, String fname, String lname, Date DOB, char sex, String blood_group, String city, String state, String abdm_no, String photo_url, String relationship, List<Documents> documents, User user, Doctor_queue queue) {
-        Id = id;
+    public Patient(String fname, String lname, Date DOB, char sex, String blood_group, String city, String state, String abdm_no, String photo_url, String relationship, List<Documents> documents, User user) {
         this.fname = fname;
         this.lname = lname;
         this.DOB = DOB;
@@ -179,8 +173,13 @@ public class Patient {
         this.relationship = relationship;
         this.documents = documents;
         this.user = user;
-        this.queue = queue;
     }
+
+    public Patient(String fname){
+        this.fname = fname;
+    }
+
+
 
     public Patient() {
     }

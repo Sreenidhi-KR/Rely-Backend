@@ -24,7 +24,7 @@ public class User {
     @Column(name="Password")
     private String password;
 
-    @OneToMany(targetEntity = Patient.class, mappedBy = "Id", cascade = CascadeType.ALL, fetch = FetchType.LAZY) //over
+    @OneToMany(targetEntity = Patient.class, mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY) //over
     private List<Patient> profiles;
 
 

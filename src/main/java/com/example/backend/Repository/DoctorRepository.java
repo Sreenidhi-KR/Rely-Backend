@@ -17,7 +17,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     List<Doctor> findDocBySpec(String specialization);
 
     @Query(value="select * from doctor a where a.id= :doctor_id", nativeQuery=true)
-    List<Doctor> findDocById(int doctor_id);
+    Doctor findDocById(int doctor_id);
 
     @Modifying
     @Query(value="delete from doctor a where a.id= :doctor_id", nativeQuery=true)

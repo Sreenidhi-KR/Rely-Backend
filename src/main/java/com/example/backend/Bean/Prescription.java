@@ -8,7 +8,7 @@ public class Prescription {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="Id")
+    @Column(name="id")
     private int id;
 
     @Column(name="PrescriptionURL")
