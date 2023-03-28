@@ -8,6 +8,7 @@ import com.google.common.net.HttpHeaders;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -26,6 +27,7 @@ public class DocumentsController {
     }
 
     @PostMapping("/upload/{Id}")
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
     public ResponseData uploadFile(@RequestParam("file") MultipartFile file,@PathVariable int Id) throws Exception {
         Documents document = null;
         String downloadURl = "";
@@ -41,6 +43,7 @@ public class DocumentsController {
                 file.getSize());
     }
     @GetMapping("/download/{Id}")
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
     public ResponseEntity<Resource> downloadFile(@PathVariable int Id) throws Exception{
         Documents document = null;
         document = documentsService.getDocument(Id);
@@ -54,11 +57,13 @@ public class DocumentsController {
 
 
     @DeleteMapping("/delete/{Id}")
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
     public void deleteDocuments(@PathVariable int Id){
         documentsService.delDocument(Id);
     }
 
     @GetMapping("/getAll/{Id}")
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
     public List<DocumentDetails> getAll(@PathVariable int Id){
         return documentsService.getAll(Id);//get all documents given user ID
     }
