@@ -16,7 +16,7 @@ import org.springframework.core.io.Resource;
 import javax.swing.text.Document;
 import java.util.List;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/document")
 public class DocumentsController {
@@ -26,6 +26,7 @@ public class DocumentsController {
         this.documentsService=documentsService;
     }
 
+
     @PostMapping("/upload/{Id}")
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
     public ResponseData uploadFile(@RequestParam("file") MultipartFile file,@PathVariable int Id) throws Exception {
@@ -33,10 +34,9 @@ public class DocumentsController {
         String downloadURl = "";
         document = documentsService.saveDocument(file,Id);
         downloadURl = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/download/")
+                .path("/api/v1/document/download/")
                 .path(String.valueOf(document.getId()))
                 .toUriString();
-
         return new ResponseData(document.getName(),
                 downloadURl,
                 file.getContentType(),

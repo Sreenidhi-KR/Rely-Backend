@@ -34,11 +34,10 @@ public class DocumentsServiceImpl  implements DocumentsService{
                 throw  new Exception("Filename contains invalid path sequence "
                         + fileName);
             }
-            String fileType=file.getOriginalFilename();
+            String fileType=file.getContentType();
             Date curDate=new Date();
 
             Patient curPatient=patientRepository.findPatientById(Id);
-            //Date date_time, String document_type, byte[] data, Patient patient,String name
             Documents document
                     = new Documents(curDate,fileType,file.getBytes(),curPatient,fileName);
             return documentsRepository.save(document);
@@ -60,9 +59,9 @@ public class DocumentsServiceImpl  implements DocumentsService{
         for (Documents patientDocument : patientDocuments) {
             int curId = patientDocument.getId();
             String curName = patientDocument.getName();
-
             DocumentDetails del = new DocumentDetails(curId, curName);
             patientDocumentsDetails.add(del);
+            System.out.println(curId+curName+del);
         }
         return patientDocumentsDetails;
     }
