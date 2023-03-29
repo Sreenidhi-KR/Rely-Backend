@@ -1,13 +1,8 @@
 package com.example.backend;
 
-import com.example.backend.Bean.DQueue;
-import com.example.backend.Bean.Doctor;
-import com.example.backend.Bean.Patient;
-import com.example.backend.Repository.DQueueRepository;
-import com.example.backend.Repository.DoctorRepository;
-import com.example.backend.Repository.PatientRepository;
-import com.example.backend.Service.DQueueService;
-import com.example.backend.Service.DoctorService;
+import com.example.backend.Bean.*;
+import com.example.backend.Repository.*;
+import com.example.backend.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -16,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class Init implements CommandLineRunner {
@@ -29,11 +25,23 @@ public class Init implements CommandLineRunner {
     @Autowired
     DQueueRepository dQueueRepository;
 
+    @Autowired
+    ConsultationRepository consultationRepository;
+
+    @Autowired
+    DocumentsRepository documentsRepository;
+
     @Resource(name = "doctorService")
     private DoctorService doctorService;
 
     @Resource(name = "DQueueService")
     private DQueueService dQueueService;
+
+    @Resource(name = "consultationService")
+    private ConsultationService consultationService;
+
+    @Resource(name = "documentsServiceImpl")
+    private DocumentsServiceImpl documentServiceImpl;
 
     @Override
     @Transactional
@@ -95,6 +103,33 @@ public class Init implements CommandLineRunner {
             ) {
                 System.out.println(p.getFname());
             }
+
+            System.out.println("Create Consultation");
+            Consultation cons = new Consultation(1, 1);
+            consultationRepository.save(cons);
+
+            System.out.println("Create Documents");
+            Documents docu = new Documents("abc");
+            documentsRepository.save(docu);
+
+            System.out.println("Consultation Id");
+            System.out.println(cons.getId());
+
+            System.out.println("add_documents");
+            consultationService.addDocument(3,4);
+
+
+            System.out.println("get documents for a given consultationId");
+            List<DocumentDetails> docs = consultationService.getAllDocuments(3);
+
+            for (DocumentDetails d: docs
+            ) {
+                System.out.println(d.getName());
+            }
+
+//            System.out.println("remove_documents");
+//            consultationService.removeDocument(3,4);
+
 
 
         }
