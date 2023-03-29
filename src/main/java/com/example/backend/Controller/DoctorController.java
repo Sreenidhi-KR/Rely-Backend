@@ -15,34 +15,39 @@ public class DoctorController {
     private DoctorService doctorService;
 
     @RequestMapping(value = "/getAllDoctors", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
     public List<Doctor> getAllDoctors() {
         List<Doctor> Doctors = doctorService.list();
         return Doctors;
     }
     @RequestMapping(value = "/getAllDoctorsBySpec/{specialization}", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
     public List<Doctor> getAllDoctorsBySpec(@PathVariable String specialization) {
         List<Doctor> Doctors = doctorService.listBySpec(specialization);
         return Doctors;
     }
 
-    @RequestMapping(value = "/addDoctor", method = RequestMethod.POST)
-    public void addDoctor(@RequestBody Doctor doctor) {
-        doctorService.addDoctor(doctor);
-    }
+//    @RequestMapping(value = "/addDoctor", method = RequestMethod.POST)
+//    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
+//    public void addDoctor(@RequestBody Doctor doctor) {
+//        doctorService.addDoctor(doctor);
+//    }
 
     @RequestMapping(value = "/deleteDoctor/{doctor_id}", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
     public void deleteDoctor(@PathVariable int doctor_id) {
         System.out.println(doctor_id);
         doctorService.deleteDoctorById(doctor_id);
     }
 
     @RequestMapping(value = "/updateDoctor", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
     public void updateDoctor(@RequestBody Doctor doctor) {
         doctorService.updateDoctor(doctor);
     }
 
     @RequestMapping(value = "/getDoctorById/{doctor_id}", method = RequestMethod.GET)
-    @PreAuthorize("hasRole('DOCTOR')")
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
     public Doctor getDoctorById(@PathVariable int doctor_id) {
         Doctor doctor = doctorService.findById(doctor_id);
         return doctor;

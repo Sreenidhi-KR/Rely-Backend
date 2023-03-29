@@ -5,14 +5,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.example.backend.Bean.Doctor;
-import com.example.backend.Payload.Request.DoctorLogin;
-import com.example.backend.Payload.Request.DoctorSignUp;
+import com.example.backend.Bean.*;
+import com.example.backend.Payload.Request.*;
+import com.example.backend.Repository.AdminRepository;
 import com.example.backend.Repository.DoctorRepository;
-import com.example.backend.Security.Jwt.AuthEntryPointJwt;
+import com.example.backend.Service.AdminDetailsImpl;
 import com.example.backend.Service.DoctorDetailsImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,11 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.backend.Bean.ERole;
-import com.example.backend.Bean.Role;
-import com.example.backend.Bean.User;
-import com.example.backend.Payload.Request.LoginRequest;
-import com.example.backend.Payload.Request.SignUpRequest;
 import com.example.backend.Payload.Response.JwtResponse;
 import com.example.backend.Payload.Response.MessageResponse;
 import com.example.backend.Repository.RoleRepository;
@@ -52,6 +45,9 @@ public class AuthController {
     DoctorRepository doctorRepository;
 
     @Autowired
+    AdminRepository adminRepository;
+
+    @Autowired
     RoleRepository roleRepository;
 
     @Autowired
@@ -61,10 +57,10 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticateUser(@RequestBody UserLogin userLogin) {
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+                new UsernamePasswordAuthenticationToken(userLogin.getUsername(), userLogin.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
@@ -82,25 +78,25 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignUpRequest signUpRequest) {
-        if (userRepository.existsByUserName(signUpRequest.getUsername())) {
+    public ResponseEntity<?> registerUser(@RequestBody UserSignUp userSignUp) {
+        if (userRepository.existsByUserName(userSignUp.getUsername())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Username is already taken!"));
         }
 
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (userRepository.existsByEmail(userSignUp.getEmail())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already in use!"));
         }
 
         // Create new user's account
-        User user = new User(signUpRequest.getUsername(),
-                signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
+        User user = new User(userSignUp.getUsername(),
+                userSignUp.getEmail(),
+                encoder.encode(userSignUp.getPassword()));
 
-        Set<String> strRoles = signUpRequest.getRole();
+        Set<String> strRoles = userSignUp.getRole();
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
@@ -135,6 +131,7 @@ public class AuthController {
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
+
 
     @PostMapping("/doctor/signup")
     public ResponseEntity<?> registerUser(@RequestBody DoctorSignUp signUp) {
@@ -182,7 +179,7 @@ public class AuthController {
 
         doctor.setRoles(roles);
         doctorRepository.save(doctor);
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return ResponseEntity.ok(new MessageResponse("Doctor registered successfully!"));
     }
 
     @PostMapping("/doctor/signin")
@@ -205,4 +202,51 @@ public class AuthController {
                 doctorDetails.getEmail(),
                 roles));
     }
+
+    @PostMapping("/admin/signup")
+    public ResponseEntity<?> registerUser(@RequestBody AdminSignUp signUp) {
+
+        if (adminRepository.existsByUserName(signUp.getUsername())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Username is already taken!"));
+        }
+
+        Admin admin = new Admin(
+                signUp.getUsername(),
+                encoder.encode(signUp.getPassword())
+        );
+
+        // Create new Admin's account
+        Set<String> strRoles = signUp.getRole();
+        Set<Role> roles = new HashSet<>();
+        Role userRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+        roles.add(userRole);
+
+        admin.setRoles(roles);
+        adminRepository.save(admin);
+        return ResponseEntity.ok(new MessageResponse("Admin registered successfully!"));
+    }
+
+    @PostMapping("/admin/signin")
+    public ResponseEntity<?> authenticateUser(@RequestBody AdminLogin loginRequest) {
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+        AdminDetailsImpl adminDetails = (AdminDetailsImpl) authentication.getPrincipal();
+        List<String> roles = adminDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(new JwtResponse(jwt,
+                adminDetails.getId(),
+                adminDetails.getUsername(),
+                roles));
+    }
+
 }
