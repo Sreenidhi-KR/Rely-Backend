@@ -12,4 +12,6 @@ public interface DocumentsRepository extends JpaRepository<Documents, Integer>{
 
     @Query(value="select * from documents a where a.patient_id= :id", nativeQuery=true)
     List<Documents> getAll(int id);
+
+    Documents findDocumentsById(int documentid);
 }

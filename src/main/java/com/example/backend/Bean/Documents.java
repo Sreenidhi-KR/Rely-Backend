@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name="Documents")
-public class Documents {
+public class Documents{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -82,6 +82,11 @@ public class Documents {
         this.data = data;
         this.patient = patient;
         this.name=name;
+    }
+
+    public Documents(String name)
+    {
+        this.name = name;
     }
 
     public Documents() {
