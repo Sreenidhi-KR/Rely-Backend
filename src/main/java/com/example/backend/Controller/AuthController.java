@@ -10,6 +10,7 @@ import com.example.backend.Payload.Request.*;
 import com.example.backend.Repository.AdminRepository;
 import com.example.backend.Repository.DoctorRepository;
 import com.example.backend.Service.AdminDetailsImpl;
+import com.example.backend.Service.DQueueService;
 import com.example.backend.Service.DoctorDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,8 @@ import com.example.backend.Repository.RoleRepository;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Security.Jwt.JwtUtils;
 import com.example.backend.Service.UserDetailsImpl;
+
+import javax.annotation.Resource;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -55,6 +58,9 @@ public class AuthController {
 
     @Autowired
     JwtUtils jwtUtils;
+
+    @Resource(name = "DQueueService")
+    public DQueueService dQueueService;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody UserLogin userLogin) {
@@ -179,6 +185,7 @@ public class AuthController {
 
         doctor.setRoles(roles);
         doctorRepository.save(doctor);
+        dQueueService.createDQueueForDoctorId(doctor.getId());
         return ResponseEntity.ok(new MessageResponse("Doctor registered successfully!"));
     }
 
