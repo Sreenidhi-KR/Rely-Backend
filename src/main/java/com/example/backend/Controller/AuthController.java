@@ -96,35 +96,10 @@ public class AuthController {
                 userSignUp.getEmail(),
                 encoder.encode(userSignUp.getPassword()));
 
-        Set<String> strRoles = userSignUp.getRole();
         Set<Role> roles = new HashSet<>();
-
-        if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            roles.add(userRole);
-        } else {
-            strRoles.forEach(role -> {
-                switch (role) {
-                    case "admin":
-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(adminRole);
-
-                        break;
-                    case "doc":
-                        Role docRole = roleRepository.findByName(ERole.ROLE_DOCTOR)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(docRole);
-
-                        break;
-                    default:
-                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(userRole);
-                }
-            });
-        }
+        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+        roles.add(userRole);
 
         user.setRoles(roles);
         userRepository.save(user);
@@ -168,14 +143,12 @@ public class AuthController {
                 signUp.getToken()
         );
 
-
-
         // Create new Doctor's account
-        Set<String> strRoles = signUp.getRole();
         Set<Role> roles = new HashSet<>();
-        Role userRole = roleRepository.findByName(ERole.ROLE_DOCTOR)
+        Role doctorRole = roleRepository.findByName(ERole.ROLE_DOCTOR)
                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-        roles.add(userRole);
+        System.out.println((doctorRole));
+        roles.add(doctorRole);
 
         doctor.setRoles(roles);
         doctorRepository.save(doctor);

@@ -39,7 +39,7 @@ public class DoctorController {
 //        doctorService.addDoctor(doctor);
 //    }
 
-    @RequestMapping(value = "/deleteDoctor/{doctor_id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteDoctor/{doctor_id}", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
     public void deleteDoctor(@PathVariable int doctor_id) {
         System.out.println(doctor_id);

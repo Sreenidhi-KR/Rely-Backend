@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -38,9 +37,9 @@ public class Consultation {
             })
     private Set<Documents> documents = new HashSet<>();
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="PrescriptionId", referencedColumnName = "id")
-    private Prescription prescription_id;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name="PrescriptionId", referencedColumnName = "id")
+    private int prescription_id;
 
     @Column(name="FollowUp")
     private Date follow_up_date;
@@ -94,11 +93,11 @@ public class Consultation {
         this.documents = documents;
     }
 
-    public Prescription getPrescription_id() {
+    public int getPrescription_id() {
         return prescription_id;
     }
 
-    public void setPrescription_id(Prescription prescription_id) {
+    public void setPrescription_id(int prescription_id) {
         this.prescription_id = prescription_id;
     }
 
@@ -111,7 +110,7 @@ public class Consultation {
     }
 
 
-    public Consultation(int patient_id, int doctor_id, Timestamp start_time, Timestamp end_time, Set<Documents> documents, Prescription prescription_id, Date follow_up_date) {
+    public Consultation(int patient_id, int doctor_id, Timestamp start_time, Timestamp end_time, Set<Documents> documents, int prescription_id, Date follow_up_date) {
         this.patient_id = patient_id;
         this.doctor_id = doctor_id;
         this.start_time = start_time;
