@@ -4,16 +4,12 @@ import com.example.backend.DocumentDetails;
 import com.example.backend.ResponseData;
 import com.example.backend.Bean.Documents;
 import com.example.backend.Service.DocumentsService;
-import com.google.common.net.HttpHeaders;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.core.io.Resource;
-import javax.swing.text.Document;
+
+import java.util.Base64;
 import java.util.List;
 
 @CrossOrigin
@@ -44,15 +40,10 @@ public class DocumentsController {
     }
     @GetMapping("/download/{Id}")
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public ResponseEntity<Resource> downloadFile(@PathVariable int Id) throws Exception{
+    public String downloadFile(@PathVariable int Id) throws Exception{
         Documents document = null;
         document = documentsService.getDocument(Id);
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(document.getDocument_type()))
-                .header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + document.getName()
-                        + "\"")
-                .body(new ByteArrayResource(document.getData()));
+        return Base64.getEncoder().encodeToString(document.getData());
     }
 
 
