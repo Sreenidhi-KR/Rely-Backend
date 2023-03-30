@@ -25,6 +25,11 @@ public class ConsultationController {
         consultationService.addDocument(Cons_id, Docu_id);
     }
 
+    @GetMapping("/addDocumentByCid_PrescriptionId/{Cons_id}/{Presc_id}")
+    public  void addDocumentByCidPid(@PathVariable int Cons_id, @PathVariable int Presc_id){
+        consultationService.addDocument(Cons_id,Presc_id);
+    }
+
     @GetMapping("/removeDocumentByCid_Docuid/{Cons_id}/{Docu_id}")
     public void removeDocumentByCidDid(@PathVariable int Cons_id, @PathVariable int Docu_id){
         consultationService.removeDocument(Cons_id, Docu_id);

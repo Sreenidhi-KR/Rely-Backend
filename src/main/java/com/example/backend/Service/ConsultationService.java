@@ -59,6 +59,27 @@ public class ConsultationService {
         consultationRepository.save(consultation);
     }
 
+    public void addPrescription(int consultationid, int documentid)
+    {
+        System.out.println("Starting Api");
+        Consultation consultation = consultationRepository.findConsultationById(consultationid);
+        System.out.println(consultation);
+        System.out.println("aksjjddn");
+        Set<Documents> docs = consultation.getDocuments();
+        System.out.println(docs);
+        Documents document = documentsRepository.findDocumentsById(documentid);
+        System.out.println(document.getId());
+        if(!docs.contains(document)) {
+            if (docs == null) {
+                docs = new HashSet<>();
+            }
+            docs.add(document);
+        }
+        consultation.setDocuments(docs);
+        consultation.setPrescription_id(documentid);
+        consultationRepository.save(consultation);
+    }
+
     public void removeDocument(int consultationid, int documentid)
     {
         Consultation consultation = consultationRepository.findConsultationById(consultationid);
