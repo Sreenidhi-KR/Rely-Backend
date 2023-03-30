@@ -2,15 +2,19 @@ package com.example.backend.Bean;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="Documents")
-public class Documents {
+public class Documents{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="Id")
-    private int Id;
+    @Column(name="id")
+    private int id;
+
+    @Column(name="Name")
+    private String name;
 
     @Column(name="DateTime")
     private Date date_time;
@@ -18,31 +22,33 @@ public class Documents {
     @Column(name="DocumentType")
     private String document_type;
 
-    @Column(name="DocumentURL")
-    private String document_url;
+    @Lob
+    @Column(name="Data")
+    private byte[] data;
 
     @ManyToOne(fetch = FetchType.LAZY) //Over
     @JoinColumn(name="patient_id", referencedColumnName = "Id", updatable = true, insertable = true)
     private Patient patient;
 
-    @ManyToOne(fetch = FetchType.LAZY) //Over
-    @JoinColumn(name="consultation_id", referencedColumnName = "Id", updatable = true, insertable = true)
-    private Consultation consultation;
 
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName(){return name;}
+
+    public void setName(String name){this.name=name;
+    }
     public Patient getPatient() {
         return patient;
     }
 
     public void setPatient(Patient patient) {
         this.patient = patient;
-    }
-
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int id) {
-        Id = id;
     }
 
     public Date getDate_time() {
@@ -54,28 +60,33 @@ public class Documents {
     }
 
     public String getDocument_type() {
-        return document_type;
+        return this.document_type;
     }
 
     public void setDocument_type(String document_type) {
         this.document_type = document_type;
     }
 
-    public String getDocument_url() {
-        return document_url;
+    public byte[] getData() {
+        return this.data;
     }
 
-    public void setDocument_url(String document_url) {
-        this.document_url = document_url;
+    public void setData(byte[] data) {
+        this.data= data;
     }
 
-    public Documents(int id, Date date_time, String document_type, String document_url, Patient patient, Consultation consultation) {
-        Id = id;
+    public Documents(Date date_time, String document_type, byte[] data, Patient patient,String name) {
+        //this.Id = id;
         this.date_time = date_time;
         this.document_type = document_type;
-        this.document_url = document_url;
+        this.data = data;
         this.patient = patient;
-        this.consultation = consultation;
+        this.name=name;
+    }
+
+    public Documents(String name)
+    {
+        this.name = name;
     }
 
     public Documents() {

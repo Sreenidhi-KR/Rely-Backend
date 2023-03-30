@@ -1,5 +1,6 @@
 package com.example.backend.Security;
 
+import com.example.backend.Service.AdminDetailsServiceImpl;
 import com.example.backend.Service.DoctorDetailsImpl;
 import com.example.backend.Service.DoctorDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     UserDetailsServiceImpl userDetailsService;
 
     @Autowired
+    AdminDetailsServiceImpl adminDetailsService;
+
+    @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
 
     @Bean
@@ -45,6 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
         authenticationManagerBuilder.userDetailsService(doctorDetailsService).passwordEncoder(passwordEncoder());
+        authenticationManagerBuilder.userDetailsService(adminDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean

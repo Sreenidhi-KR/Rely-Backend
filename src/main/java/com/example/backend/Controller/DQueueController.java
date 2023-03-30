@@ -3,13 +3,11 @@ package com.example.backend.Controller;
 import com.example.backend.Bean.Patient;
 import com.example.backend.Service.DQueueService;
 import com.example.backend.Service.DoctorService;
-import org.springframework.http.codec.ServerSentEvent;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.annotation.Resource;
-import java.time.Duration;
-import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -21,22 +19,26 @@ public class DQueueController {
     public DQueueService dQueueService;
 
     @GetMapping("/getPatients/{doctorId}")
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
     public List<Patient> getAllPatientsFromDQueue(@PathVariable int doctorId){
         return dQueueService.getAllPatientsFromDQueue(doctorId);
     }
 
     @GetMapping("/addPatient/{doctorId}/{patientId}")
-    public void addPatientToDqueue(@PathVariable Integer doctorId , @PathVariable Integer patientId){
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
+    public void addPatientToDqueue(@PathVariable int doctorId , @PathVariable int patientId){
         dQueueService.addPatientToQueue(doctorId,patientId);
     }
 
     @GetMapping("/removePatient/{doctorId}/{patientId}")
-    public void removePatientFromDqueue(@PathVariable int doctorId , @PathVariable int patientId){
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
+    public void removePatientToDqueue(@PathVariable int doctorId , @PathVariable int patientId){
         dQueueService.removePatientFromQueue(doctorId,patientId);
     }
 
     @GetMapping("/getPatientIndex/{doctorId}/{patientId}")
-    public int getPatientIndex(@PathVariable Integer doctorId , @PathVariable Integer patientId){
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
+    public int getPatientIndex(@PathVariable int doctorId , @PathVariable int patientId){
         return dQueueService.getPatientIndexFromQueue(doctorId,patientId);
     }
 
