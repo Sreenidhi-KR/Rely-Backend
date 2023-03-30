@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -53,7 +54,9 @@ public class DQueueService {
         if(patientList == null){
             patientList = new ArrayList<>();
         }
-        patientList.add(patient);
+        if(! patientList.contains(patient)) {
+            patientList.add(patient);
+        }
         dQueueRepository.save(queue);
     }
     public void removePatientFromQueue(Integer doctorId, Integer patientId) {
@@ -78,6 +81,7 @@ public class DQueueService {
             throw new IllegalArgumentException("No queue found for doctor");
         }
         List<Patient> patientList = queue.getPatientList();
+        Collections.reverse(patientList);
         if(!patientList.contains(patient)){
             return -1;
         }
