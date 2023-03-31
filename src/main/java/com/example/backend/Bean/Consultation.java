@@ -39,7 +39,7 @@ public class Consultation {
 
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name="PrescriptionId", referencedColumnName = "id")
-    private int prescription_id;
+    private Integer prescription_id;
 
     @Column(name="FollowUp")
     private Date follow_up_date;
@@ -120,7 +120,7 @@ public class Consultation {
         this.follow_up_date = follow_up_date;
     }
 
-    public Consultation(int patient_id, int doctor_id)
+    public Consultation(int patient_id, int doctor_id)          //for init testing.
     {
         this.patient_id = patient_id;
         this.doctor_id = doctor_id;

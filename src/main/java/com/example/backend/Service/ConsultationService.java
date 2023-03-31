@@ -27,8 +27,8 @@ public class ConsultationService {
     @Autowired
     private DoctorRepository doctorRepository;
 
-    public List<DocumentDetails> getAllDocuments(int Cons_id) {
-        Consultation consultation = consultationRepository.findConsultationById(Cons_id);
+    public List<DocumentDetails> getAllDocuments(int consultationId) {
+        Consultation consultation = consultationRepository.findConsultationById(consultationId);
         Set<Documents> docs = consultation.getDocuments();
         List<DocumentDetails> consultationDocuments = new ArrayList<>();
         for(Documents d : docs){
@@ -113,5 +113,17 @@ public class ConsultationService {
         return all_consults;
     }
 
+    public int addConsultation(Consultation consultation)
+    {
+        Consultation c = consultationRepository.save(consultation);
+        return c.getId();
+    }
+
+    public void updateConsultationEndtime(Consultation consultation)
+    {
+        int id = consultation.getId();
+        Timestamp endTime = consultation.getEnd_time();
+        consultationRepository.updateConsultationEndTime(id, endTime);
+    }
 
 }
