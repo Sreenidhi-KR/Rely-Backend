@@ -1,13 +1,17 @@
 package com.example.backend.Service;
 
 import com.example.backend.Bean.Consultation;
+import com.example.backend.Bean.Doctor;
 import com.example.backend.Bean.Documents;
+import com.example.backend.Bean.PrevConsultations;
 import com.example.backend.DocumentDetails;
 import com.example.backend.Repository.ConsultationRepository;
+import com.example.backend.Repository.DoctorRepository;
 import com.example.backend.Repository.DocumentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -20,8 +24,11 @@ public class ConsultationService {
     @Autowired
     private DocumentsRepository documentsRepository;
 
-    public List<DocumentDetails> getAllDocuments(int Cons_id) {
-        Consultation consultation = consultationRepository.findConsultationById(Cons_id);
+    @Autowired
+    private DoctorRepository doctorRepository;
+
+    public List<DocumentDetails> getAllDocuments(int consultationId) {
+        Consultation consultation = consultationRepository.findConsultationById(consultationId);
         Set<Documents> docs = consultation.getDocuments();
         List<DocumentDetails> consultationDocuments = new ArrayList<>();
         for(Documents d : docs){
@@ -88,5 +95,35 @@ public class ConsultationService {
         }
     }
 
+    public List<PrevConsultations> getPrevConsultations(int patientId)
+    {
+        List<Consultation> allConsultations = consultationRepository.getAllConsultationsByPid(patientId);
+        List<PrevConsultations> all_consults = new ArrayList<>();
+        for(Consultation consult: allConsultations ) {
+            Timestamp start = consult.getStart_time();
+            Timestamp end = consult.getEnd_time();
+            int doctor_id = consult.getDoctor_id();
+            Doctor doc = doctorRepository.findDocById(doctor_id);
+            String doc_name = doc.getFname() + " " + doc.getLname();
+            int consult_id = consult.getId();
+            String specialization = doc.getSpecialization();
+            PrevConsultations individual_consultation = new PrevConsultations(start, end, doc_name, consult_id, specialization);
+            all_consults.add(individual_consultation);
+        }
+        return all_consults;
+    }
+
+    public int addConsultation(Consultation consultation)
+    {
+        Consultation c = consultationRepository.save(consultation);
+        return c.getId();
+    }
+
+    public void updateConsultationEndtime(Consultation consultation)
+    {
+        int id = consultation.getId();
+        Timestamp endTime = consultation.getEnd_time();
+        consultationRepository.updateConsultationEndTime(id, endTime);
+    }
 
 }
