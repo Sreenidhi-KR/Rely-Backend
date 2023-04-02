@@ -2,7 +2,7 @@ package com.example.backend.Controller;
 
 import com.example.backend.Bean.Consultation;
 import com.example.backend.Bean.PrevConsultations;
-import com.example.backend.DocumentDetails;
+import com.example.backend.Bean.DocumentDetails;
 import com.example.backend.Service.ConsultationService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +18,7 @@ public class ConsultationController {
 
     @GetMapping("/getAllDocumentsByCid/{consultationId}")
     public List<DocumentDetails> getAllDocuments(@PathVariable int consultationId) {
-        return consultationService.getAllDocuments(consultationId);
+        return consultationService.getAllDocumentDetails(consultationId);
     }
 
     @GetMapping("/addDocumentByCid_Docuid/{consultationId}/{documentId}")
