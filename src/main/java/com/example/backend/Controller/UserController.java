@@ -16,14 +16,14 @@ public class UserController {
     @Resource(name = "userService")
     private UserService userService;
 
-    @RequestMapping(value="/addProfile/{userId}", method=RequestMethod.POST)
+    @RequestMapping(value="/addPatient/{userId}", method=RequestMethod.POST)
     public void addPatient(@PathVariable int userId,@RequestBody Patient patient){
         userService.addPatient(patient,userId);
     }
 
-    @RequestMapping(value="/getProfiles/{userId}",method=RequestMethod.GET)
+    @RequestMapping(value="/getPatients/{userId}",method=RequestMethod.GET)
     public List<Patient> getPatients(@PathVariable int userId){
-        List<Patient> patients=userService.getAllProfiles(userId);
+        List<Patient> patients=userService.getAllPatients(userId);
         return patients;
     }
 }

@@ -20,11 +20,11 @@ public class UserService {
     @Autowired
     private PatientRepository patientRepository;
 
-    public List<Patient> getAllProfiles(int userId){
+    public List<Patient> getAllPatients(int userId){
         User user = userRepository.findUserById(userId);
-        System.out.println("working file till step 1");
+        //System.out.println("working file till step 1");
         List<Patient> patients = patientRepository.getPatients(userId);
-        System.out.println("working fine till step 2");
+        //System.out.println("working fine till step 2");
         return patients;
     }
 
@@ -32,13 +32,13 @@ public class UserService {
         //get user with the given id
         User user=userRepository.findUserById(userId);
         //add the new patient profile to the list of profiles and update
-        List<Patient>profiles = user.getProfiles();
-        if (profiles==null){
-            profiles=new ArrayList<>();
+        List<Patient>patients = user.getProfiles();
+        if (patients==null){
+            patients=new ArrayList<>();
         }
         patient.setUser(user);
-        profiles.add(patient);
-        user.setProfiles(profiles);
+        patients.add(patient);
+        user.setProfiles(patients);
         userRepository.save(user);
     }
 
