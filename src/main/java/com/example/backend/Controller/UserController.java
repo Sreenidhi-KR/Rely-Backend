@@ -26,4 +26,9 @@ public class UserController {
         List<Patient> patients=userService.getAllPatients(userId);
         return patients;
     }
+
+    @RequestMapping(value="/deletePatient/{patientId}",method=RequestMethod.DELETE)
+    public void removePatient(@PathVariable int patientId){
+        userService.removePatient(patientId);
+    }
 }
