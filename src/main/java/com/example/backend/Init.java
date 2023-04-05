@@ -67,20 +67,20 @@ public class Init implements CommandLineRunner {
 //
 //            dQueueService.createDQueueForDoctorId(1);
 //
-            System.out.println("Create Patient 1");
-            Patient patient = new Patient("Kiran");
-            System.out.println("Save patient 1");
-            patientRepository.save(patient);
+//            System.out.println("Create Patient 1");
+//            Patient patient = new Patient("Kiran");
+//            System.out.println("Save patient 1");
+//            patientRepository.save(patient);
+////
+//            System.out.println("Create Patient 2");
+//            Patient patient2 = new Patient("Aditya");
+//            System.out.println("Save patient 2");
+//            patientRepository.save(patient2);
 //
-            System.out.println("Create Patient 2");
-            Patient patient2 = new Patient("Aditya");
-            System.out.println("Save patient 2");
-            patientRepository.save(patient2);
-
-            System.out.println("Create Patient 3");
-            Patient patient3 = new Patient("Aditya");
-            System.out.println("Save patient 2");
-            patientRepository.save(patient3);
+//            System.out.println("Create Patient 3");
+//            Patient patient3 = new Patient("Aditya");
+//            System.out.println("Save patient 2");
+//            patientRepository.save(patient3);
 //
 //            System.out.println("Add Patient1 to Quueue");
 //            dQueueService.addPatientToQueue(1,1);
