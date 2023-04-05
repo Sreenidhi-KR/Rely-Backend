@@ -1,6 +1,6 @@
 package com.example.backend.Controller;
 
-import com.example.backend.DocumentDetails;
+import com.example.backend.Bean.DocumentDetails;
 import com.example.backend.ResponseData;
 import com.example.backend.Bean.Documents;
 import com.example.backend.Service.ConsultationService;

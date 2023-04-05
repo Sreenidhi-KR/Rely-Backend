@@ -2,7 +2,7 @@ package com.example.backend.Service;
 
 import com.example.backend.Bean.Documents;
 import com.example.backend.Bean.Patient;
-import com.example.backend.DocumentDetails;
+import com.example.backend.Bean.DocumentDetails;
 import com.example.backend.Repository.DocumentsRepository;
 import com.example.backend.Repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.swing.text.Document;
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

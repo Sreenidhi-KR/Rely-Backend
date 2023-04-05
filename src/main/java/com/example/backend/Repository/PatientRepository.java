@@ -20,5 +20,8 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     void deletePatientById(int patient_id);
 
     Patient findPatientById(int patientId);
+
+    @Query(value="select * from patient a where a.user_id= :userId", nativeQuery=true)
+    List<Patient> getPatients(int userId);
 }
 

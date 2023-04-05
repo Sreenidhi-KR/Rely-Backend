@@ -39,6 +39,7 @@ public class Consultation {
 
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name="PrescriptionId", referencedColumnName = "id")
+    @Column(nullable = true)
     private Integer prescription_id;
 
     @Column(name="FollowUp")

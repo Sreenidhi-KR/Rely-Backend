@@ -1,6 +1,7 @@
 package com.example.backend.Bean;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class PrevConsultations {
 
@@ -9,6 +10,8 @@ public class PrevConsultations {
     private String doctorName;
     private int consultId;
     private String specialization;
+
+    private List<DocumentDetails> documentDetailsList;
 
     public Timestamp getStartTime() {
         return startTime;
@@ -46,15 +49,24 @@ public class PrevConsultations {
         return specialization;
     }
 
+    public List<DocumentDetails> getDocumentDetailsList() {
+        return documentDetailsList;
+    }
+
+    public void setDocumentDetailsList(List<DocumentDetails> documentDetailsList) {
+        this.documentDetailsList = documentDetailsList;
+    }
+
     public void setSpecialization(String specialization) {
         this.specialization = specialization;
     }
 
-    public PrevConsultations(Timestamp startTime, Timestamp endTime, String doctorName, int consultId, String specialization) {
+    public PrevConsultations(Timestamp startTime, Timestamp endTime, String doctorName, int consultId, String specialization, List<DocumentDetails> documentDetailsList) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.doctorName = doctorName;
         this.consultId = consultId;
         this.specialization = specialization;
+        this.documentDetailsList = documentDetailsList;
     }
 }

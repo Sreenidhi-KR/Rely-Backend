@@ -9,9 +9,7 @@ import com.example.backend.Bean.*;
 import com.example.backend.Payload.Request.*;
 import com.example.backend.Repository.AdminRepository;
 import com.example.backend.Repository.DoctorRepository;
-import com.example.backend.Service.AdminDetailsImpl;
-import com.example.backend.Service.DQueueService;
-import com.example.backend.Service.DoctorDetailsImpl;
+import com.example.backend.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,7 +28,6 @@ import com.example.backend.Payload.Response.MessageResponse;
 import com.example.backend.Repository.RoleRepository;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Security.Jwt.JwtUtils;
-import com.example.backend.Service.UserDetailsImpl;
 
 import javax.annotation.Resource;
 
@@ -61,6 +58,9 @@ public class AuthController {
 
     @Resource(name = "DQueueService")
     public DQueueService dQueueService;
+
+    @Resource(name ="userService")
+    public UserService userService;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody UserLogin userLogin) {
@@ -108,8 +108,14 @@ public class AuthController {
         roles.add(userRole);
 
         user.setRoles(roles);
-        userRepository.save(user);
-
+        //userRepository.save(user);
+        User savedUser=userRepository.save(user);
+        //temp solution
+        int userId=savedUser.getId();
+        String fname=savedUser.getUserName();
+        //still defaultProfile patient is not linked to the userId which will be done in addPatient()
+        Patient defaultProfile= new Patient(fname);
+        userService.addPatient(defaultProfile,userId);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
