@@ -25,6 +25,8 @@ public interface DQueueRepository extends JpaRepository<DQueue, Long> {
 
     DQueue findDQueueByDoctor(Doctor doctor);
 
+    DQueue findDQueueById(int id);
+
 
 }
 

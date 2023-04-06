@@ -68,6 +68,8 @@ public class DocumentsController {
     public ResponseData uploadFile(@RequestParam("file") MultipartFile file,@PathVariable int PId, @PathVariable int Cid) throws Exception {
         Documents document = null;
         String downloadURl = "";
+        System.out.println("alssddbadww"+PId);
+        System.out.println(Cid);
         document = documentsService.saveDocument(file,PId);
         downloadURl = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/api/v1/document/download/")
