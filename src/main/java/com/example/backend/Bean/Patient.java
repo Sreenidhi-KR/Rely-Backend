@@ -175,7 +175,8 @@ public class Patient {
         this.user = user;
     }
 
-    public Patient(String fname){
+    public Patient(String fname ){
+
         this.fname = fname;
     }
 

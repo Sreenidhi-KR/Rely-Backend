@@ -1,16 +1,15 @@
 package com.example.backend.Service;
 
-import com.example.backend.Bean.Consultation;
-import com.example.backend.Bean.Doctor;
-import com.example.backend.Bean.Documents;
-import com.example.backend.Bean.PrevConsultations;
-import com.example.backend.DocumentDetails;
+import com.example.backend.Bean.*;
 import com.example.backend.Repository.ConsultationRepository;
+import com.example.backend.Repository.DQueueRepository;
 import com.example.backend.Repository.DoctorRepository;
 import com.example.backend.Repository.DocumentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,6 +18,9 @@ import java.util.Set;
 
 @Service
 public class ConsultationService {
+
+    @Autowired
+    private DQueueRepository dQueueRepository;
     @Autowired
     private ConsultationRepository consultationRepository;
     @Autowired
@@ -27,8 +29,11 @@ public class ConsultationService {
     @Autowired
     private DoctorRepository doctorRepository;
 
-    public List<DocumentDetails> getAllDocuments(int consultationId) {
+    public List<DocumentDetails> getAllDocumentDetails(int consultationId) {
         Consultation consultation = consultationRepository.findConsultationById(consultationId);
+        if(consultation == null){
+            return new ArrayList<DocumentDetails>();
+        }
         Set<Documents> docs = consultation.getDocuments();
         List<DocumentDetails> consultationDocuments = new ArrayList<>();
         for(Documents d : docs){
@@ -40,14 +45,14 @@ public class ConsultationService {
         return consultationDocuments;
     }
 
-    public void addDocument(int consultationid, int documentid)
+    public void addDocument(int consultationId, int documentId)
     {
         System.out.println("Starting Api");
-        Consultation consultation = consultationRepository.findConsultationById(consultationid);
+        Consultation consultation = consultationRepository.findConsultationById(consultationId);
         System.out.println(consultation);
         Set<Documents> docs = consultation.getDocuments();
         System.out.println(docs);
-        Documents document = documentsRepository.findDocumentsById(documentid);
+        Documents document = documentsRepository.findDocumentsById(documentId);
         System.out.println(document.getId());
         if(!docs.contains(document)) {
             if (docs == null) {
@@ -107,7 +112,8 @@ public class ConsultationService {
             String doc_name = doc.getFname() + " " + doc.getLname();
             int consult_id = consult.getId();
             String specialization = doc.getSpecialization();
-            PrevConsultations individual_consultation = new PrevConsultations(start, end, doc_name, consult_id, specialization);
+            List<DocumentDetails> documentDetailsList = getAllDocumentDetails(consult_id);
+            PrevConsultations individual_consultation = new PrevConsultations(start, end, doc_name, consult_id, specialization,documentDetailsList);
             all_consults.add(individual_consultation);
         }
         return all_consults;
@@ -116,6 +122,13 @@ public class ConsultationService {
     public int addConsultation(Consultation consultation)
     {
         Consultation c = consultationRepository.save(consultation);
+        Integer docId= consultation.getDoctor_id();
+        Doctor doctor=doctorRepository.findDocById(docId);
+        DQueue queue = dQueueRepository.findDQueueByDoctor(doctor);
+        List<Consultation> consultaionList = new ArrayList<>();
+        consultaionList.add(c);
+        queue.setConsultationList(consultaionList);
+        dQueueRepository.save(queue);
         return c.getId();
     }
 

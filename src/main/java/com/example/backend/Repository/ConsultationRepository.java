@@ -18,9 +18,10 @@ public interface ConsultationRepository extends JpaRepository<Consultation, Long
 //    @Query(value="select * from consultation a where a.id= :id", nativeQuery=true)
 //    Consultation findConsultationByCid(int id);
 
+    @Query(value="select * from consultation c where c.id= :id", nativeQuery = true)
     Consultation findConsultationById(int id);
 
-    @Query(value="select * from Consultation c where c.patient_id= :patientid", nativeQuery = true)
+    @Query(value="select * from consultation c where c.patient_id= :patientid", nativeQuery = true)
     List<Consultation> getAllConsultationsByPid(int patientid);
 
     @Modifying
