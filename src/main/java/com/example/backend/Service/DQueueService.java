@@ -1,5 +1,6 @@
 package com.example.backend.Service;
 
+import com.example.backend.Bean.Consultation;
 import com.example.backend.Bean.DQueue;
 import com.example.backend.Bean.Doctor;
 import com.example.backend.Bean.Patient;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 
 @Service
@@ -86,5 +88,27 @@ public class DQueueService {
             return -1;
         }
         return patientList.indexOf(patient)+1;
+    }
+
+    public Integer getDqueueId(Integer doctorId){
+        Doctor doctor = doctorRepository.findDocById(doctorId);
+        DQueue queue = dQueueRepository.findDQueueByDoctor(doctor);
+        Integer qid=queue.getId();
+        return qid;
+    }
+
+    public  Integer getConsultationId(int Qid)
+    {
+        DQueue queue=dQueueRepository.findDQueueById(Qid);
+        Consultation consultation=queue.getConsultationList().get(0);
+        System.out.println(consultation.getId());
+        return consultation.getId();
+    }
+
+    public Integer getPatientId(int Qid)
+    {
+        DQueue queue=dQueueRepository.findDQueueById(Qid);
+        Consultation consultation=queue.getConsultationList().get(0);
+        return consultation.getPatient_id();
     }
 }

@@ -4,6 +4,7 @@ import com.example.backend.Bean.Patient;
 import com.example.backend.Service.DQueueService;
 import com.example.backend.Service.DoctorService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -40,6 +41,24 @@ public class DQueueController {
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
     public int getPatientIndex(@PathVariable int doctorId , @PathVariable int patientId){
         return dQueueService.getPatientIndexFromQueue(doctorId,patientId);
+    }
+
+    @GetMapping("/getDqueue/{doctorId}")
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
+    public int getDqueueId(@PathVariable int doctorId){
+        return dQueueService.getDqueueId(doctorId);
+    }
+
+    @GetMapping("/getConsultationId/{qid}")
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
+    public Integer getConsulationId(@PathVariable int qid){
+        return dQueueService.getConsultationId(qid);
+    }
+
+    @GetMapping("/getPatientId/{qid}")
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
+    public Integer getPatientId(@PathVariable int qid){
+        return dQueueService.getPatientId(qid);
     }
 
 }
