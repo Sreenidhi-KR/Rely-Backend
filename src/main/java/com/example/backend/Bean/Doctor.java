@@ -2,6 +2,10 @@ package com.example.backend.Bean;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -70,6 +74,9 @@ public class Doctor {
 
     @Column(name="Email")
     private String email;
+
+    @Column(name="Age")
+    private Integer age;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(  name = "doctor_roles",
@@ -229,6 +236,24 @@ public class Doctor {
         this.online_status = online_status;
     }
 
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public static Integer calculateAge(LocalDate dob) {
+        LocalDate curDate = LocalDate.now();
+        if ((dob != null) && (curDate != null)) {
+            return Period.between(dob, curDate).getYears();
+        }
+        else {
+            return 0;
+        }
+    }
+
     public Doctor(String fname, String lname, Date DOB, char sex, String channel_name, String specialization, String qualification, String description, int rating, String available_timimgs, String city, String state, String clinic_address, String photo_url, boolean online_status, String userName, String password, String email, String token) {
         this.fname = fname;
         this.lname = lname;
@@ -249,6 +274,9 @@ public class Doctor {
         this.password=password;
         this.email=email;
         this.token = token;
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String s = formatter.format(DOB);
+        this.age=calculateAge(LocalDate.parse(s));
     }
 
     public Doctor(String fname, String lname){
