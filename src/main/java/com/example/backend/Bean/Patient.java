@@ -1,6 +1,10 @@
 package com.example.backend.Bean;
 
 import javax.persistence.*;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Date;
 
@@ -43,12 +47,16 @@ public class Patient {
     @Column(name="Relationship")
     private String relationship;
 
+    @Column(name="Age")
+    private Integer age;
+
     @OneToMany(targetEntity = Documents.class, mappedBy = "id",cascade = CascadeType.ALL, fetch = FetchType.LAZY) //over
     private List<Documents> documents;
 
     @ManyToOne(fetch = FetchType.LAZY) //over
     @JoinColumn(name="user_id",referencedColumnName = "id", updatable = true, insertable = true)
     private User user;
+
 
 
     public User getUser() {
@@ -160,6 +168,24 @@ public class Patient {
         this.relationship = relationship;
     }
 
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public static Integer calculateAge(LocalDate dob) {
+        LocalDate curDate = LocalDate.now();
+        if ((dob != null) && (curDate != null)) {
+            return Period.between(dob, curDate).getYears();
+        }
+        else {
+            return 0;
+        }
+    }
+
     public Patient(String fname, String lname, Date DOB, char sex, String blood_group, String city, String state, String abdm_no, String photo_url, String relationship, List<Documents> documents, User user) {
         this.fname = fname;
         this.lname = lname;
@@ -173,15 +199,14 @@ public class Patient {
         this.relationship = relationship;
         this.documents = documents;
         this.user = user;
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String s = formatter.format(DOB);
+        this.age=calculateAge(LocalDate.parse(s));
     }
 
     public Patient(String fname ){
-
         this.fname = fname;
     }
-
-
-
     public Patient() {
     }
 
