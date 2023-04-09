@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Deque;
 import java.util.List;
 
 @Service
@@ -35,9 +33,6 @@ public class DQueueService {
         dQueueRepository.save(dQueue);
     }
 
-    public void hello(){
-        System.out.println("Hello from Dqueue Service");
-    }
 
     public List<Patient> getAllPatientsFromDQueue(int doctorId) {
         Doctor doctor = doctorRepository.findDocById(doctorId);
@@ -83,7 +78,7 @@ public class DQueueService {
             throw new IllegalArgumentException("No queue found for doctor");
         }
         List<Patient> patientList = queue.getPatientList();
-        Collections.reverse(patientList);
+//        Collections.reverse(patientList);
         if(!patientList.contains(patient)){
             return -1;
         }
