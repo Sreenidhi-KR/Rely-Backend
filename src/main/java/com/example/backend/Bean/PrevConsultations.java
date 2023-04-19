@@ -1,6 +1,7 @@
 package com.example.backend.Bean;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 public class PrevConsultations {
@@ -10,9 +11,36 @@ public class PrevConsultations {
     private String doctorName;
     private int consultId;
     private String specialization;
+    private String patientName;
+    private Integer prescription;
+
+    private Date followUpDate;
 
     private List<DocumentDetails> documentDetailsList;
 
+    public Date getFollowUpDate() {
+        return followUpDate;
+    }
+
+    public void setFollowUpDate(Date followUpDate) {
+        this.followUpDate = followUpDate;
+    }
+
+    public Integer getPrescription() {
+        return prescription;
+    }
+
+    public void setPrescription(Integer prescription) {
+        this.prescription = prescription;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
     public Timestamp getStartTime() {
         return startTime;
     }
@@ -61,12 +89,15 @@ public class PrevConsultations {
         this.specialization = specialization;
     }
 
-    public PrevConsultations(Timestamp startTime, Timestamp endTime, String doctorName, int consultId, String specialization, List<DocumentDetails> documentDetailsList) {
+    public PrevConsultations(Timestamp startTime, Timestamp endTime, String doctorName, String patientName, int consultId, String specialization, List<DocumentDetails> documentDetailsList, Integer prescription, Date followUpDate) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.doctorName = doctorName;
+        this.patientName = patientName;
         this.consultId = consultId;
         this.specialization = specialization;
         this.documentDetailsList = documentDetailsList;
+        this.prescription = prescription;
+        this.followUpDate = followUpDate;
     }
 }

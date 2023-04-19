@@ -70,4 +70,13 @@ public class DoctorController {
         fileInputStreamReader.read(bytes);
         return Base64.getEncoder().encodeToString(bytes);
     }
+
+    @RequestMapping(value = "/setQueueLimit/{doctor_id}/{limit}", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
+    public void setQueueLimit(@PathVariable int doctor_id,@PathVariable Integer limit) throws SQLException, IOException {
+        Doctor doctor = doctorService.findById(doctor_id);
+        doctor.setLimit(limit);
+        System.out.println("Limit:"+limit);
+        updateDoctor(doctor);
+    }
 }
