@@ -17,6 +17,7 @@ public class DQueue {
     private Doctor doctor;
 
     @OneToMany(targetEntity = Patient.class, cascade = CascadeType.ALL, fetch=FetchType.LAZY) //over
+    @OrderColumn
     private List<Patient> patientList = new ArrayList<>();
 
     @OneToMany(targetEntity = Consultation.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY) //over
