@@ -1,5 +1,8 @@
 package com.example.backend.Bean;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -26,6 +29,9 @@ public class Consultation {
 
     @Column(name="EndTime")
     private Timestamp end_time;
+
+    @Column(name="FollowupId")
+    private int followup_id = 0;
 
     @ManyToMany(targetEntity = Documents.class, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY) //over
     @JoinTable(name="consultation_documents",
@@ -110,8 +116,15 @@ public class Consultation {
         this.follow_up_date = follow_up_date;
     }
 
+    public int getFollowup_id() {
+        return followup_id;
+    }
 
-    public Consultation(int patient_id, int doctor_id, Timestamp start_time, Timestamp end_time, Set<Documents> documents, int prescription_id, Date follow_up_date) {
+    public void setFollowup_id(int followup_id) {
+        this.followup_id = followup_id;
+    }
+
+    public Consultation(int patient_id, int doctor_id, Timestamp start_time, Timestamp end_time, Set<Documents> documents, int prescription_id, Date follow_up_date, int followup_id) {
         this.patient_id = patient_id;
         this.doctor_id = doctor_id;
         this.start_time = start_time;
@@ -119,6 +132,7 @@ public class Consultation {
         this.documents = documents;
         this.prescription_id = prescription_id;
         this.follow_up_date = follow_up_date;
+        this.followup_id = followup_id;
     }
 
     public Consultation(int patient_id, int doctor_id)          //for init testing.

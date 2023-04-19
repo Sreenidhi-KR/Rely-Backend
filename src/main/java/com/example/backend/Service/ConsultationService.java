@@ -182,6 +182,15 @@ public class ConsultationService {
     public int addConsultation(Consultation consultation)
     {
         Consultation c = consultationRepository.save(consultation);
+        int followupId = c.getFollowup_id();
+        if(followupId!=0)
+        {
+            Consultation prevConsultation = consultationRepository.findConsultationById(followupId);
+            Set<Documents> prevDocuments = prevConsultation.getDocuments();
+            Set<Documents> copy = new HashSet<>(prevDocuments);
+            c.setDocuments(copy);
+            consultationRepository.save(c);
+        }
         Integer docId= consultation.getDoctor_id();
         Doctor doctor=doctorRepository.findDocById(docId);
         DQueue queue = dQueueRepository.findDQueueByDoctor(doctor);
