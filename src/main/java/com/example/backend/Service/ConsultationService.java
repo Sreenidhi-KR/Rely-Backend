@@ -1,20 +1,17 @@
 package com.example.backend.Service;
 
 import com.example.backend.Bean.*;
-import com.example.backend.Repository.ConsultationRepository;
-import com.example.backend.Repository.DQueueRepository;
-import com.example.backend.Repository.DoctorRepository;
-import com.example.backend.Repository.DocumentsRepository;
+import com.example.backend.Repository.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import javax.print.Doc;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class ConsultationService {
@@ -25,6 +22,9 @@ public class ConsultationService {
     private ConsultationRepository consultationRepository;
     @Autowired
     private DocumentsRepository documentsRepository;
+
+    @Autowired
+    private PatientRepository patientRepository;
 
     @Autowired
     private DoctorRepository doctorRepository;
@@ -102,21 +102,81 @@ public class ConsultationService {
 
     public List<PrevConsultations> getPrevConsultations(int patientId)
     {
+        Patient p = patientRepository.findPatientById(patientId);
+        String patient_name = p.getFname() + " " + p.getLname();
         List<Consultation> allConsultations = consultationRepository.getAllConsultationsByPid(patientId);
         List<PrevConsultations> all_consults = new ArrayList<>();
         for(Consultation consult: allConsultations ) {
             Timestamp start = consult.getStart_time();
             Timestamp end = consult.getEnd_time();
-            int doctor_id = consult.getDoctor_id();
+            Integer doctor_id = consult.getDoctor_id();
             Doctor doc = doctorRepository.findDocById(doctor_id);
             String doc_name = doc.getFname() + " " + doc.getLname();
-            int consult_id = consult.getId();
+            Integer consult_id = consult.getId();
+            Date followUp = consultationRepository.getFollowUpDate(consult_id);
             String specialization = doc.getSpecialization();
             List<DocumentDetails> documentDetailsList = getAllDocumentDetails(consult_id);
-            PrevConsultations individual_consultation = new PrevConsultations(start, end, doc_name, consult_id, specialization,documentDetailsList);
+            Integer pid= consult.getPrescription_id();
+            PrevConsultations individual_consultation = new PrevConsultations(start, end, doc_name, patient_name, consult_id, specialization,documentDetailsList,pid,followUp);
             all_consults.add(individual_consultation);
         }
         return all_consults;
+    }
+
+    public List<PrevConsultations> getPrevConsultationsDoctor(int doctor_Id)
+    {
+        Doctor d = doctorRepository.findDocById(doctor_Id);
+        String doc_name=d.getFname()+" "+d.getLname();
+        List<Consultation> allConsultations = consultationRepository.getAllConsultationsByDid(doctor_Id);
+        List<PrevConsultations> all_consults = new ArrayList<>();
+        for(Consultation consult: allConsultations ) {
+            Timestamp start = consult.getStart_time();
+            Timestamp end = consult.getEnd_time();
+            Integer patient_id = consult.getPatient_id();
+            Patient p = patientRepository.findPatientById(patient_id);
+            String patient_name = p.getFname() + " " + p.getLname();
+            Integer consult_id = consult.getId();
+            Date followUp = consultationRepository.getFollowUpDate(consult_id);
+            List<DocumentDetails> documentDetailsList = getAllDocumentDetails(consult_id);
+            Integer pid= consult.getPrescription_id();
+            PrevConsultations individual_consultation = new PrevConsultations(start, end, doc_name, patient_name, consult_id, null,documentDetailsList,pid,followUp);
+            all_consults.add(individual_consultation);
+        }
+        return all_consults;
+    }
+
+    public List<Map<String,Long>> getPrevConsultationsStats(int doctor_Id) throws Exception
+    {
+        Doctor d = doctorRepository.findDocById(doctor_Id);
+        List<Consultation> allConsultations = consultationRepository.getAllConsultationsByDid(doctor_Id);
+        HashMap<Long,Integer> stats = new HashMap<Long,Integer>();
+        for(Consultation consult: allConsultations ) {
+            Date start = consult.getStart_time();
+            start.setHours(0);
+            start.setMinutes(0);
+            start.setSeconds(0);
+            System.out.println(start);
+            long millis = start.getTime();
+            if(stats.containsKey(millis)){
+                int val=stats.get(millis).intValue();
+                val=val+1;
+                stats.remove(millis);
+                stats.put(millis,val);
+            }
+            else{
+                stats.put(millis,1);
+            }
+        }
+        List<Map<String,Long>> statistics = new ArrayList<>();
+        for (Map.Entry<Long, Integer> entry : stats.entrySet()) {
+            Map<String,Long> m = new HashMap<>();
+            Long key = entry.getKey();
+            Long value = (long) entry.getValue();
+            m.put("x",key);
+            m.put("y",value);
+            statistics.add(m);
+        }
+        return statistics;
     }
 
     public int addConsultation(Consultation consultation)
@@ -148,4 +208,9 @@ public class ConsultationService {
         consultationRepository.updateConsultationEndTime(id, endTime);
     }
 
+    public void setFollowUpDate(int consultation_id, Date followUpDate){
+        Consultation c = consultationRepository.findConsultationById(consultation_id);
+        c.setFollow_up_date(followUpDate);
+        consultationRepository.save(c);
+    }
 }

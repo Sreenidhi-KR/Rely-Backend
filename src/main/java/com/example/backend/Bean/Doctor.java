@@ -82,6 +82,9 @@ public class Doctor {
     @Column(name="Age")
     private Integer age;
 
+    @Column(name="QueueLimit")
+    private Integer limit;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(  name = "doctor_roles",
             joinColumns = @JoinColumn(name = "doctor_id"),
@@ -256,6 +259,14 @@ public class Doctor {
         this.age = age;
     }
 
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
+
     public static Integer calculateAge(LocalDate dob) {
         LocalDate curDate = LocalDate.now();
         if ((dob != null) && (curDate != null)) {
@@ -289,11 +300,13 @@ public class Doctor {
         Format formatter = new SimpleDateFormat("yyyy-MM-dd");
         String s = formatter.format(DOB);
         this.age=calculateAge(LocalDate.parse(s));
+        this.limit=10;
     }
 
     public Doctor(String fname, String lname){
         this.fname = fname;
         this.lname = lname;
+        this.limit=10;
     }
 
     public Doctor() {
