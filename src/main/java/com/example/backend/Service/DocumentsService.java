@@ -13,4 +13,6 @@ public interface DocumentsService {
     void delDocument(int id);
 
     List<DocumentDetails> getAll(int id);
+
+    List<DocumentDetails> getAllPrescriptions(int id);
 }

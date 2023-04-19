@@ -63,6 +63,12 @@ public class DocumentsController {
         return documentsService.getAll(Id);//get all documents given user ID
     }
 
+    @GetMapping("/getAllPrescriptions/{Id}")
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
+    public List<DocumentDetails> getAllPrescriptions(@PathVariable int Id){
+        return documentsService.getAllPrescriptions(Id);//get all documents given user ID
+    }
+
     @PostMapping("/uploadPrescription/{PId}/{Cid}")
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
     public ResponseData uploadFile(@RequestParam("file") MultipartFile file,@PathVariable int PId, @PathVariable int Cid) throws Exception {

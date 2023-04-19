@@ -24,7 +24,7 @@ public class Patient {
     private String lname;
 
     @Column(name="DOB")
-    private Date DOB;
+    private String DOB;
 
     @Column(name="Sex")
     private char sex;
@@ -104,11 +104,11 @@ public class Patient {
         this.lname = lname;
     }
 
-    public Date getDOB() {
+    public String getDOB() {
         return DOB;
     }
 
-    public void setDOB(Date DOB) {
+    public void setDOB(String DOB) {
         this.DOB = DOB;
     }
 
@@ -186,7 +186,7 @@ public class Patient {
         }
     }
 
-    public Patient(String fname, String lname, Date DOB, char sex, String blood_group, String city, String state, String abdm_no, String photo_url, String relationship, List<Documents> documents, User user) {
+    public Patient(String fname, String lname, String DOB, char sex, String blood_group, String city, String state, String abdm_no, String photo_url, String relationship, List<Documents> documents, User user) {
         this.fname = fname;
         this.lname = lname;
         this.DOB = DOB;
