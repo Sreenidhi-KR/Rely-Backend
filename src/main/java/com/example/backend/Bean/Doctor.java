@@ -42,6 +42,9 @@ public class Doctor {
     @Column(name="Rating")
     private int rating;
 
+    @Column(name="NoOfRatings")
+    private int no_of_ratings;
+
     @Column(name="AvailableTimings")
     private String available_timings;
 
@@ -50,6 +53,7 @@ public class Doctor {
 
     @Column(name="State")
     private String state;
+
 
     @Column(name="ClinicAddress")
     private String clinic_address;
@@ -146,6 +150,14 @@ public class Doctor {
 
     public void setDOB(Date DOB) {
         this.DOB = DOB;
+    }
+
+    public int getNo_of_ratings() {
+        return no_of_ratings;
+    }
+
+    public void setNo_of_ratings(int no_of_ratings) {
+        this.no_of_ratings = no_of_ratings;
     }
 
     public char getSex() {

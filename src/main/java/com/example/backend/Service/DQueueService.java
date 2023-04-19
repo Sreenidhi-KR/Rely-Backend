@@ -106,4 +106,30 @@ public class DQueueService {
         Consultation consultation=queue.getConsultationList().get(0);
         return consultation.getPatient_id();
     }
+
+    public Doctor getQuickDoctor()
+    {
+        List<DQueue> dQueueList = dQueueRepository.findAll();
+        int minLength = Integer.MAX_VALUE;
+        Doctor quickDoctor = null;
+        for(DQueue dQ: dQueueList)
+        {
+            List<Patient> patientList = dQ.getPatientList();
+            boolean onlineStatus = dQ.getDoctor().isOnline_status();
+
+            if(patientList.isEmpty() && onlineStatus){
+               quickDoctor = dQ.getDoctor();
+               break;
+            }
+            if(onlineStatus)
+            {
+                int dqueueLength = patientList.size();
+                if (dqueueLength < minLength) {
+                    minLength = dqueueLength;
+                    quickDoctor = dQ.getDoctor();
+                }
+            }
+        }
+        return  quickDoctor;
+    }
 }
