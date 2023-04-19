@@ -51,8 +51,11 @@ public class DQueueService {
         if(patientList == null){
             patientList = new ArrayList<>();
         }
-        if(! patientList.contains(patient)) {
+        if(!patientList.contains(patient) && doctor.getLimit()>patientList.size()) {
             patientList.add(patient);
+        }
+        else if(doctor.getLimit()<=patientList.size()){
+            System.out.println("Queue Limit Reached");
         }
         dQueueRepository.save(queue);
     }
