@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 @Service
 public class DQueueService {
@@ -98,6 +99,9 @@ public class DQueueService {
     public  Integer getConsultationId(int Qid)
     {
         DQueue queue=dQueueRepository.findDQueueById(Qid);
+        if(queue.getConsultationList().size()==0){
+            return -1;
+        }
         Consultation consultation=queue.getConsultationList().get(0);
         System.out.println(consultation.getId());
         return consultation.getId();
@@ -134,5 +138,18 @@ public class DQueueService {
             }
         }
         return  quickDoctor;
+    }
+
+    public void removeAllPatientsFromQueue(Integer qid){
+        DQueue queue = dQueueRepository.findDQueueById(qid);
+        queue.setPatientList(null);
+        dQueueRepository.save(queue);
+    }
+
+    public boolean toggleAcceptPatient(Integer qid, boolean bool){
+        DQueue queue = dQueueRepository.findDQueueById(qid);
+        queue.setAccept(bool);
+        dQueueRepository.save(queue);
+        return  queue.isAccept();
     }
 }
