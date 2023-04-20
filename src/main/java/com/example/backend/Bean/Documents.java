@@ -2,7 +2,6 @@ package com.example.backend.Bean;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name="Documents")

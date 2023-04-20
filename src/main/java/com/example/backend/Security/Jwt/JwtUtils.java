@@ -1,18 +1,16 @@
 package com.example.backend.Security.Jwt;
 
-import java.util.Date;
-
 import com.example.backend.Service.AdminDetailsImpl;
-import com.example.backend.Service.AdminDetailsServiceImpl;
 import com.example.backend.Service.DoctorDetailsImpl;
+import com.example.backend.Service.UserDetailsImpl;
+import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import com.example.backend.Service.UserDetailsImpl;
-import io.jsonwebtoken.*;
+import java.util.Date;
 
 @Component
 public class JwtUtils {

@@ -1,13 +1,9 @@
 package com.example.backend.Controller;
 
 import com.example.backend.Bean.Consultation;
-import com.example.backend.Bean.PrevConsultations;
 import com.example.backend.Bean.DocumentDetails;
+import com.example.backend.Bean.PrevConsultations;
 import com.example.backend.Service.ConsultationService;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

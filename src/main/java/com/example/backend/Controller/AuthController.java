@@ -1,14 +1,14 @@
 package com.example.backend.Controller;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import com.example.backend.Bean.*;
 import com.example.backend.Payload.Request.*;
+import com.example.backend.Payload.Response.JwtResponse;
+import com.example.backend.Payload.Response.MessageResponse;
 import com.example.backend.Repository.AdminRepository;
 import com.example.backend.Repository.DoctorRepository;
+import com.example.backend.Repository.RoleRepository;
+import com.example.backend.Repository.UserRepository;
+import com.example.backend.Security.Jwt.JwtUtils;
 import com.example.backend.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,19 +17,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.example.backend.Payload.Response.JwtResponse;
-import com.example.backend.Payload.Response.MessageResponse;
-import com.example.backend.Repository.RoleRepository;
-import com.example.backend.Repository.UserRepository;
-import com.example.backend.Security.Jwt.JwtUtils;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

@@ -2,14 +2,10 @@ package com.example.backend.Repository;
 
 import com.example.backend.Bean.DQueue;
 import com.example.backend.Bean.Doctor;
-import com.example.backend.Bean.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Repository
 @Transactional

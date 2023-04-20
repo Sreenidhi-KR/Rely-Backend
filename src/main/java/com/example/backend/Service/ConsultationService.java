@@ -2,15 +2,10 @@ package com.example.backend.Service;
 
 import com.example.backend.Bean.*;
 import com.example.backend.Repository.*;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
-import javax.print.Doc;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service

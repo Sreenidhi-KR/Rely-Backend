@@ -1,7 +1,6 @@
 package com.example.backend.Repository;
 
 import com.example.backend.Bean.Admin;
-import com.example.backend.Bean.Doctor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

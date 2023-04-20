@@ -1,7 +1,6 @@
 package com.example.backend.Service;
 
 import com.example.backend.Bean.Patient;
-import com.example.backend.Bean.Role;
 import com.example.backend.Bean.User;
 import com.example.backend.Repository.PatientRepository;
 import com.example.backend.Repository.UserRepository;

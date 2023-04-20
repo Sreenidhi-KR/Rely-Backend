@@ -3,13 +3,10 @@ package com.example.backend.Controller;
 import com.example.backend.Bean.Doctor;
 import com.example.backend.Bean.Patient;
 import com.example.backend.Service.DQueueService;
-import com.example.backend.Service.DoctorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.annotation.Resource;
 import java.util.List;
