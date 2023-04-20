@@ -1,8 +1,8 @@
 package com.example.backend.Controller;
 
 import com.example.backend.Bean.DocumentDetails;
-import com.example.backend.ResponseData;
 import com.example.backend.Bean.Documents;
+import com.example.backend.ResponseData;
 import com.example.backend.Service.ConsultationService;
 import com.example.backend.Service.DocumentsService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -61,6 +61,12 @@ public class DocumentsController {
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
     public List<DocumentDetails> getAll(@PathVariable int Id){
         return documentsService.getAll(Id);//get all documents given user ID
+    }
+
+    @GetMapping("/getAllPrescriptions/{Id}")
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
+    public List<DocumentDetails> getAllPrescriptions(@PathVariable int Id){
+        return documentsService.getAllPrescriptions(Id);//get all documents given user ID
     }
 
     @PostMapping("/uploadPrescription/{PId}/{Cid}")

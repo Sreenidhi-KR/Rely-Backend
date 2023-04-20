@@ -1,13 +1,10 @@
 package com.example.backend.Controller;
 
-import com.example.backend.Bean.Admin;
 import com.example.backend.Bean.Doctor;
 import com.example.backend.Service.AdminService;
 import com.example.backend.Service.DoctorService;
 import com.example.backend.Utils.FileUploadUtil;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

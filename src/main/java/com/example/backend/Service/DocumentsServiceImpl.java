@@ -1,8 +1,8 @@
 package com.example.backend.Service;
 
+import com.example.backend.Bean.DocumentDetails;
 import com.example.backend.Bean.Documents;
 import com.example.backend.Bean.Patient;
-import com.example.backend.Bean.DocumentDetails;
 import com.example.backend.Repository.DocumentsRepository;
 import com.example.backend.Repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +53,19 @@ public class DocumentsServiceImpl  implements DocumentsService{
     @Override
     public List<DocumentDetails> getAll(int id) {
         List<Documents> patientDocuments= documentsRepository.getAll(id);
+        List<DocumentDetails>patientDocumentsDetails=new ArrayList<DocumentDetails>();
+        for (Documents patientDocument : patientDocuments) {
+            int curId = patientDocument.getId();
+            String curName = patientDocument.getName();
+            DocumentDetails del = new DocumentDetails(curId, curName);
+            patientDocumentsDetails.add(del);
+            System.out.println(curId+curName+del);
+        }
+        return patientDocumentsDetails;
+    }
+
+    public List<DocumentDetails> getAllPrescriptions(int id){
+        List<Documents> patientDocuments= documentsRepository.getAllPrescriptions(id);
         List<DocumentDetails>patientDocumentsDetails=new ArrayList<DocumentDetails>();
         for (Documents patientDocument : patientDocuments) {
             int curId = patientDocument.getId();
