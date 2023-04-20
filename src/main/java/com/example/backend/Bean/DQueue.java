@@ -12,6 +12,9 @@ public class DQueue {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name="DoctorAcceptance")
+    private boolean accept;
+
     @OneToOne //over
     @JoinColumn(name="DoctorId", referencedColumnName = "Id" , nullable = false)
     private Doctor doctor;
@@ -55,10 +58,19 @@ public class DQueue {
         this.consultationList = consultationList;
     }
 
+    public boolean isAccept() {
+        return accept;
+    }
+
+    public void setAccept(boolean accept) {
+        this.accept = accept;
+    }
+
     public DQueue(Doctor doctor, List<Patient> patientList, List<Consultation> consultationList) {
         this.doctor = doctor;
         this.patientList = patientList;
         this.consultationList = consultationList;
+        this.accept=false;
     }
 
     public DQueue( Doctor doctor) {

@@ -97,7 +97,7 @@ public class Consultation {
         this.documents = documents;
     }
 
-    public int getPrescription_id() {
+    public Integer getPrescription_id() {
         return prescription_id;
     }
 
@@ -121,7 +121,7 @@ public class Consultation {
         this.followup_id = followup_id;
     }
 
-    public Consultation(int patient_id, int doctor_id, Timestamp start_time, Timestamp end_time, Set<Documents> documents, int prescription_id, Date follow_up_date, int followup_id) {
+    public Consultation(int patient_id, int doctor_id, Timestamp start_time, Timestamp end_time, Set<Documents> documents, Integer prescription_id, Date follow_up_date, int followup_id) {
         this.patient_id = patient_id;
         this.doctor_id = doctor_id;
         this.start_time = start_time;
