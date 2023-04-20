@@ -1,5 +1,6 @@
 package com.example.backend.Controller;
 
+import com.example.backend.Bean.DQueue;
 import com.example.backend.Bean.Doctor;
 import com.example.backend.Bean.Patient;
 import com.example.backend.Service.DQueueService;
@@ -72,5 +73,17 @@ public class DQueueController {
         return new ResponseEntity<>(d, HttpStatus.OK);
     }
 
+    @GetMapping("/removeAllPatient/{doctorId}")
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
+    public void removeAllPatientFromDqueue(@PathVariable int doctorId){
+        Integer qid=dQueueService.getDqueueId(doctorId);
+        dQueueService.removeAllPatientsFromQueue(qid);
+    }
+
+    @GetMapping("/toggleAcceptPatient/{queueId}/{bool}")
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
+    public boolean toggleAcceptPatient(@PathVariable int queueId,@PathVariable boolean bool){
+        return dQueueService.toggleAcceptPatient(queueId,bool);
+    }
 
 }

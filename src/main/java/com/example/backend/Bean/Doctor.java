@@ -301,6 +301,7 @@ public class Doctor {
         String s = formatter.format(DOB);
         this.age=calculateAge(LocalDate.parse(s));
         this.limit=10;
+        this.no_of_ratings=1;
     }
 
     public Doctor(String fname, String lname){
