@@ -33,4 +33,14 @@ public class DoctorService {
     }
     public List<Doctor> listBySpec(String specialization) { return doctorRepository.findDocBySpec(specialization);}
     public Doctor findById(int doctor_id) { return doctorRepository.findDocById(doctor_id);}
+
+    public void updateDoctorRating(int doctor_id, int rating){
+        Doctor doc = doctorRepository.findDocById(doctor_id);
+        int count = doc.getNo_of_ratings();
+        doc.setNo_of_ratings(count+1);
+        float newRating = ((doc.getRating()*count)+rating)/(count+1);
+        doc.setRating(newRating);
+        System.out.println(doc.getRating());
+        doctorRepository.save(doc);
+    }
 }

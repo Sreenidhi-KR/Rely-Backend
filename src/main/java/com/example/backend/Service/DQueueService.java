@@ -123,7 +123,11 @@ public class DQueueService {
         {
             List<Patient> patientList = dQ.getPatientList();
             boolean onlineStatus = dQ.getDoctor().isOnline_status();
+            int queueLimit = dQ.getDoctor().getLimit();
 
+            if((patientList.size()+1)>queueLimit){
+                continue;
+            }
             if(patientList.isEmpty() && onlineStatus){
                quickDoctor = dQ.getDoctor();
                break;

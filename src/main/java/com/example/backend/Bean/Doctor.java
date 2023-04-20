@@ -40,7 +40,7 @@ public class Doctor {
     private String description;
 
     @Column(name="Rating")
-    private int rating;
+    private float rating;
 
     @Column(name="NoOfRatings")
     private int no_of_ratings;
@@ -195,11 +195,11 @@ public class Doctor {
         this.description = description;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
@@ -277,7 +277,7 @@ public class Doctor {
         }
     }
 
-    public Doctor(String fname, String lname, Date DOB, char sex, String channel_name, String specialization, String qualification, String description, int rating, String available_timimgs, String city, String state, String clinic_address, String photo_url, boolean online_status, String userName, String password, String email, String token) {
+    public Doctor(String fname, String lname, Date DOB, char sex, String channel_name, String specialization, String qualification, String description, float rating, int no_of_ratings, String available_timimgs, String city, String state, String clinic_address, String photo_url, boolean online_status, String userName, String password, String email, String token) {
         this.fname = fname;
         this.lname = lname;
         this.DOB = DOB;
@@ -286,6 +286,7 @@ public class Doctor {
         this.qualification = qualification;
         this.description = description;
         this.rating = rating;
+        this.no_of_ratings = no_of_ratings;
         this.available_timings = available_timimgs;
         this.city = city;
         this.state = state;

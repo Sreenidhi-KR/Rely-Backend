@@ -137,6 +137,7 @@ public class AuthController {
                 signUp.getQualification(),
                 signUp.getDescription(),
                 signUp.getRating(),
+                signUp.getNo_of_ratings(),
                 signUp.getAvailable_timings(),
                 signUp.getCity(),
                 signUp.getState(),

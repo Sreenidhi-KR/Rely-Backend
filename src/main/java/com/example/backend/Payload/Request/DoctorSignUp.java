@@ -11,7 +11,8 @@ public class DoctorSignUp {
     private String specialization;
     private String qualification;
     private String description;
-    private int rating;
+    private float rating;
+    private int no_of_ratings;
     private String available_timings;
     private String city;
     private String state;
@@ -123,12 +124,20 @@ public class DoctorSignUp {
         this.description = description;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(float rating) {
         this.rating = rating;
+    }
+
+    public int getNo_of_ratings() {
+        return no_of_ratings;
+    }
+
+    public void setNo_of_ratings(int no_of_ratings) {
+        this.no_of_ratings = no_of_ratings;
     }
 
     public String getAvailable_timings() {
