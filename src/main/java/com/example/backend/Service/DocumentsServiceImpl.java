@@ -1,8 +1,8 @@
 package com.example.backend.Service;
 
+import com.example.backend.Bean.DocumentDetails;
 import com.example.backend.Bean.Documents;
 import com.example.backend.Bean.Patient;
-import com.example.backend.Bean.DocumentDetails;
 import com.example.backend.Repository.DocumentsRepository;
 import com.example.backend.Repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;

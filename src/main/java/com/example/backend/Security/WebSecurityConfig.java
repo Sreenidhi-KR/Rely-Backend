@@ -1,8 +1,10 @@
 package com.example.backend.Security;
 
+import com.example.backend.Security.Jwt.AuthEntryPointJwt;
+import com.example.backend.Security.Jwt.AuthTokenFilter;
 import com.example.backend.Service.AdminDetailsServiceImpl;
-import com.example.backend.Service.DoctorDetailsImpl;
 import com.example.backend.Service.DoctorDetailsServiceImpl;
+import com.example.backend.Service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,10 +18,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import com.example.backend.Security.Jwt.AuthEntryPointJwt;
-import com.example.backend.Security.Jwt.AuthTokenFilter;
-import com.example.backend.Service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity

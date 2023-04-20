@@ -1,7 +1,7 @@
 package com.example.backend.Service;
 
-import com.example.backend.Bean.Documents;
 import com.example.backend.Bean.DocumentDetails;
+import com.example.backend.Bean.Documents;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

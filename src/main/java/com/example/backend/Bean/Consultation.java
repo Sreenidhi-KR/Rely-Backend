@@ -1,8 +1,5 @@
 package com.example.backend.Bean;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.bind.DefaultValue;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;

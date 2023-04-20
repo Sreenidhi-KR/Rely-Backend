@@ -2,7 +2,6 @@ package com.example.backend.Controller;
 
 import com.example.backend.Bean.Patient;
 import com.example.backend.Service.UserService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
