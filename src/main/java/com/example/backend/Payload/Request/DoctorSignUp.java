@@ -3,9 +3,6 @@ package com.example.backend.Payload.Request;
 import java.sql.Date;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.validation.constraints.*;
-
 public class DoctorSignUp {
     private String fname;
     private String lname;

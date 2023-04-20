@@ -1,6 +1,5 @@
 package com.example.backend.Service;
 
-import com.example.backend.Bean.Admin;
 import com.example.backend.Repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
