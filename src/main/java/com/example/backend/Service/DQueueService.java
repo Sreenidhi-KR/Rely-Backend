@@ -4,6 +4,7 @@ import com.example.backend.Bean.Consultation;
 import com.example.backend.Bean.DQueue;
 import com.example.backend.Bean.Doctor;
 import com.example.backend.Bean.Patient;
+import com.example.backend.Payload.Response.DQueueInfo;
 import com.example.backend.Repository.DQueueRepository;
 import com.example.backend.Repository.DoctorRepository;
 import com.example.backend.Repository.PatientRepository;
@@ -74,7 +75,7 @@ public class DQueueService {
         dQueueRepository.save(queue);
     }
 
-    public Integer getPatientIndexFromQueue(Integer doctorId, Integer patientId){
+    public DQueueInfo getPatientIndexFromQueue(Integer doctorId, Integer patientId){
         Doctor doctor = doctorRepository.findDocById(doctorId);
         DQueue queue = dQueueRepository.findDQueueByDoctor(doctor);
         Patient patient = patientRepository.findPatientById(patientId);
@@ -83,10 +84,16 @@ public class DQueueService {
         }
         List<Patient> patientList = queue.getPatientList();
 //        Collections.reverse(patientList);
+        DQueueInfo dQueueInfo = new DQueueInfo();
         if(!patientList.contains(patient)){
-            return -1;
+            dQueueInfo.setIndex(-1);
+            dQueueInfo.setAccept(false);
+            return dQueueInfo;
         }
-        return patientList.indexOf(patient)+1;
+
+        dQueueInfo.setIndex(patientList.indexOf(patient)+1);
+        dQueueInfo.setAccept(queue.isAccept());
+        return dQueueInfo;
     }
 
     public Integer getDqueueId(Integer doctorId){

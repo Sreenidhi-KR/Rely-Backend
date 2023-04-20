@@ -80,7 +80,7 @@ public class DoctorController {
         updateDoctor(doctor);
     }
 
-    @RequestMapping(value = "/updateDoctorRating/{doctor_id}/{rating}", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateDoctorRating/{doctor_id}/{rating}", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public void updateDoctorRating(@PathVariable int doctor_id, @PathVariable int rating) {
         doctorService.updateDoctorRating(doctor_id, rating);
