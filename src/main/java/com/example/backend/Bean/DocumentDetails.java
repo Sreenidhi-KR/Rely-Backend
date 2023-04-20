@@ -1,5 +1,7 @@
 package com.example.backend.Bean;
 
+import javax.persistence.OrderColumn;
+
 public class DocumentDetails {
     private int id;
     private String name;

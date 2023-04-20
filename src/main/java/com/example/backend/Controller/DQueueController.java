@@ -3,6 +3,7 @@ package com.example.backend.Controller;
 import com.example.backend.Bean.DQueue;
 import com.example.backend.Bean.Doctor;
 import com.example.backend.Bean.Patient;
+import com.example.backend.Payload.Response.DQueueInfo;
 import com.example.backend.Service.DQueueService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class DQueueController {
 
     @GetMapping("/getPatientIndex/{doctorId}/{patientId}")
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public int getPatientIndex(@PathVariable int doctorId , @PathVariable int patientId){
+    public DQueueInfo getPatientIndex(@PathVariable int doctorId , @PathVariable int patientId){
         return dQueueService.getPatientIndexFromQueue(doctorId,patientId);
     }
 
