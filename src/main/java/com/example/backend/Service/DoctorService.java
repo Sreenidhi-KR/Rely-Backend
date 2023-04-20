@@ -33,6 +33,7 @@ public class DoctorService {
     }
     public List<Doctor> listBySpec(String specialization) { return doctorRepository.findDocBySpec(specialization);}
     public Doctor findById(int doctor_id) { return doctorRepository.findDocById(doctor_id);}
+    public Boolean getOnlineStatus(int doctor_id) { return doctorRepository.getOnlineStatus(doctor_id);}
 
     public void updateDoctorRating(int doctor_id, int rating){
         Doctor doc = doctorRepository.findDocById(doctor_id);
