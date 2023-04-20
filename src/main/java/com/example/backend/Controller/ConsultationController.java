@@ -2,6 +2,7 @@ package com.example.backend.Controller;
 
 import com.example.backend.Bean.Consultation;
 import com.example.backend.Bean.DocumentDetails;
+import com.example.backend.Bean.FollowUp;
 import com.example.backend.Bean.PrevConsultations;
 import com.example.backend.Service.ConsultationService;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class ConsultationController {
     }
 
     @GetMapping("/addDocumentByCid_PrescriptionId/{consultationId}/{prescriptionId}")
-    public  void addDocumentByCidPid(@PathVariable int consultationId, @PathVariable int prescriptionId){
+    public void addDocumentByCidPid(@PathVariable int consultationId, @PathVariable int prescriptionId){
         consultationService.addDocument(consultationId, prescriptionId);
     }
 
@@ -81,4 +82,8 @@ public class ConsultationController {
             consultationService.setFollowUpDate(consultation_id, followUpDate);
     }
 
+    @GetMapping("/getFollowUp/{patient_id}")
+    public List<FollowUp> getFollowUp(@PathVariable int patient_id){
+        return consultationService.getFollowUp(patient_id);
+    }
 }

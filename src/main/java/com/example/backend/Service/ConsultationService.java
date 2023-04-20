@@ -208,4 +208,25 @@ public class ConsultationService {
         c.setFollow_up_date(followUpDate);
         consultationRepository.save(c);
     }
+
+    public List<FollowUp> getFollowUp(int patientId) {
+        List<PrevConsultations> consultationsList = getPrevConsultations(patientId);
+        List<FollowUp> followUpList = new ArrayList<>();
+        for(PrevConsultations c : consultationsList) {
+            if(c.getFollowUpDate()==null){
+                continue;
+            }
+            Date followUpDate = c.getFollowUpDate();
+            Timestamp currentDate = c.getEndTime();
+            if(currentDate.before(followUpDate))
+            {
+                int consultationId = c.getConsultId();
+                Consultation consultation = consultationRepository.findConsultationById(consultationId);
+                int doctorId = consultation.getDoctor_id();
+                FollowUp followUp = new FollowUp(consultationId, followUpDate, doctorId);
+                followUpList.add(followUp);
+            }
+        }
+        return followUpList;
+    }
 }
