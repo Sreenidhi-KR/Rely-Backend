@@ -112,7 +112,7 @@ public class ConsultationService {
             String specialization = doc.getSpecialization();
             List<DocumentDetails> documentDetailsList = getAllDocumentDetails(consult_id);
             Integer pid= consult.getPrescription_id();
-            PrevConsultations individual_consultation = new PrevConsultations(start, end, doc_name, patient_name, consult_id, specialization,documentDetailsList,pid,followUp);
+            PrevConsultations individual_consultation = new PrevConsultations(start, end, doc_name, patient_name, doctor_id, consult_id, specialization,documentDetailsList,pid,followUp);
             all_consults.add(individual_consultation);
         }
         return all_consults;
@@ -122,6 +122,7 @@ public class ConsultationService {
     {
         Doctor d = doctorRepository.findDocById(doctor_Id);
         String doc_name=d.getFname()+" "+d.getLname();
+        String specialization = d.getSpecialization();
         List<Consultation> allConsultations = consultationRepository.getAllConsultationsByDid(doctor_Id);
         List<PrevConsultations> all_consults = new ArrayList<>();
         for(Consultation consult: allConsultations ) {
@@ -134,7 +135,7 @@ public class ConsultationService {
             Date followUp = consultationRepository.getFollowUpDate(consult_id);
             List<DocumentDetails> documentDetailsList = getAllDocumentDetails(consult_id);
             Integer pid= consult.getPrescription_id();
-            PrevConsultations individual_consultation = new PrevConsultations(start, end, doc_name, patient_name, consult_id, null,documentDetailsList,pid,followUp);
+            PrevConsultations individual_consultation = new PrevConsultations(start, end, doc_name, patient_name, doctor_Id, consult_id, specialization,documentDetailsList,pid,followUp);
             all_consults.add(individual_consultation);
         }
         return all_consults;
