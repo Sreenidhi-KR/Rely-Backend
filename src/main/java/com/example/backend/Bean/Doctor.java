@@ -1,5 +1,4 @@
 package com.example.backend.Bean;
-
 import javax.persistence.*;
 import java.sql.Date;
 import java.text.Format;
