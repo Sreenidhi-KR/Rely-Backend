@@ -102,14 +102,7 @@ public class AuthController {
         roles.add(userRole);
 
         user.setRoles(roles);
-        //userRepository.save(user);
-        User savedUser=userRepository.save(user);
-        //temp solution
-        int userId=savedUser.getId();
-        String fname=savedUser.getUserName();
-        //still defaultProfile patient is not linked to the userId which will be done in addPatient()
-        Patient defaultProfile= new Patient(fname);
-        userService.addPatient(defaultProfile,userId);
+        userRepository.save(user);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 

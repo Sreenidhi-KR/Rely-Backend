@@ -14,7 +14,7 @@ import java.util.Optional;
 @Transactional
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
-    @Query(value = "select * from doctor", nativeQuery = true)
+    @Query(value = "select * from doctor order by online_status desc", nativeQuery = true)
     List<Doctor> findAll();
 
     @Query(value="select * from doctor a where a.specialization= :specialization", nativeQuery=true)
