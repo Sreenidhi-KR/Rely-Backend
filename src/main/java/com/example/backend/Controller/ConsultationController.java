@@ -8,6 +8,7 @@ import com.example.backend.Service.ConsultationService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -77,9 +78,15 @@ public class ConsultationController {
     }
 
     @PostMapping("/setFollowUp/{consultation_id}/{followUpDate}")
-    public void setFollowUpDate(@PathVariable int consultation_id, @PathVariable Date followUpDate){
+    public void setFollowUpDate(@PathVariable int consultation_id, @PathVariable String followUpDate){
+        try {
+            Date date = new SimpleDateFormat("yyyyy-MM-dd").parse(followUpDate);
             //Date followUpDate = new Date();
-            consultationService.setFollowUpDate(consultation_id, followUpDate);
+            consultationService.setFollowUpDate(consultation_id, date);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     @GetMapping("/getFollowUp/{patient_id}")
