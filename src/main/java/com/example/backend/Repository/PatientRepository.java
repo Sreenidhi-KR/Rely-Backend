@@ -17,7 +17,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
 
     @Modifying
-    @Query(value="delete from Patient a where a.Id= :patient_id", nativeQuery=true)
+    @Query(value="delete from patient a where a.Id= :patient_id", nativeQuery=true)
     void deletePatientById(int patient_id);
 
     Patient findPatientById(int patientId);
