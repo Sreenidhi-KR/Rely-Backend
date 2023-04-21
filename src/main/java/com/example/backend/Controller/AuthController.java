@@ -79,7 +79,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody UserSignUp userSignUp) {
-        if (userRepository.existsByUserName(userSignUp.getUsername())) {
+        if (userRepository.existsByUserName(userSignUp.getUsername()) && doctorRepository.existsByUserName(userSignUp.getUsername()) && adminRepository.existsByUserName(userSignUp.getUsername())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Username is already taken!"));
@@ -117,7 +117,7 @@ public class AuthController {
     @PostMapping("/doctor/signup")
     public ResponseEntity<?> registerUser(@RequestBody DoctorSignUp signUp) {
 
-        if (doctorRepository.existsByUserName(signUp.getUsername())) {
+        if (doctorRepository.existsByUserName(signUp.getUsername()) && userRepository.existsByUserName(signUp.getUsername()) && adminRepository.existsByUserName(signUp.getUsername())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Username is already taken!"));
@@ -136,8 +136,6 @@ public class AuthController {
                 signUp.getSpecialization(),
                 signUp.getQualification(),
                 signUp.getDescription(),
-                signUp.getRating(),
-                signUp.getNo_of_ratings(),
                 signUp.getAvailable_timings(),
                 signUp.getCity(),
                 signUp.getState(),
@@ -147,7 +145,8 @@ public class AuthController {
                 signUp.getUsername(),
                 encoder.encode(signUp.getPassword()),
                 signUp.getEmail(),
-                signUp.getToken()
+                signUp.getToken(),
+                signUp.getPhoneNo()
         );
 
         // Create new Doctor's account
@@ -187,7 +186,7 @@ public class AuthController {
     @PostMapping("/admin/signup")
     public ResponseEntity<?> registerUser(@RequestBody AdminSignUp signUp) {
 
-        if (adminRepository.existsByUserName(signUp.getUsername())) {
+        if (adminRepository.existsByUserName(signUp.getUsername()) && doctorRepository.existsByUserName(signUp.getUsername()) && userRepository.existsByUserName(signUp.getUsername())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Username is already taken!"));
