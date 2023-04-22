@@ -84,6 +84,9 @@ public class Doctor {
     @Column(name="QueueLimit")
     private Integer limit;
 
+    @Column(name="PhoneNumber")
+    private Long phoneNo;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(  name = "doctor_roles",
             joinColumns = @JoinColumn(name = "doctor_id"),
@@ -276,7 +279,15 @@ public class Doctor {
         }
     }
 
-    public Doctor(String fname, String lname, Date DOB, char sex, String channel_name, String specialization, String qualification, String description, float rating, int no_of_ratings, String available_timimgs, String city, String state, String clinic_address, String photo_url, boolean online_status, String userName, String password, String email, String token) {
+    public Long getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(Long phoneNo) {
+        this.phoneNo = phoneNo;
+    }
+
+    public Doctor(String fname, String lname, Date DOB, char sex, String channel_name, String specialization, String qualification, String description, String available_timimgs, String city, String state, String clinic_address, String photo_url, boolean online_status, String userName, String password, String email, String token, Long phoneNo) {
         this.fname = fname;
         this.lname = lname;
         this.DOB = DOB;
@@ -284,8 +295,7 @@ public class Doctor {
         this.specialization = specialization;
         this.qualification = qualification;
         this.description = description;
-        this.rating = rating;
-        this.no_of_ratings = no_of_ratings;
+        this.rating = 0;
         this.available_timings = available_timimgs;
         this.city = city;
         this.state = state;
@@ -301,7 +311,8 @@ public class Doctor {
         String s = formatter.format(DOB);
         this.age=calculateAge(LocalDate.parse(s));
         this.limit=10;
-        this.no_of_ratings=1;
+        this.no_of_ratings=0;
+        this.phoneNo=phoneNo;
     }
 
     public Doctor(String fname, String lname){

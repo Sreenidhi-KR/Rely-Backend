@@ -28,6 +28,8 @@ public class DoctorSignUp {
     private String token;
     private Set<String> role;
 
+    private Long phoneNo;
+
     public Set<String> getRole() {
         return role;
     }
@@ -194,6 +196,14 @@ public class DoctorSignUp {
 
     public void setChannel_name(String channel_name) {
         this.channel_name = channel_name;
+    }
+
+    public Long getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(Long phoneNo) {
+        this.phoneNo = phoneNo;
     }
 }
 

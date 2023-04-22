@@ -115,6 +115,7 @@ public class ConsultationService {
             PrevConsultations individual_consultation = new PrevConsultations(start, end, doc_name, patient_name, doctor_id, consult_id, specialization,documentDetailsList,pid,followUp);
             all_consults.add(individual_consultation);
         }
+        Collections.reverse(all_consults);
         return all_consults;
     }
 
