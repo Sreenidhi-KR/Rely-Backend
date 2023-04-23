@@ -34,7 +34,11 @@ public class ConsultationService {
         for(Documents d : docs){
             int document_id = d.getId();
             String document_name = d.getName();
-            DocumentDetails temp = new DocumentDetails(document_id, document_name);
+            boolean isAvailible=true;
+            if (d.getData()==null){
+                isAvailible=false;
+            }
+            DocumentDetails temp = new DocumentDetails(document_id, document_name,isAvailible);
             consultationDocuments.add(temp);
         }
         return consultationDocuments;

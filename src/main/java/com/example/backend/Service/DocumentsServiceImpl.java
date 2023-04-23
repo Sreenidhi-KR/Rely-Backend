@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,7 +48,7 @@ public class DocumentsServiceImpl  implements DocumentsService{
 
     @Override
     public void delDocument(int id) {
-        documentsRepository.deleteById(id);
+        documentsRepository.removeDocumentById(id);//will only set data filed in as NULL
     }
 
     @Override
@@ -57,7 +58,11 @@ public class DocumentsServiceImpl  implements DocumentsService{
         for (Documents patientDocument : patientDocuments) {
             int curId = patientDocument.getId();
             String curName = patientDocument.getName();
-            DocumentDetails del = new DocumentDetails(curId, curName);
+            boolean isAvailible=true;
+            if (patientDocument.getData()==null) {
+                isAvailible=false;
+            }
+            DocumentDetails del = new DocumentDetails(curId, curName,isAvailible);
             patientDocumentsDetails.add(del);
             System.out.println(curId+curName+del);
         }
@@ -70,7 +75,11 @@ public class DocumentsServiceImpl  implements DocumentsService{
         for (Documents patientDocument : patientDocuments) {
             int curId = patientDocument.getId();
             String curName = patientDocument.getName();
-            DocumentDetails del = new DocumentDetails(curId, curName);
+            boolean isAvailible=true;
+            if (patientDocument.getData()==null) {
+                isAvailible=false;
+            }
+            DocumentDetails del = new DocumentDetails(curId, curName,isAvailible);
             patientDocumentsDetails.add(del);
             System.out.println(curId+curName+del);
         }
