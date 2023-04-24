@@ -50,6 +50,17 @@ public class Patient {
     @Column(name="Age")
     private Integer age;
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    @Column(name="isActive")
+    private boolean isActive;
+
     @OneToMany(targetEntity = Documents.class, mappedBy = "id",cascade = CascadeType.ALL, fetch = FetchType.LAZY) //over
     private List<Documents> documents;
 
@@ -186,7 +197,7 @@ public class Patient {
         }
     }
 
-    public Patient(String fname, String lname, String DOB, char sex, String blood_group, String city, String state, String abdm_no, String photo_url, String relationship, List<Documents> documents, User user) {
+    public Patient(String fname, String lname, String DOB, char sex, String blood_group, String city, String state, String abdm_no, String photo_url, String relationship, List<Documents> documents, User user,boolean isActive) {
         this.fname = fname;
         this.lname = lname;
         this.DOB = DOB;
@@ -202,6 +213,7 @@ public class Patient {
         Format formatter = new SimpleDateFormat("yyyy-MM-dd");
         String s = formatter.format(DOB);
         this.age=calculateAge(LocalDate.parse(s));
+        this.isActive=isActive;
     }
 
     public Patient(String fname ){

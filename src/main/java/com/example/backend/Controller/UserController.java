@@ -18,6 +18,7 @@ public class UserController {
 
     @RequestMapping(value="/addPatient/{userId}", method=RequestMethod.POST)
     public void addPatient(@PathVariable int userId,@RequestBody Patient patient){
+        patient.setActive(true);
         userService.addPatient(patient,userId);
     }
 
