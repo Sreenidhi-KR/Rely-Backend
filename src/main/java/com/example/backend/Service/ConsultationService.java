@@ -34,7 +34,11 @@ public class ConsultationService {
         for(Documents d : docs){
             int document_id = d.getId();
             String document_name = d.getName();
-            DocumentDetails temp = new DocumentDetails(document_id, document_name);
+            boolean isAvailible=true;
+            if (d.getData()==null){
+                isAvailible=false;
+            }
+            DocumentDetails temp = new DocumentDetails(document_id, document_name,isAvailible);
             consultationDocuments.add(temp);
         }
         return consultationDocuments;
@@ -115,6 +119,7 @@ public class ConsultationService {
             PrevConsultations individual_consultation = new PrevConsultations(start, end, doc_name, patient_name, doctor_id, consult_id, specialization,documentDetailsList,pid,followUp);
             all_consults.add(individual_consultation);
         }
+        Collections.reverse(all_consults);
         return all_consults;
     }
 

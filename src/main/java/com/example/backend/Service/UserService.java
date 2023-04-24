@@ -1,7 +1,10 @@
 package com.example.backend.Service;
 
+import com.example.backend.Bean.DocumentDetails;
+import com.example.backend.Bean.Documents;
 import com.example.backend.Bean.Patient;
 import com.example.backend.Bean.User;
+import com.example.backend.Repository.DocumentsRepository;
 import com.example.backend.Repository.PatientRepository;
 import com.example.backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,10 @@ public class UserService {
 
     @Autowired
     private PatientRepository patientRepository;
+
+    @Autowired
+    private DocumentsRepository documentsRepository;
+
 
     public List<Patient> getAllPatients(int userId){
         User user = userRepository.findUserById(userId);
@@ -48,6 +55,12 @@ public class UserService {
 
     public void removePatient(int patientId){
         patientRepository.deletePatientById(patientId);
+        //remove all the documents uploded by the patient
+        List<Documents>patientDocuments=documentsRepository.getAll(patientId);
+        for (Documents patientDocument :patientDocuments) {
+            int id=patientDocument.getId();
+            documentsRepository.removeDocumentById(id);
+        }
     }
 
 }

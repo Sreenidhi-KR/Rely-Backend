@@ -2,9 +2,11 @@ package com.example.backend.Repository;
 
 import com.example.backend.Bean.Documents;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -17,4 +19,9 @@ public interface DocumentsRepository extends JpaRepository<Documents, Integer>{
     List<Documents> getAllPrescriptions(int id);
 
     Documents findDocumentsById(int documentid);
+
+    @Transactional
+    @Modifying
+    @Query(value="update documents set data=NULL where documents.id=:documentId",nativeQuery = true)
+    void removeDocumentById(int documentId);
 }
