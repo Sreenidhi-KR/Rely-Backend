@@ -229,7 +229,10 @@ public class ConsultationService {
                 int consultationId = c.getConsultId();
                 Consultation consultation = consultationRepository.findConsultationById(consultationId);
                 int doctorId = consultation.getDoctor_id();
-                FollowUp followUp = new FollowUp(consultationId, followUpDate, doctorId);
+                Doctor d = doctorRepository.findDocById(doctorId);
+                String firstName = d.getFname();
+                String lastName = d.getLname();
+                FollowUp followUp = new FollowUp(consultationId, followUpDate, doctorId, firstName, lastName);
                 followUpList.add(followUp);
             }
         }

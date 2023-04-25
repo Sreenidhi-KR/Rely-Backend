@@ -35,6 +35,15 @@ public class UserService {
         return patients;
     }
 
+    public Patient getPatient(int patientId){
+        Patient patient=patientRepository.findPatientById(patientId);
+        return patient;
+    }
+
+    public void uploadDoc(Patient patient){
+        patientRepository.save(patient);
+    }
+
     public void addPatient(Patient patient, int userId){
         //get user with the given id
         User user=userRepository.findUserById(userId);

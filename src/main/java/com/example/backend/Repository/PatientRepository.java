@@ -17,12 +17,12 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
 
     @Modifying
-    @Query(value="delete from patient a where a.Id= :patient_id", nativeQuery=true)
+    @Query(value="update patient a set a.is_active=false where a.Id= :patient_id", nativeQuery=true)
     void deletePatientById(int patient_id);
 
     Patient findPatientById(int patientId);
 
-    @Query(value="select * from patient a where a.user_id= :userId", nativeQuery=true)
+    @Query(value="select * from patient a where a.user_id= :userId and a.is_active=true", nativeQuery=true)
     List<Patient> getPatients(int userId);
 
     @Modifying
