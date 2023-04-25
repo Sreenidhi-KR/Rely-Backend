@@ -4,10 +4,12 @@ import com.example.backend.Bean.*;
 import com.example.backend.Payload.Request.*;
 import com.example.backend.Payload.Response.JwtResponse;
 import com.example.backend.Payload.Response.MessageResponse;
+import com.example.backend.Payload.Response.TokenRefreshResponse;
 import com.example.backend.Repository.AdminRepository;
 import com.example.backend.Repository.DoctorRepository;
 import com.example.backend.Repository.RoleRepository;
 import com.example.backend.Repository.UserRepository;
+import com.example.backend.Security.Exception.TokenRefreshException;
 import com.example.backend.Security.Jwt.JwtUtils;
 import com.example.backend.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,9 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @Autowired
+    BlacklistService blacklistService;
+
+    @Autowired
     UserRepository userRepository;
 
     @Autowired
@@ -49,6 +54,9 @@ public class AuthController {
 
     @Autowired
     JwtUtils jwtUtils;
+
+    @Autowired
+    RefreshTokenService refreshTokenService;
 
     @Resource(name = "DQueueService")
     public DQueueService dQueueService;
@@ -70,11 +78,14 @@ public class AuthController {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
+
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
-                roles));
+                roles,
+                refreshToken.getToken()));
     }
 
     @PostMapping("/signup")
@@ -106,6 +117,27 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
+    @PostMapping("/refreshtoken")
+    public ResponseEntity<?> refreshtoken(@RequestBody TokenRefreshRequest request) {
+        String requestRefreshToken = request.getRefreshToken();
+
+        return refreshTokenService.findByToken(requestRefreshToken)
+                .map(refreshTokenService::verifyExpiration)
+                .map(RefreshToken::getUser)
+                .map(user -> {
+                    String token = jwtUtils.generateTokenFromUsername(user.getUserName());
+                    return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
+                })
+                .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
+                        "Refresh token is not in database!"));
+    }
+
+    @PostMapping("/signout")
+    public void signout(@RequestHeader(value="Authorization") String token) {
+            Blacklist blacklist=new Blacklist(token);
+            blacklistService.setToken(blacklist);
+
+    }
 
     @PostMapping("/doctor/signup")
     public ResponseEntity<?> registerUser(@RequestBody DoctorSignUp signUp) {
@@ -169,11 +201,30 @@ public class AuthController {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
+        RefreshTokenDoctor refreshToken = refreshTokenService.createRefreshTokenDoctor(doctorDetails.getId());
+
+
         return ResponseEntity.ok(new JwtResponse(jwt,
                 doctorDetails.getId(),
                 doctorDetails.getUsername(),
                 doctorDetails.getEmail(),
-                roles));
+                roles,
+                refreshToken.getToken()));
+    }
+
+    @PostMapping("/doctor/refreshtoken")
+    public ResponseEntity<?> refreshtokenDoctor(@RequestBody TokenRefreshRequest request) {
+        String requestRefreshToken = request.getRefreshToken();
+
+        return refreshTokenService.findDoctorByToken(requestRefreshToken)
+                .map(refreshTokenService::verifyExpirationDoctor)
+                .map(RefreshTokenDoctor::getDoctor)
+                .map(doctor -> {
+                    String token = jwtUtils.generateTokenFromUsername(doctor.getUserName());
+                    return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
+                })
+                .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
+                        "Refresh token is not in database!"));
     }
 
     @PostMapping("/admin/signup")
@@ -216,10 +267,14 @@ public class AuthController {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(adminDetails.getId());
+
+
         return ResponseEntity.ok(new JwtResponse(jwt,
                 adminDetails.getId(),
                 adminDetails.getUsername(),
-                roles));
+                roles,
+                refreshToken.getToken()));
     }
 
 }
