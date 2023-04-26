@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class AdminDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-    private int id;
+    private Integer id;
 
     private String username;
 
@@ -23,7 +23,7 @@ public class AdminDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public AdminDetailsImpl(int id, String username, String password,
+    public AdminDetailsImpl (Integer id, String username, String password,
                              Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
@@ -48,7 +48,7 @@ public class AdminDetailsImpl implements UserDetails {
         return authorities;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

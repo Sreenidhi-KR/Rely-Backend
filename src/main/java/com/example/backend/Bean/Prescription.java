@@ -9,16 +9,16 @@ public class Prescription {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
-    private int id;
+    private Integer id;
 
     @Column(name="PrescriptionURL")
     private String prescription_url;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId (Integer id) {
         this.id = id;
     }
 
@@ -30,7 +30,7 @@ public class Prescription {
         this.prescription_url = prescription_url;
     }
 
-    public Prescription(int id, String prescription_url) {
+    public Prescription (Integer id, String prescription_url) {
         this.id = id;
         this.prescription_url = prescription_url;
     }

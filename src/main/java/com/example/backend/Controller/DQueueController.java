@@ -23,43 +23,43 @@ public class DQueueController {
 
     @GetMapping("/getPatients/{doctorId}")
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public List<Patient> getAllPatientsFromDQueue(@PathVariable int doctorId){
+    public List<Patient> getAllPatientsFromDQueue(@PathVariable Integer doctorId){
         return dQueueService.getAllPatientsFromDQueue(doctorId);
     }
 
     @GetMapping("/addPatient/{doctorId}/{patientId}")
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public void addPatientToDqueue(@PathVariable int doctorId , @PathVariable int patientId){
+    public void addPatientToDqueue(@PathVariable Integer doctorId , @PathVariable Integer patientId){
         dQueueService.addPatientToQueue(doctorId,patientId);
     }
 
     @GetMapping("/removePatient/{doctorId}/{patientId}")
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public void removePatientToDqueue(@PathVariable int doctorId , @PathVariable int patientId){
+    public void removePatientToDqueue(@PathVariable Integer doctorId , @PathVariable Integer patientId){
         dQueueService.removePatientFromQueue(doctorId,patientId);
     }
 
     @GetMapping("/getPatientIndex/{doctorId}/{patientId}")
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public DQueueInfo getPatientIndex(@PathVariable int doctorId , @PathVariable int patientId){
+    public DQueueInfo getPatientIndex(@PathVariable Integer doctorId , @PathVariable Integer patientId){
         return dQueueService.getPatientIndexFromQueue(doctorId,patientId);
     }
 
     @GetMapping("/getDqueue/{doctorId}")
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public int getDqueueId(@PathVariable int doctorId){
+    public Integer getDqueueId(@PathVariable Integer doctorId){
         return dQueueService.getDqueueId(doctorId);
     }
 
     @GetMapping("/getConsultationId/{qid}")
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public Integer getConsulationId(@PathVariable int qid){
+    public Integer getConsulationId(@PathVariable Integer qid){
         return dQueueService.getConsultationId(qid);
     }
 
     @GetMapping("/getPatientId/{qid}")
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public Integer getPatientId(@PathVariable int qid){
+    public Integer getPatientId(@PathVariable Integer qid){
         return dQueueService.getPatientId(qid);
     }
 
@@ -76,14 +76,14 @@ public class DQueueController {
 
     @GetMapping("/removeAllPatient/{doctorId}")
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public void removeAllPatientFromDqueue(@PathVariable int doctorId){
+    public void removeAllPatientFromDqueue(@PathVariable Integer doctorId){
         Integer qid=dQueueService.getDqueueId(doctorId);
         dQueueService.removeAllPatientsFromQueue(qid);
     }
 
     @GetMapping("/toggleAcceptPatient/{queueId}/{bool}")
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public boolean toggleAcceptPatient(@PathVariable int queueId,@PathVariable boolean bool){
+    public boolean toggleAcceptPatient(@PathVariable Integer queueId,@PathVariable boolean bool){
         return dQueueService.toggleAcceptPatient(queueId,bool);
     }
 

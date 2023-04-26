@@ -27,7 +27,7 @@ public class UserService {
     private DocumentsRepository documentsRepository;
 
 
-    public List<Patient> getAllPatients(int userId){
+    public List<Patient> getAllPatients (Integer userId){
         User user = userRepository.findUserById(userId);
         //System.out.println("working file till step 1");
         List<Patient> patients = patientRepository.getPatients(userId);
@@ -35,7 +35,7 @@ public class UserService {
         return patients;
     }
 
-    public Patient getPatient(int patientId){
+    public Patient getPatient (Integer patientId){
         Patient patient=patientRepository.findPatientById(patientId);
         return patient;
     }
@@ -44,7 +44,7 @@ public class UserService {
         patientRepository.save(patient);
     }
 
-    public void addPatient(Patient patient, int userId){
+    public void addPatient(Patient patient, Integer userId){
         //get user with the given id
         User user=userRepository.findUserById(userId);
         //add the new patient profile to the list of profiles and update
@@ -58,16 +58,16 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void editPatient(int patientId, String fname, String lname, String DOB,char sex, String blood_group,String city,String state,String abdm_no,String photo_url,String relationship){
+    public void editPatient (Integer patientId, String fname, String lname, String DOB,char sex, String blood_group,String city,String state,String abdm_no,String photo_url,String relationship){
         patientRepository.updatePatient(patientId,fname,lname,DOB,sex,blood_group,city,state,abdm_no,relationship);
     }
 
-    public void removePatient(int patientId){
+    public void removePatient (Integer patientId){
         patientRepository.deletePatientById(patientId);
         //remove all the documents uploded by the patient
         List<Documents>patientDocuments=documentsRepository.getAll(patientId);
         for (Documents patientDocument :patientDocuments) {
-            int id=patientDocument.getId();
+            Integer id=patientDocument.getId();
             documentsRepository.removeDocumentById(id);
         }
     }

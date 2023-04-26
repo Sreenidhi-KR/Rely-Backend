@@ -3,19 +3,19 @@ package com.example.backend.Bean;
 import java.util.Date;
 
 public class FollowUp {
-    private int consultationId;
+    private Integer consultationId;
     private Date followUpDate;
-    private int doctorId;
+    private Integer doctorId;
 
     private String fname;
 
     private String lname;
 
-    public int getConsultationId() {
+    public Integer getConsultationId() {
         return consultationId;
     }
 
-    public void setConsultationId(int consultationId) {
+    public void setConsultationId (Integer consultationId) {
         this.consultationId = consultationId;
     }
 
@@ -27,11 +27,11 @@ public class FollowUp {
         this.followUpDate = followUpDate;
     }
 
-    public int getDoctorId() {
+    public Integer getDoctorId() {
         return doctorId;
     }
 
-    public void setDoctorId(int doctorId) {
+    public void setDoctorId (Integer doctorId) {
         this.doctorId = doctorId;
     }
 
@@ -51,7 +51,7 @@ public class FollowUp {
         this.lname = lname;
     }
 
-    public FollowUp(int consultationId, Date followUpDate, int doctorId, String fname, String lname) {
+    public FollowUp (Integer consultationId, Date followUpDate, Integer doctorId, String fname, String lname) {
         this.consultationId = consultationId;
         this.followUpDate = followUpDate;
         this.doctorId = doctorId;

@@ -13,5 +13,5 @@ import com.example.backend.Bean.User;
 public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long> {
     Optional<RefreshToken> findByToken(String token);
     @Modifying
-    int deleteByUser(User user);
+    Integer deleteByUser(User user);
 }

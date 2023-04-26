@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 @Transactional
 public interface DQueueRepository extends JpaRepository<DQueue, Long> {
 //    @Query(value="select patientList from DQueue q where q.id= :queueID", nativeQuery=true)
-//    List<Patient> getAllPatientsFromDQueue(int queueID);
+//    List<Patient> getAllPatientsFromDQueue (Integer queueID);
 //
 //    @Query("SELECT q.patientList FROM DQueue q WHERE q.doctorId = :doctor")
 //    List<Patient> getAllPatientsFromQueue(@Param("doctor") Integer doctorId);
@@ -21,7 +21,7 @@ public interface DQueueRepository extends JpaRepository<DQueue, Long> {
 
     DQueue findDQueueByDoctor(Doctor doctor);
 
-    DQueue findDQueueById(int id);
+    DQueue findDQueueById (Integer id);
 
 
 }

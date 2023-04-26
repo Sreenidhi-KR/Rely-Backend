@@ -12,7 +12,7 @@ public class DoctorSignUp {
     private String qualification;
     private String description;
     private float rating;
-    private int no_of_ratings;
+    private Integer no_of_ratings;
     private String available_timings;
     private String city;
     private String state;
@@ -134,11 +134,11 @@ public class DoctorSignUp {
         this.rating = rating;
     }
 
-    public int getNo_of_ratings() {
+    public Integer getNo_of_ratings() {
         return no_of_ratings;
     }
 
-    public void setNo_of_ratings(int no_of_ratings) {
+    public void setNo_of_ratings (Integer no_of_ratings) {
         this.no_of_ratings = no_of_ratings;
     }
 
