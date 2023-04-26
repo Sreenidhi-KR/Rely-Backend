@@ -4,14 +4,17 @@ import com.example.backend.Bean.*;
 import com.example.backend.Payload.Request.*;
 import com.example.backend.Payload.Response.JwtResponse;
 import com.example.backend.Payload.Response.MessageResponse;
+import com.example.backend.Payload.Response.TokenRefreshResponse;
 import com.example.backend.Repository.AdminRepository;
 import com.example.backend.Repository.DoctorRepository;
 import com.example.backend.Repository.RoleRepository;
 import com.example.backend.Repository.UserRepository;
+import com.example.backend.Security.Exception.TokenRefreshException;
 import com.example.backend.Security.Jwt.JwtUtils;
 import com.example.backend.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -33,6 +36,9 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @Autowired
+    BlacklistService blacklistService;
+
+    @Autowired
     UserRepository userRepository;
 
     @Autowired
@@ -50,34 +56,16 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    RefreshTokenService refreshTokenService;
+
     @Resource(name = "DQueueService")
     public DQueueService dQueueService;
 
     @Resource(name ="userService")
     public UserService userService;
 
-    @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@RequestBody UserLogin userLogin) {
-
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(userLogin.getUsername(), userLogin.getPassword()));
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
-
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getUsername(),
-                userDetails.getEmail(),
-                roles));
-    }
-
-    @PostMapping("/signup")
+    @PostMapping("/user/signup")
     public ResponseEntity<?> registerUser(@RequestBody UserSignUp userSignUp) {
         if (userRepository.existsByUserName(userSignUp.getUsername()) && doctorRepository.existsByUserName(userSignUp.getUsername()) && adminRepository.existsByUserName(userSignUp.getUsername())) {
             return ResponseEntity
@@ -106,6 +94,52 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
+    @PostMapping("/user/signin")
+    public ResponseEntity<?> authenticateUser(@RequestBody UserLogin userLogin) {
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(userLogin.getUsername(), userLogin.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
+
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
+
+        return ResponseEntity.ok(new JwtResponse(jwt,
+                userDetails.getId(),
+                userDetails.getUsername(),
+                userDetails.getEmail(),
+                roles,
+                refreshToken.getToken()));
+    }
+
+    @PostMapping("/user/refreshtoken")
+    public ResponseEntity<?> refreshtoken(@RequestBody TokenRefreshRequest request) {
+        String requestRefreshToken = request.getRefreshToken();
+
+        return refreshTokenService.findByToken(requestRefreshToken)
+                .map(refreshTokenService::verifyExpiration)
+                .map(RefreshToken::getUser)
+                .map(user -> {
+                    String token = jwtUtils.generateTokenFromUsername(user.getUserName());
+                    return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
+                })
+                .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
+                        "Refresh token is not in database!"));
+    }
+
+    @PostMapping("/user/signout/{user_id}")
+    @PreAuthorize("hasRole('USER')")
+    public void signout(@RequestHeader(value="Authorization") String token, @PathVariable Integer user_id) {
+            Blacklist blacklist=new Blacklist(token);
+            blacklistService.setToken(blacklist);
+            blacklistService.deleteRefreshTokenUser(user_id);
+    }
 
     @PostMapping("/doctor/signup")
     public ResponseEntity<?> registerUser(@RequestBody DoctorSignUp signUp) {
@@ -163,17 +197,45 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
+        System.out.println(jwt);
 
         DoctorDetailsImpl doctorDetails = (DoctorDetailsImpl) authentication.getPrincipal();
         List<String> roles = doctorDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
+        RefreshTokenDoctor refreshToken = refreshTokenService.createRefreshTokenDoctor(doctorDetails.getId());
+
+
         return ResponseEntity.ok(new JwtResponse(jwt,
                 doctorDetails.getId(),
                 doctorDetails.getUsername(),
                 doctorDetails.getEmail(),
-                roles));
+                roles,
+                refreshToken.getToken()));
+    }
+
+    @PostMapping("/doctor/refreshtoken")
+    public ResponseEntity<?> refreshtokenDoctor(@RequestBody TokenRefreshRequest request) {
+        String requestRefreshToken = request.getRefreshToken();
+
+        return refreshTokenService.findDoctorByToken(requestRefreshToken)
+                .map(refreshTokenService::verifyExpirationDoctor)
+                .map(RefreshTokenDoctor::getDoctor)
+                .map(doctor -> {
+                    String token = jwtUtils.generateTokenFromUsername(doctor.getUserName());
+                    return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
+                })
+                .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
+                        "Refresh token is not in database!"));
+    }
+
+    @PostMapping("/doctor/signout/{doctor_id}")
+    @PreAuthorize("hasRole('DOCTOR')")
+    public void doctorSignout(@RequestHeader(value="Authorization") String token, @PathVariable Integer doctor_id) {
+        Blacklist blacklist=new Blacklist(token);
+        blacklistService.setToken(blacklist);
+        blacklistService.deleteRefreshTokenDoctor(doctor_id);
     }
 
     @PostMapping("/admin/signup")
@@ -210,16 +272,21 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
+        System.out.println(jwt);
 
         AdminDetailsImpl adminDetails = (AdminDetailsImpl) authentication.getPrincipal();
         List<String> roles = adminDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(adminDetails.getId());
+
+
         return ResponseEntity.ok(new JwtResponse(jwt,
                 adminDetails.getId(),
                 adminDetails.getUsername(),
-                roles));
+                roles,
+                refreshToken.getToken()));
     }
 
 }

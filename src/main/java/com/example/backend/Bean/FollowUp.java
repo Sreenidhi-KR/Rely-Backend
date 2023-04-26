@@ -7,6 +7,10 @@ public class FollowUp {
     private Date followUpDate;
     private int doctorId;
 
+    private String fname;
+
+    private String lname;
+
     public int getConsultationId() {
         return consultationId;
     }
@@ -31,9 +35,27 @@ public class FollowUp {
         this.doctorId = doctorId;
     }
 
-    public FollowUp(int consultationId, Date followUpDate, int doctorId) {
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
+    }
+
+    public FollowUp(int consultationId, Date followUpDate, int doctorId, String fname, String lname) {
         this.consultationId = consultationId;
         this.followUpDate = followUpDate;
         this.doctorId = doctorId;
+        this.fname = fname;
+        this.lname =lname;
     }
 }
