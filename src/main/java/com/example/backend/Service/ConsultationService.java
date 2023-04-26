@@ -223,8 +223,9 @@ public class ConsultationService {
                 continue;
             }
             Date followUpDate = c.getFollowUpDate();
-            Timestamp currentDate = c.getEndTime();
-            if(currentDate.before(followUpDate))
+            Timestamp currentDate = c.getStartTime();
+            java.sql.Date date=new java.sql.Date(System.currentTimeMillis());
+            if(currentDate.before(followUpDate) && (followUpDate.compareTo(date)<=0))
             {
                 Integer consultationId = c.getConsultId();
                 Consultation consultation = consultationRepository.findConsultationById(consultationId);

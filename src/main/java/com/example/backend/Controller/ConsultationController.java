@@ -23,38 +23,67 @@ public class ConsultationController {
     private ConsultationService consultationService;
 
     @GetMapping("/getAllDocumentsByCid/{consultationId}")
-    public List<DocumentDetails> getAllDocuments(@PathVariable Integer consultationId) {
-        return consultationService.getAllDocumentDetails(consultationId);
+    public List<DocumentDetails> getAllDocuments(@PathVariable Integer consultationId) throws Exception{
+        try {
+            return consultationService.getAllDocumentDetails(consultationId);
+        }
+        catch(Exception e){
+            System.out.println(e);
+            return null;
+        }
     }
 
     @GetMapping("/addDocumentByCid_Docuid/{consultationId}/{documentId}")
-    public void addDocumentByCidDid(@PathVariable Integer consultationId, @PathVariable Integer documentId){
-        consultationService.addDocument(consultationId, documentId);
+    public void addDocumentByCidDid(@PathVariable Integer consultationId, @PathVariable Integer documentId) throws Exception{
+        try{
+            consultationService.addDocument(consultationId, documentId);
+        } catch(Exception e){
+            System.out.println(e);
+        }
     }
 
     @GetMapping("/addDocumentByCid_PrescriptionId/{consultationId}/{prescriptionId}")
-    public void addDocumentByCidPid(@PathVariable Integer consultationId, @PathVariable Integer prescriptionId){
-        consultationService.addDocument(consultationId, prescriptionId);
+    public void addDocumentByCidPid(@PathVariable Integer consultationId, @PathVariable Integer prescriptionId) throws Exception{
+        try{
+            consultationService.addDocument(consultationId, prescriptionId);
+        } catch(Exception e){
+            System.out.println(e);
+        }
     }
 
     @GetMapping("/removeDocumentByCid_Docuid/{consultationId}/{documentId}")
-    public void removeDocumentByCidDid(@PathVariable Integer consultationId, @PathVariable Integer documentId){
-        consultationService.removeDocument(consultationId, documentId);
+    public void removeDocumentByCidDid(@PathVariable Integer consultationId, @PathVariable Integer documentId) throws Exception{
+        try{
+            consultationService.removeDocument(consultationId, documentId);
+        } catch(Exception e){
+            System.out.println(e);
+        }
     }
 
     @GetMapping("/getPrevConsultations/{patientId}")
-    public List<PrevConsultations> getPrevConsultationsByPid(@PathVariable Integer patientId){
-        return consultationService.getPrevConsultations(patientId);
+    public List<PrevConsultations> getPrevConsultationsByPid(@PathVariable Integer patientId) throws Exception{
+        try{
+            return consultationService.getPrevConsultations(patientId);
+        }catch (Exception e)
+        {
+            System.out.println(e);
+            return  null;
+        }
     }
 
     @GetMapping("/getPrevConsultationsDoctor/{doctorId}")
-    public List<PrevConsultations> getPrevConsultationsByDid(@PathVariable Integer doctorId){
-        return consultationService.getPrevConsultationsDoctor(doctorId);
+    public List<PrevConsultations> getPrevConsultationsByDid(@PathVariable Integer doctorId) throws Exception{
+        try{
+            return consultationService.getPrevConsultationsDoctor(doctorId);
+        } catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
     }
 
     @GetMapping("/getPrevConsultationsStats/{doctorId}")
     @ResponseBody
-    public List<Map<String,Long>> getPrevConsultationsStats(@PathVariable Integer doctorId){
+    public List<Map<String,Long>> getPrevConsultationsStats(@PathVariable Integer doctorId) throws Exception{
         List<Map<String,Long>> arr=new ArrayList<>();
         try {
             arr = consultationService.getPrevConsultationsStats(doctorId);
@@ -68,17 +97,26 @@ public class ConsultationController {
         return arr;
     }
     @PostMapping("/addConsultation")
-    public Integer addConsulation(@RequestBody Consultation consultation){
-        return consultationService.addConsultation(consultation);
+    public Integer addConsulation(@RequestBody Consultation consultation) throws Exception{
+        try{
+            return consultationService.addConsultation(consultation);
+        } catch(Exception e){
+            System.out.println(e);
+            return -1;
+        }
     }
 
     @PostMapping("/updateConsultationEndTime")
-    public void updateConsultationEndTime(@RequestBody Consultation consultation){
-        consultationService.updateConsultationEndtime(consultation);
+    public void updateConsultationEndTime(@RequestBody Consultation consultation) throws Exception{
+        try{
+            consultationService.updateConsultationEndtime(consultation);
+        } catch(Exception e){
+            System.out.println(e);
+        }
     }
 
     @PostMapping("/setFollowUp/{consultation_id}/{followUpDate}")
-    public void setFollowUpDate(@PathVariable Integer consultation_id, @PathVariable String followUpDate){
+    public void setFollowUpDate(@PathVariable Integer consultation_id, @PathVariable String followUpDate) throws Exception{
         try {
             Date date = new SimpleDateFormat("yyyyy-MM-dd").parse(followUpDate);
             //Date followUpDate = new Date();
@@ -90,7 +128,14 @@ public class ConsultationController {
     }
 
     @GetMapping("/getFollowUp/{patient_id}")
-    public List<FollowUp> getFollowUp(@PathVariable Integer patient_id){
-        return consultationService.getFollowUp(patient_id);
+    public List<FollowUp> getFollowUp(@PathVariable Integer patient_id)throws Exception{
+        try{
+            return consultationService.getFollowUp(patient_id);
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+            return  null;
+        }
     }
 }
