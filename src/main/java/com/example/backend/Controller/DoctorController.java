@@ -16,15 +16,20 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/api/v1/doctor")
-public class DoctorController {
+public class DoctorController extends Exception {
     @Resource(name = "doctorService")
     private DoctorService doctorService;
 
     @RequestMapping(value = "/getAllDoctors", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
     public List<Doctor> getAllDoctors() {
-        List<Doctor> Doctors = doctorService.list();
-        return Doctors;
+        try {
+            List<Doctor> Doctors = doctorService.list();
+            return Doctors;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
     @RequestMapping(value = "/getAllDoctorsBySpec/{specialization}", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
@@ -32,12 +37,6 @@ public class DoctorController {
         List<Doctor> Doctors = doctorService.listBySpec(specialization);
         return Doctors;
     }
-
-//    @RequestMapping(value = "/addDoctor", method = RequestMethod.POST)
-//    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-//    public void addDoctor(@RequestBody Doctor doctor) {
-//        doctorService.addDoctor(doctor);
-//    }
 
     @RequestMapping(value = "/deleteDoctor/{doctor_id}", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
@@ -72,7 +71,7 @@ public class DoctorController {
     }
 
     @RequestMapping(value = "/setQueueLimit/{doctor_id}/{limit}", method = RequestMethod.POST)
-    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('DOCTOR') or hasRole('ADMIN')")
     public void setQueueLimit(@PathVariable int doctor_id,@PathVariable Integer limit) throws SQLException, IOException {
         Doctor doctor = doctorService.findById(doctor_id);
         doctor.setLimit(limit);
