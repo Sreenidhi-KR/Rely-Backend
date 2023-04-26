@@ -29,7 +29,7 @@ public class DocumentsController {
 
     @PostMapping("/upload/{Id}")
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public ResponseData uploadFile(@RequestParam("file") MultipartFile file,@PathVariable int Id) throws Exception {
+    public ResponseData uploadFile(@RequestParam("file") MultipartFile file,@PathVariable Integer Id) throws Exception {
         Documents document = null;
         String downloadURl = "";
         document = documentsService.saveDocument(file,Id);
@@ -44,7 +44,7 @@ public class DocumentsController {
     }
     @GetMapping("/download/{Id}")
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public String downloadFile(@PathVariable int Id) throws Exception{
+    public String downloadFile(@PathVariable Integer Id) throws Exception{
         Documents document = null;
         document = documentsService.getDocument(Id);
         return Base64.getEncoder().encodeToString(document.getData());
@@ -53,25 +53,25 @@ public class DocumentsController {
 
     @DeleteMapping("/delete/{Id}")
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public void deleteDocuments(@PathVariable int Id){
+    public void deleteDocuments(@PathVariable Integer Id){
         documentsService.delDocument(Id);
     }
 
     @GetMapping("/getAll/{Id}")
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public List<DocumentDetails> getAll(@PathVariable int Id){
+    public List<DocumentDetails> getAll(@PathVariable Integer Id){
         return documentsService.getAll(Id);//get all documents given user ID
     }
 
     @GetMapping("/getAllPrescriptions/{Id}")
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public List<DocumentDetails> getAllPrescriptions(@PathVariable int Id){
+    public List<DocumentDetails> getAllPrescriptions(@PathVariable Integer Id){
         return documentsService.getAllPrescriptions(Id);//get all documents given user ID
     }
 
     @PostMapping("/uploadPrescription/{PId}/{Cid}")
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public ResponseData uploadFile(@RequestParam("file") MultipartFile file,@PathVariable int PId, @PathVariable int Cid) throws Exception {
+    public ResponseData uploadFile(@RequestParam("file") MultipartFile file,@PathVariable Integer PId, @PathVariable Integer Cid) throws Exception {
         Documents document = null;
         String downloadURl = "";
         System.out.println("alssddbadww"+PId);

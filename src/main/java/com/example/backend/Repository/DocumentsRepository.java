@@ -13,15 +13,15 @@ import java.util.List;
 public interface DocumentsRepository extends JpaRepository<Documents, Integer>{
 
     @Query(value="select * from documents a where a.patient_id= :id and a.id not in (select prescription_id from consultation where prescription_id is not null)", nativeQuery=true)
-    List<Documents> getAll(int id);
+    List<Documents> getAll (Integer id);
 
     @Query(value="select * from documents a where a.patient_id=:id and a.id in (select prescription_id from consultation where prescription_id is not null)",nativeQuery = true)
-    List<Documents> getAllPrescriptions(int id);
+    List<Documents> getAllPrescriptions (Integer id);
 
-    Documents findDocumentsById(int documentid);
+    Documents findDocumentsById (Integer documentid);
 
     @Transactional
     @Modifying
     @Query(value="update documents set data=NULL where documents.id=:documentId",nativeQuery = true)
-    void removeDocumentById(int documentId);
+    void removeDocumentById (Integer documentId);
 }

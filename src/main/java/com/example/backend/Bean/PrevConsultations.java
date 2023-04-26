@@ -9,8 +9,8 @@ public class PrevConsultations {
     private Timestamp startTime;
     private Timestamp endTime;
     private String doctorName;
-    private int doctorId;
-    private int consultId;
+    private Integer doctorId;
+    private Integer consultId;
     private String specialization;
     private String patientName;
     private Integer prescription;
@@ -66,19 +66,19 @@ public class PrevConsultations {
         this.doctorName = doctorName;
     }
 
-    public int getDoctorId() {
+    public Integer getDoctorId() {
         return doctorId;
     }
 
-    public void setDoctorId(int doctorId) {
+    public void setDoctorId (Integer doctorId) {
         this.doctorId = doctorId;
     }
 
-    public int getConsultId() {
+    public Integer getConsultId() {
         return consultId;
     }
 
-    public void setConsultId(int consultId) {
+    public void setConsultId (Integer consultId) {
         this.consultId = consultId;
     }
 
@@ -98,7 +98,7 @@ public class PrevConsultations {
         this.specialization = specialization;
     }
 
-    public PrevConsultations(Timestamp startTime, Timestamp endTime, String doctorName, String patientName, int doctorId, int consultId, String specialization, List<DocumentDetails> documentDetailsList, Integer prescription, Date followUpDate) {
+    public PrevConsultations(Timestamp startTime, Timestamp endTime, String doctorName, String patientName, Integer doctorId, Integer consultId, String specialization, List<DocumentDetails> documentDetailsList, Integer prescription, Date followUpDate) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.doctorName = doctorName;

@@ -23,38 +23,38 @@ public class ConsultationController {
     private ConsultationService consultationService;
 
     @GetMapping("/getAllDocumentsByCid/{consultationId}")
-    public List<DocumentDetails> getAllDocuments(@PathVariable int consultationId) {
+    public List<DocumentDetails> getAllDocuments(@PathVariable Integer consultationId) {
         return consultationService.getAllDocumentDetails(consultationId);
     }
 
     @GetMapping("/addDocumentByCid_Docuid/{consultationId}/{documentId}")
-    public void addDocumentByCidDid(@PathVariable int consultationId, @PathVariable int documentId){
+    public void addDocumentByCidDid(@PathVariable Integer consultationId, @PathVariable Integer documentId){
         consultationService.addDocument(consultationId, documentId);
     }
 
     @GetMapping("/addDocumentByCid_PrescriptionId/{consultationId}/{prescriptionId}")
-    public void addDocumentByCidPid(@PathVariable int consultationId, @PathVariable int prescriptionId){
+    public void addDocumentByCidPid(@PathVariable Integer consultationId, @PathVariable Integer prescriptionId){
         consultationService.addDocument(consultationId, prescriptionId);
     }
 
     @GetMapping("/removeDocumentByCid_Docuid/{consultationId}/{documentId}")
-    public void removeDocumentByCidDid(@PathVariable int consultationId, @PathVariable int documentId){
+    public void removeDocumentByCidDid(@PathVariable Integer consultationId, @PathVariable Integer documentId){
         consultationService.removeDocument(consultationId, documentId);
     }
 
     @GetMapping("/getPrevConsultations/{patientId}")
-    public List<PrevConsultations> getPrevConsultationsByPid(@PathVariable int patientId){
+    public List<PrevConsultations> getPrevConsultationsByPid(@PathVariable Integer patientId){
         return consultationService.getPrevConsultations(patientId);
     }
 
     @GetMapping("/getPrevConsultationsDoctor/{doctorId}")
-    public List<PrevConsultations> getPrevConsultationsByDid(@PathVariable int doctorId){
+    public List<PrevConsultations> getPrevConsultationsByDid(@PathVariable Integer doctorId){
         return consultationService.getPrevConsultationsDoctor(doctorId);
     }
 
     @GetMapping("/getPrevConsultationsStats/{doctorId}")
     @ResponseBody
-    public List<Map<String,Long>> getPrevConsultationsStats(@PathVariable int doctorId){
+    public List<Map<String,Long>> getPrevConsultationsStats(@PathVariable Integer doctorId){
         List<Map<String,Long>> arr=new ArrayList<>();
         try {
             arr = consultationService.getPrevConsultationsStats(doctorId);
@@ -68,7 +68,7 @@ public class ConsultationController {
         return arr;
     }
     @PostMapping("/addConsultation")
-    public int addConsulation(@RequestBody Consultation consultation){
+    public Integer addConsulation(@RequestBody Consultation consultation){
         return consultationService.addConsultation(consultation);
     }
 
@@ -78,7 +78,7 @@ public class ConsultationController {
     }
 
     @PostMapping("/setFollowUp/{consultation_id}/{followUpDate}")
-    public void setFollowUpDate(@PathVariable int consultation_id, @PathVariable String followUpDate){
+    public void setFollowUpDate(@PathVariable Integer consultation_id, @PathVariable String followUpDate){
         try {
             Date date = new SimpleDateFormat("yyyyy-MM-dd").parse(followUpDate);
             //Date followUpDate = new Date();
@@ -90,7 +90,7 @@ public class ConsultationController {
     }
 
     @GetMapping("/getFollowUp/{patient_id}")
-    public List<FollowUp> getFollowUp(@PathVariable int patient_id){
+    public List<FollowUp> getFollowUp(@PathVariable Integer patient_id){
         return consultationService.getFollowUp(patient_id);
     }
 }

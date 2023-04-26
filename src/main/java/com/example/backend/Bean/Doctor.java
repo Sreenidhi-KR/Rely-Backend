@@ -15,7 +15,7 @@ public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="Id", nullable = false)
-    private int id;
+    private Integer id;
 
     @Column(name="Fname")
     private String fname;
@@ -42,7 +42,7 @@ public class Doctor {
     private float rating;
 
     @Column(name="NoOfRatings")
-    private int no_of_ratings;
+    private Integer no_of_ratings;
 
     @Column(name="AvailableTimings")
     private String available_timings;
@@ -128,11 +128,11 @@ public class Doctor {
         this.email = email;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId (Integer id) {
         this.id = id;
     }
 
@@ -160,11 +160,11 @@ public class Doctor {
         this.DOB = DOB;
     }
 
-    public int getNo_of_ratings() {
+    public Integer getNo_of_ratings() {
         return no_of_ratings;
     }
 
-    public void setNo_of_ratings(int no_of_ratings) {
+    public void setNo_of_ratings (Integer no_of_ratings) {
         this.no_of_ratings = no_of_ratings;
     }
 

@@ -40,7 +40,7 @@ public class RefreshTokenService {
 
     public Optional<RefreshTokenDoctor> findDoctorByToken(String token) { return refreshTokenDoctorRepository.findByToken(token); }
 
-    public RefreshToken createRefreshToken(int userId) {
+    public RefreshToken createRefreshToken (Integer userId) {
         RefreshToken refreshToken = new RefreshToken();
 
         refreshToken.setUser(userRepository.findUserById(userId));
@@ -51,7 +51,7 @@ public class RefreshTokenService {
         return refreshToken;
     }
 
-    public RefreshTokenDoctor createRefreshTokenDoctor(int doctorId){
+    public RefreshTokenDoctor createRefreshTokenDoctor (Integer doctorId){
         RefreshTokenDoctor refreshTokenDoctor = new RefreshTokenDoctor();
 
         refreshTokenDoctor.setDoctor(doctorRepository.findDocById(doctorId));

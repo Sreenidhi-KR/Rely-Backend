@@ -15,7 +15,7 @@ public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Id")
-    private int id;
+    private Integer id;
 
     @Column(name="Fname")
     private String fname;
@@ -91,11 +91,11 @@ public class Patient {
         this.documents.add(document);
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId (Integer id) {
         id = id;
     }
 

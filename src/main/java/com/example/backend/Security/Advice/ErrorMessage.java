@@ -3,19 +3,19 @@ package com.example.backend.Security.Advice;
 import java.util.Date;
 
 public class ErrorMessage {
-    private int statusCode;
+    private Integer statusCode;
     private Date timestamp;
     private String message;
     private String description;
 
-    public ErrorMessage(int statusCode, Date timestamp, String message, String description) {
+    public ErrorMessage (Integer statusCode, Date timestamp, String message, String description) {
         this.statusCode = statusCode;
         this.timestamp = timestamp;
         this.message = message;
         this.description = description;
     }
 
-    public int getStatusCode() {
+    public Integer getStatusCode() {
         return statusCode;
     }
 

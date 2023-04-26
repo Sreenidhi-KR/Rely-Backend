@@ -23,7 +23,7 @@ public class AdminController {
 
     @PostMapping("/uploadImage/{doctor_id}")
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public void uploadImage(@PathVariable int doctor_id,
+    public void uploadImage(@PathVariable Integer doctor_id,
     @RequestParam("image") MultipartFile multipartFile) throws IOException {
         String fileName = String.valueOf(doctor_id) + ".jpg";
         Doctor doctor = doctorService.findById(doctor_id);

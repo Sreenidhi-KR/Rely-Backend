@@ -9,7 +9,7 @@ public class Blacklist {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="Id")
-    int Id;
+    Integer Id;
 
     @Column(name="JwtToken")
     String JwtToken;
