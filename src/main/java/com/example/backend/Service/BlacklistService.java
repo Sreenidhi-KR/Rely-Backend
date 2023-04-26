@@ -17,12 +17,19 @@ public class BlacklistService {
     public boolean isTokenAvailable(String token){
         String bearer= "Bearer "+token;
         String a=blacklistRepository.isTokenAvailable(bearer);
-        System.out.println("adasdasasasassa"+a);
         if(a!=null){
             return true;
         }
         else{
             return false;
         }
+    }
+
+    public void deleteRefreshTokenUser(Integer id){
+        blacklistRepository.deleteRefreshTokenUser(id);
+    }
+
+    public void deleteRefreshTokenDoctor(Integer id){
+        blacklistRepository.deleteRefreshTokenDoctor(id);
     }
 }
