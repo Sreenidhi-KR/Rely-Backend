@@ -87,6 +87,9 @@ public class Doctor {
     @Column(name="PhoneNumber")
     private Long phoneNo;
 
+    @Column(name="isActive")
+    private boolean isActive;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(  name = "doctor_roles",
             joinColumns = @JoinColumn(name = "doctor_id"),
@@ -287,6 +290,14 @@ public class Doctor {
         this.phoneNo = phoneNo;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
     public Doctor(String fname, String lname, Date DOB, char sex, String channel_name, String specialization, String qualification, String description, String available_timimgs, String city, String state, String clinic_address, String photo_url, boolean online_status, String userName, String password, String email, String token, Long phoneNo) {
         this.fname = fname;
         this.lname = lname;
@@ -313,6 +324,7 @@ public class Doctor {
         this.limit=10;
         this.no_of_ratings=0;
         this.phoneNo=phoneNo;
+        this.isActive=true;
     }
 
     public Doctor(String fname, String lname){
