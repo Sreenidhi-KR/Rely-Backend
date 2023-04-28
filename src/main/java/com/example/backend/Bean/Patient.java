@@ -5,7 +5,6 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -38,8 +37,8 @@ public class Patient {
     @Column(name="State")
     private String state;
 
-    @Column(name="ABDMNum")
-    private String abdm_no;
+    @Column(name="PinCode")
+    private String pinCode;
 
     @Column(name="PhotoURL")
     private String photo_url;
@@ -155,12 +154,12 @@ public class Patient {
         this.state = state;
     }
 
-    public String getAbdm_no() {
-        return abdm_no;
+    public String getPinCode() {
+        return pinCode;
     }
 
-    public void setAbdm_no(String abdm_no) {
-        this.abdm_no = abdm_no;
+    public void setPinCode(String pinCode) {
+        this.pinCode = pinCode;
     }
 
     public String getPhoto_url() {
@@ -197,7 +196,7 @@ public class Patient {
         }
     }
 
-    public Patient(String fname, String lname, String DOB, char sex, String blood_group, String city, String state, String abdm_no, String photo_url, String relationship, List<Documents> documents, User user,boolean isActive) {
+    public Patient(String fname, String lname, String DOB, char sex, String blood_group, String city, String state, String pinCode, String photo_url, String relationship, List<Documents> documents, User user, boolean isActive) {
         this.fname = fname;
         this.lname = lname;
         this.DOB = DOB;
@@ -205,7 +204,7 @@ public class Patient {
         this.blood_group = blood_group;
         this.city = city;
         this.state = state;
-        this.abdm_no = abdm_no;
+        this.pinCode = pinCode;
         this.photo_url = photo_url;
         this.relationship = relationship;
         this.documents = documents;

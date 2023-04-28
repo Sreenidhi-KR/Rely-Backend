@@ -1,15 +1,12 @@
 package com.example.backend.Controller;
 
-import com.example.backend.Bean.Doctor;
 import com.example.backend.Bean.Patient;
 import com.example.backend.Service.UserService;
 import com.example.backend.Utils.FileUploadUtil;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.validation.constraints.Null;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -62,10 +59,10 @@ public class UserController {
         char sex=patient.getSex();
         String city=patient.getCity();
         String state=patient.getState();
-        String abdm_no=patient.getAbdm_no();
+        String pinCode=patient.getPinCode();
         String photo_url=patient.getPhoto_url();
         String relationship=patient.getRelationship();
-        userService.editPatient(patientId,fname,lname,DOB,sex,blood_group,city,state,abdm_no,photo_url,relationship);
+        userService.editPatient(patientId,fname,lname,DOB,sex,blood_group,city,state,pinCode,photo_url,relationship);
     }
 
     @RequestMapping(value="/getPatients/{userId}",method=RequestMethod.GET)

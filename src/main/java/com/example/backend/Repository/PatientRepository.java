@@ -26,7 +26,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     List<Patient> getPatients (Integer userId);
 
     @Modifying
-    @Query(value="update Patient u set u.fname=:fname,u.lname=:lname,u.DOB=:dob,u.sex=:sex,u.blood_group=:bloodGroup,u.city=:city,u.state=:state,u.abdm_no=:abdmNo,u.relationship=:relationship where u.id=:patientId")
-    void updatePatient (Integer patientId, String fname, String lname, String dob, char sex, String bloodGroup, String city, String state, String abdmNo, String relationship);
+    @Query(value="update Patient u set u.fname=:fname,u.lname=:lname,u.DOB=:dob,u.sex=:sex,u.blood_group=:bloodGroup,u.city=:city,u.state=:state,u.pinCode=:pinCode,u.relationship=:relationship where u.id=:patientId")
+    void updatePatient (Integer patientId, String fname, String lname, String dob, char sex, String bloodGroup, String city, String state, String pinCode, String relationship);
 }
 
