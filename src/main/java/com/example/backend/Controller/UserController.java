@@ -63,7 +63,7 @@ public class UserController {
         String city=patient.getCity();
         String state=patient.getState();
         String abdm_no=patient.getAbdm_no();
-        String photo_url="No photo";
+        String photo_url=patient.getPhoto_url();
         String relationship=patient.getRelationship();
         userService.editPatient(patientId,fname,lname,DOB,sex,blood_group,city,state,abdm_no,photo_url,relationship);
     }

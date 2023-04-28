@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 @Service
 public class DQueueService {
@@ -106,10 +105,10 @@ public class DQueueService {
     public  Integer getConsultationId (Integer Qid)
     {
         DQueue queue=dQueueRepository.findDQueueById(Qid);
-        if(queue.getConsultationList().size()==0){
+        if(queue.getConsultation() == null){
             return -1;
         }
-        Consultation consultation=queue.getConsultationList().get(0);
+        Consultation consultation=queue.getConsultation();
         System.out.println(consultation.getId());
         return consultation.getId();
     }
@@ -117,7 +116,7 @@ public class DQueueService {
     public Integer getPatientId (Integer Qid)
     {
         DQueue queue=dQueueRepository.findDQueueById(Qid);
-        Consultation consultation=queue.getConsultationList().get(0);
+        Consultation consultation=queue.getConsultation();
         return consultation.getPatient_id();
     }
 

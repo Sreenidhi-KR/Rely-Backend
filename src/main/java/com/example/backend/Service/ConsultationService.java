@@ -195,9 +195,9 @@ public class ConsultationService {
         Integer docId= consultation.getDoctor_id();
         Doctor doctor=doctorRepository.findDocById(docId);
         DQueue queue = dQueueRepository.findDQueueByDoctor(doctor);
-        List<Consultation> consultaionList = new ArrayList<>();
-        consultaionList.add(c);
-        queue.setConsultationList(consultaionList);
+        Consultation consultaion = c;
+
+        queue.setConsultation(consultaion);
         dQueueRepository.save(queue);
         return c.getId();
     }
