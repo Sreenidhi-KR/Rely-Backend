@@ -26,7 +26,7 @@ public class JwtUtils {
     private String jwtSecret;
 
     @Value("${had.app.jwtExpirationMs}")
-    private int jwtExpirationMs;
+    private Integer jwtExpirationMs;
 
     public String generateJwtToken(Authentication authentication) {
         if(authentication.getPrincipal().toString().matches(".*UserDetailsImpl.*")){

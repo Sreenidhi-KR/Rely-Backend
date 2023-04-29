@@ -7,7 +7,7 @@ import java.time.Instant;
 public class RefreshToken {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -19,11 +19,11 @@ public class RefreshToken {
     @Column(nullable = false)
     private Instant expiryDate;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId (Integer id) {
         this.id = id;
     }
 

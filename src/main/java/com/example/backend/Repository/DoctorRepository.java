@@ -21,14 +21,14 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     List<Doctor> findDocBySpec(String specialization);
 
     @Query(value="select * from doctor a where a.id= :doctor_id and is_active=true", nativeQuery=true)
-    Doctor findDocById(int doctor_id);
+    Doctor findDocById (Integer doctor_id);
 
     @Query(value="select online_status from doctor a where a.id= :doctor_id and is_active=true", nativeQuery=true)
-    Boolean getOnlineStatus(int doctor_id);
+    Boolean getOnlineStatus (Integer doctor_id);
 
     @Modifying
     @Query(value="update doctor set is_active=false where id= :doctor_id", nativeQuery=true)
-    void deleteDoctorById(int doctor_id);
+    void deleteDoctorById (Integer doctor_id);
 
     Optional<Doctor> findByUserName(String username);
 

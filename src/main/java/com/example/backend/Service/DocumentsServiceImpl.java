@@ -26,7 +26,7 @@ public class DocumentsServiceImpl  implements DocumentsService{
         this.documentsRepository=documentsRepository;
     }
     @Override
-    public Documents saveDocument(MultipartFile file, int Id) throws Exception {
+    public Documents saveDocument(MultipartFile file, Integer Id) throws Exception {
         try {
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
             if(fileName.contains("..")) {
@@ -47,16 +47,16 @@ public class DocumentsServiceImpl  implements DocumentsService{
     }
 
     @Override
-    public void delDocument(int id) {
+    public void delDocument (Integer id) {
         documentsRepository.removeDocumentById(id);//will only set data filed in as NULL
     }
 
     @Override
-    public List<DocumentDetails> getAll(int id) {
+    public List<DocumentDetails> getAll (Integer id) {
         List<Documents> patientDocuments= documentsRepository.getAll(id);
         List<DocumentDetails>patientDocumentsDetails=new ArrayList<DocumentDetails>();
         for (Documents patientDocument : patientDocuments) {
-            int curId = patientDocument.getId();
+            Integer curId = patientDocument.getId();
             String curName = patientDocument.getName();
             boolean isAvailible=true;
             if (patientDocument.getData()==null) {
@@ -69,11 +69,11 @@ public class DocumentsServiceImpl  implements DocumentsService{
         return patientDocumentsDetails;
     }
 
-    public List<DocumentDetails> getAllPrescriptions(int id){
+    public List<DocumentDetails> getAllPrescriptions (Integer id){
         List<Documents> patientDocuments= documentsRepository.getAllPrescriptions(id);
         List<DocumentDetails>patientDocumentsDetails=new ArrayList<DocumentDetails>();
         for (Documents patientDocument : patientDocuments) {
-            int curId = patientDocument.getId();
+            Integer curId = patientDocument.getId();
             String curName = patientDocument.getName();
             boolean isAvailible=true;
             if (patientDocument.getData()==null) {
@@ -87,7 +87,7 @@ public class DocumentsServiceImpl  implements DocumentsService{
     }
 
     @Override
-    public Documents getDocument(int Id) throws Exception {
+    public Documents getDocument (Integer Id) throws Exception {
         return documentsRepository
                 .findById(Id)
                 .orElseThrow(()->new Exception("File not found with Id:"+Id));

@@ -24,7 +24,7 @@ public class ConsultationService {
     @Autowired
     private DoctorRepository doctorRepository;
 
-    public List<DocumentDetails> getAllDocumentDetails(int consultationId) {
+    public List<DocumentDetails> getAllDocumentDetails (Integer consultationId) {
         Consultation consultation = consultationRepository.findConsultationById(consultationId);
         if(consultation == null){
             return new ArrayList<DocumentDetails>();
@@ -32,7 +32,7 @@ public class ConsultationService {
         Set<Documents> docs = consultation.getDocuments();
         List<DocumentDetails> consultationDocuments = new ArrayList<>();
         for(Documents d : docs){
-            int document_id = d.getId();
+            Integer document_id = d.getId();
             String document_name = d.getName();
             boolean isAvailible=true;
             if (d.getData()==null){
@@ -44,7 +44,7 @@ public class ConsultationService {
         return consultationDocuments;
     }
 
-    public void addDocument(int consultationId, int documentId)
+    public void addDocument (Integer consultationId, Integer documentId)
     {
         System.out.println("Starting Api");
         Consultation consultation = consultationRepository.findConsultationById(consultationId);
@@ -63,7 +63,7 @@ public class ConsultationService {
         consultationRepository.save(consultation);
     }
 
-    public void addPrescription(int consultationid, int documentid)
+    public void addPrescription (Integer consultationid, Integer documentid)
     {
         System.out.println("Starting Api");
         Consultation consultation = consultationRepository.findConsultationById(consultationid);
@@ -84,7 +84,7 @@ public class ConsultationService {
         consultationRepository.save(consultation);
     }
 
-    public void removeDocument(int consultationid, int documentid)
+    public void removeDocument (Integer consultationid, Integer documentid)
     {
         Consultation consultation = consultationRepository.findConsultationById(consultationid);
         Set<Documents> docs = consultation.getDocuments();
@@ -99,7 +99,7 @@ public class ConsultationService {
         }
     }
 
-    public List<PrevConsultations> getPrevConsultations(int patientId)
+    public List<PrevConsultations> getPrevConsultations (Integer patientId)
     {
         Patient p = patientRepository.findPatientById(patientId);
         String patient_name = p.getFname() + " " + p.getLname();
@@ -123,7 +123,7 @@ public class ConsultationService {
         return all_consults;
     }
 
-    public List<PrevConsultations> getPrevConsultationsDoctor(int doctor_Id)
+    public List<PrevConsultations> getPrevConsultationsDoctor (Integer doctor_Id)
     {
         Doctor d = doctorRepository.findDocById(doctor_Id);
         String doc_name=d.getFname()+" "+d.getLname();
@@ -146,7 +146,7 @@ public class ConsultationService {
         return all_consults;
     }
 
-    public List<Map<String,Long>> getPrevConsultationsStats(int doctor_Id) throws Exception
+    public List<Map<String,Long>> getPrevConsultationsStats (Integer doctor_Id) throws Exception
     {
         Doctor d = doctorRepository.findDocById(doctor_Id);
         List<Consultation> allConsultations = consultationRepository.getAllConsultationsByDid(doctor_Id);
@@ -159,7 +159,7 @@ public class ConsultationService {
             System.out.println(start);
             long millis = start.getTime();
             if(stats.containsKey(millis)){
-                int val=stats.get(millis).intValue();
+                Integer val=stats.get(millis).intValue();
                 val=val+1;
                 stats.remove(millis);
                 stats.put(millis,val);
@@ -180,10 +180,10 @@ public class ConsultationService {
         return statistics;
     }
 
-    public int addConsultation(Consultation consultation)
+    public Integer addConsultation(Consultation consultation)
     {
         Consultation c = consultationRepository.save(consultation);
-        int followupId = c.getFollowup_id();
+        Integer followupId = c.getFollowup_id();
         if(followupId!=0)
         {
             Consultation prevConsultation = consultationRepository.findConsultationById(followupId);
@@ -195,27 +195,27 @@ public class ConsultationService {
         Integer docId= consultation.getDoctor_id();
         Doctor doctor=doctorRepository.findDocById(docId);
         DQueue queue = dQueueRepository.findDQueueByDoctor(doctor);
-        List<Consultation> consultaionList = new ArrayList<>();
-        consultaionList.add(c);
-        queue.setConsultationList(consultaionList);
+        Consultation consultaion = c;
+
+        queue.setConsultation(consultaion);
         dQueueRepository.save(queue);
         return c.getId();
     }
 
     public void updateConsultationEndtime(Consultation consultation)
     {
-        int id = consultation.getId();
+        Integer id = consultation.getId();
         Timestamp endTime = consultation.getEnd_time();
         consultationRepository.updateConsultationEndTime(id, endTime);
     }
 
-    public void setFollowUpDate(int consultation_id, Date followUpDate){
+    public void setFollowUpDate (Integer consultation_id, Date followUpDate){
         Consultation c = consultationRepository.findConsultationById(consultation_id);
         c.setFollow_up_date(followUpDate);
         consultationRepository.save(c);
     }
 
-    public List<FollowUp> getFollowUp(int patientId) {
+    public List<FollowUp> getFollowUp (Integer patientId) {
         List<PrevConsultations> consultationsList = getPrevConsultations(patientId);
         List<FollowUp> followUpList = new ArrayList<>();
         for(PrevConsultations c : consultationsList) {
@@ -223,12 +223,13 @@ public class ConsultationService {
                 continue;
             }
             Date followUpDate = c.getFollowUpDate();
-            Timestamp currentDate = c.getEndTime();
+            Timestamp currentDate = c.getStartTime();
+            java.sql.Date date=new java.sql.Date(System.currentTimeMillis());
             if(currentDate.before(followUpDate))
             {
-                int consultationId = c.getConsultId();
+                Integer consultationId = c.getConsultId();
                 Consultation consultation = consultationRepository.findConsultationById(consultationId);
-                int doctorId = consultation.getDoctor_id();
+                Integer doctorId = consultation.getDoctor_id();
                 Doctor d = doctorRepository.findDocById(doctorId);
                 String firstName = d.getFname();
                 String lastName = d.getLname();

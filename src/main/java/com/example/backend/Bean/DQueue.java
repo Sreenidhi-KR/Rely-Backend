@@ -10,7 +10,7 @@ public class DQueue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name="DoctorAcceptance")
     private boolean accept;
@@ -23,14 +23,14 @@ public class DQueue {
     @OrderColumn
     private List<Patient> patientList = new ArrayList<>();
 
-    @OneToMany(targetEntity = Consultation.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY) //over
-    private List<Consultation> consultationList = new ArrayList<>();
+    @OneToOne(targetEntity = Consultation.class, cascade = CascadeType.ALL) //over
+    private Consultation consultation;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId (Integer id) {
         this.id = id;
     }
 
@@ -50,12 +50,12 @@ public class DQueue {
         this.patientList = patientList;
     }
 
-    public List<Consultation> getConsultationList() {
-        return consultationList;
+    public Consultation getConsultation() {
+        return consultation;
     }
 
-    public void setConsultationList(List<Consultation> consultationList) {
-        this.consultationList = consultationList;
+    public void setConsultation(Consultation consultation) {
+        this.consultation = consultation;
     }
 
     public boolean isAccept() {
@@ -66,10 +66,10 @@ public class DQueue {
         this.accept = accept;
     }
 
-    public DQueue(Doctor doctor, List<Patient> patientList, List<Consultation> consultationList) {
+    public DQueue(Doctor doctor, List<Patient> patientList, Consultation consultation) {
         this.doctor = doctor;
         this.patientList = patientList;
-        this.consultationList = consultationList;
+        this.consultation = consultation;
         this.accept=false;
     }
 

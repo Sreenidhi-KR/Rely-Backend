@@ -3,22 +3,22 @@ package com.example.backend.Bean;
 import javax.persistence.OrderColumn;
 
 public class DocumentDetails {
-    private int id;
+    private Integer id;
     private String name;
 
     private boolean isAvailible;
 
-    public DocumentDetails(int id,String name, boolean isAvailible){
+    public DocumentDetails (Integer id,String name, boolean isAvailible){
         this.id=id;
         this.name=name;
         this.isAvailible=isAvailible;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId (Integer id) {
         this.id = id;
     }
 

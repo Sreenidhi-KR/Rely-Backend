@@ -40,7 +40,7 @@ public class DoctorController extends Exception {
 
     @RequestMapping(value = "/deleteDoctor/{doctor_id}", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public void deleteDoctor(@PathVariable int doctor_id) {
+    public void deleteDoctor(@PathVariable Integer doctor_id) {
         System.out.println(doctor_id);
         doctorService.deleteDoctorById(doctor_id);
     }
@@ -53,14 +53,14 @@ public class DoctorController extends Exception {
 
     @RequestMapping(value = "/getDoctorById/{doctor_id}", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public Doctor getDoctorById(@PathVariable int doctor_id) {
+    public Doctor getDoctorById(@PathVariable Integer doctor_id) {
         Doctor doctor = doctorService.findById(doctor_id);
         return doctor;
     }
 
     @RequestMapping(value = "/getPhotoById/{doctor_id}", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
-    public String fileUpload(@PathVariable int doctor_id) throws SQLException, IOException {
+    public String fileUpload(@PathVariable Integer doctor_id) throws SQLException, IOException {
         Doctor doctor = doctorService.findById(doctor_id);
         String path = doctor.getPhoto_url();
         File ImgPath = new File(path);
@@ -72,7 +72,7 @@ public class DoctorController extends Exception {
 
     @RequestMapping(value = "/setQueueLimit/{doctor_id}/{limit}", method = RequestMethod.POST)
     @PreAuthorize("hasRole('DOCTOR') or hasRole('ADMIN')")
-    public void setQueueLimit(@PathVariable int doctor_id,@PathVariable Integer limit) throws SQLException, IOException {
+    public void setQueueLimit(@PathVariable Integer doctor_id,@PathVariable Integer limit) throws SQLException, IOException {
         Doctor doctor = doctorService.findById(doctor_id);
         doctor.setLimit(limit);
         System.out.println("Limit:"+limit);
@@ -81,13 +81,13 @@ public class DoctorController extends Exception {
 
     @RequestMapping(value = "/updateDoctorRating/{doctor_id}/{rating}", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public void updateDoctorRating(@PathVariable int doctor_id, @PathVariable int rating) {
+    public void updateDoctorRating(@PathVariable Integer doctor_id, @PathVariable Integer rating) {
         doctorService.updateDoctorRating(doctor_id, rating);
     }
 
     @RequestMapping(value = "/getOnlineStatus/{doctor_id}", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public Boolean getOnlineStatus(@PathVariable int doctor_id) {
+    public Boolean getOnlineStatus(@PathVariable Integer doctor_id) {
         return doctorService.getOnlineStatus(doctor_id);
     }
 }

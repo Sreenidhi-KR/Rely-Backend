@@ -1,15 +1,12 @@
 package com.example.backend.Controller;
 
-import com.example.backend.Bean.Doctor;
 import com.example.backend.Bean.Patient;
 import com.example.backend.Service.UserService;
 import com.example.backend.Utils.FileUploadUtil;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.validation.constraints.Null;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -26,7 +23,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/uploadImage/{patient_id}")
-    public void uploadImage(@PathVariable int patient_id,
+    public void uploadImage(@PathVariable Integer patient_id,
                             @RequestParam("image") MultipartFile multipartFile) throws IOException {
         String fileName = String.valueOf(patient_id) + ".jpg";
         Patient patient = userService.getPatient(patient_id);
@@ -37,7 +34,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/downloadImage/{patient_id}", method = RequestMethod.GET)
-    public String fileUpload(@PathVariable int patient_id) throws SQLException, IOException {
+    public String fileUpload(@PathVariable Integer patient_id) throws SQLException, IOException {
         Patient patient = userService.getPatient(patient_id);
         String path = patient.getPhoto_url();
         File ImgPath = new File(path);
@@ -48,13 +45,13 @@ public class UserController {
     }
 
     @RequestMapping(value="/addPatient/{userId}", method=RequestMethod.POST)
-    public void addPatient(@PathVariable int userId,@RequestBody Patient patient){
+    public void addPatient(@PathVariable Integer userId,@RequestBody Patient patient){
         patient.setActive(true);
         userService.addPatient(patient,userId);
     }
 
     @RequestMapping(value="/editPatient/{patientId}",method=RequestMethod.POST)
-    public void editPatient(@PathVariable int patientId,@RequestBody Patient patient){
+    public void editPatient(@PathVariable Integer patientId,@RequestBody Patient patient){
         String fname=patient.getFname();
         String lname=patient.getLname();
         String DOB=patient.getDOB();
@@ -62,20 +59,20 @@ public class UserController {
         char sex=patient.getSex();
         String city=patient.getCity();
         String state=patient.getState();
-        String abdm_no=patient.getAbdm_no();
-        String photo_url="No photo";
+        String pinCode=patient.getPinCode();
+        String photo_url=patient.getPhoto_url();
         String relationship=patient.getRelationship();
-        userService.editPatient(patientId,fname,lname,DOB,sex,blood_group,city,state,abdm_no,photo_url,relationship);
+        userService.editPatient(patientId,fname,lname,DOB,sex,blood_group,city,state,pinCode,photo_url,relationship);
     }
 
     @RequestMapping(value="/getPatients/{userId}",method=RequestMethod.GET)
-    public List<Patient> getPatients(@PathVariable int userId){
+    public List<Patient> getPatients(@PathVariable Integer userId){
         List<Patient> patients=userService.getAllPatients(userId);
         return patients;
     }
 
     @RequestMapping(value="/deletePatient/{patientId}",method=RequestMethod.DELETE)
-    public void removePatient(@PathVariable int patientId){
+    public void removePatient(@PathVariable Integer patientId){
         userService.removePatient(patientId);
     }
 }

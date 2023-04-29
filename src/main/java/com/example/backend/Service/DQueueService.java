@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 @Service
 public class DQueueService {
@@ -29,14 +28,14 @@ public class DQueueService {
 
     public void createDQueue(DQueue queue){ dQueueRepository.save(queue);}
 
-    public void createDQueueForDoctorId(int doctorId){
+    public void createDQueueForDoctorId (Integer doctorId){
         Doctor find_doctor = doctorRepository.findDocById(doctorId);
         DQueue dQueue = new DQueue(find_doctor);
         dQueueRepository.save(dQueue);
     }
 
 
-    public List<Patient> getAllPatientsFromDQueue(int doctorId) {
+    public List<Patient> getAllPatientsFromDQueue (Integer doctorId) {
         Doctor doctor = doctorRepository.findDocById(doctorId);
         DQueue queue = dQueueRepository.findDQueueByDoctor(doctor);
         return queue.getPatientList();
@@ -103,34 +102,34 @@ public class DQueueService {
         return qid;
     }
 
-    public  Integer getConsultationId(int Qid)
+    public  Integer getConsultationId (Integer Qid)
     {
         DQueue queue=dQueueRepository.findDQueueById(Qid);
-        if(queue.getConsultationList().size()==0){
+        if(queue.getConsultation() == null){
             return -1;
         }
-        Consultation consultation=queue.getConsultationList().get(0);
+        Consultation consultation=queue.getConsultation();
         System.out.println(consultation.getId());
         return consultation.getId();
     }
 
-    public Integer getPatientId(int Qid)
+    public Integer getPatientId (Integer Qid)
     {
         DQueue queue=dQueueRepository.findDQueueById(Qid);
-        Consultation consultation=queue.getConsultationList().get(0);
+        Consultation consultation=queue.getConsultation();
         return consultation.getPatient_id();
     }
 
     public Doctor getQuickDoctor()
     {
         List<DQueue> dQueueList = dQueueRepository.findAll();
-        int minLength = Integer.MAX_VALUE;
+        Integer minLength = Integer.MAX_VALUE;
         Doctor quickDoctor = null;
         for(DQueue dQ: dQueueList)
         {
             List<Patient> patientList = dQ.getPatientList();
             boolean onlineStatus = dQ.getDoctor().isOnline_status();
-            int queueLimit = dQ.getDoctor().getLimit();
+            Integer queueLimit = dQ.getDoctor().getLimit();
 
             if((patientList.size()+1)>queueLimit){
                 continue;
@@ -141,7 +140,7 @@ public class DQueueService {
             }
             if(onlineStatus)
             {
-                int dqueueLength = patientList.size();
+                Integer dqueueLength = patientList.size();
                 if (dqueueLength < minLength) {
                     minLength = dqueueLength;
                     quickDoctor = dQ.getDoctor();
