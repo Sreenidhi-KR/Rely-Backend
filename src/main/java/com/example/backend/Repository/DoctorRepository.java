@@ -14,20 +14,20 @@ import java.util.Optional;
 @Transactional
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
-    @Query(value = "select * from doctor where is_active=true order by online_status desc", nativeQuery = true)
+    @Query(value = "select * from doctor where active=true order by online_status desc", nativeQuery = true)
     List<Doctor> findAll();
 
-    @Query(value="select * from doctor a where is_active=true and a.specialization= :specialization", nativeQuery=true)
+    @Query(value="select * from doctor a where active=true and a.specialization= :specialization", nativeQuery=true)
     List<Doctor> findDocBySpec(String specialization);
 
-    @Query(value="select * from doctor a where a.id= :doctor_id and is_active=true", nativeQuery=true)
+    @Query(value="select * from doctor a where a.id= :doctor_id and active=true", nativeQuery=true)
     Doctor findDocById (Integer doctor_id);
 
-    @Query(value="select online_status from doctor a where a.id= :doctor_id and is_active=true", nativeQuery=true)
+    @Query(value="select online_status from doctor a where a.id= :doctor_id and active=true", nativeQuery=true)
     Boolean getOnlineStatus (Integer doctor_id);
 
     @Modifying
-    @Query(value="update doctor set is_active=false where id= :doctor_id", nativeQuery=true)
+    @Query(value="update doctor set active=false where id= :doctor_id", nativeQuery=true)
     void deleteDoctorById (Integer doctor_id);
 
     Optional<Doctor> findByUserName(String username);
