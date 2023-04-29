@@ -51,6 +51,10 @@ public class DoctorController extends Exception {
         doctorService.updateDoctor(doctor);
     }
 
+    @RequestMapping(value = "/updateDoctorCall", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
+    public void updateDoctorCall(@RequestBody Doctor doctor) {doctorService.updateDoctorCall(doctor);}
+
     @RequestMapping(value = "/getDoctorById/{doctor_id}", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER') or hasRole('DOCTOR') or hasRole('ADMIN')")
     public Doctor getDoctorById(@PathVariable Integer doctor_id) {
