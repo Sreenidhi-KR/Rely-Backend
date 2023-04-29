@@ -27,17 +27,25 @@ public class DoctorService {
         Doctor s = doctorRepository.save(doctor);
         dQueueService.createDQueueForDoctorId(s.getId());
     }
-    public void deleteDoctorById (Integer doctor_id){ doctorRepository.deleteDoctorById(doctor_id);}
+    public void deleteDoctorById(int doctor_id){ doctorRepository.deleteDoctorById(doctor_id);}
     public void updateDoctor(Doctor doctor){
         doctorRepository.save(doctor);
     }
     public List<Doctor> listBySpec(String specialization) { return doctorRepository.findDocBySpec(specialization);}
-    public Doctor findById (Integer doctor_id) { return doctorRepository.findDocById(doctor_id);}
-    public Boolean getOnlineStatus (Integer doctor_id) { return doctorRepository.getOnlineStatus(doctor_id);}
+    public Doctor findById(int doctor_id) { return doctorRepository.findDocById(doctor_id);}
+    public Boolean getOnlineStatus(int doctor_id) { return doctorRepository.getOnlineStatus(doctor_id);}
 
-    public void updateDoctorRating (Integer doctor_id, Integer rating){
+    public void updateDoctorCall(Doctor doctor){
+        Doctor doc=findById(doctor.getId());
+        doc.setToken(doctor.getToken());
+        doc.setChannel_name(doctor.getChannel_name());
+        doc.setOnline_status(doctor.isOnline_status());
+        doctorRepository.save(doc);
+    }
+
+    public void updateDoctorRating(int doctor_id, int rating){
         Doctor doc = doctorRepository.findDocById(doctor_id);
-        Integer count = doc.getNo_of_ratings();
+        int count = doc.getNo_of_ratings();
         doc.setNo_of_ratings(count+1);
         float newRating = ((doc.getRating()*count)+rating)/(count+1);
         doc.setRating(newRating);
