@@ -67,7 +67,7 @@ public class AuthController {
 
     @PostMapping("/user/signup")
     public ResponseEntity<?> registerUser(@RequestBody UserSignUp userSignUp) {
-        if (userRepository.existsByUserName(userSignUp.getUsername()) && doctorRepository.existsByUserName(userSignUp.getUsername()) && adminRepository.existsByUserName(userSignUp.getUsername())) {
+        if (userRepository.existsByUserName(userSignUp.getUsername()) || doctorRepository.existsByUserName(userSignUp.getUsername()) || adminRepository.existsByUserName(userSignUp.getUsername())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Username is already taken!"));
@@ -144,7 +144,7 @@ public class AuthController {
     @PostMapping("/doctor/signup")
     public ResponseEntity<?> registerUser(@RequestBody DoctorSignUp signUp) {
 
-        if (doctorRepository.existsByUserName(signUp.getUsername()) && userRepository.existsByUserName(signUp.getUsername()) && adminRepository.existsByUserName(signUp.getUsername())) {
+        if (doctorRepository.existsByUserName(signUp.getUsername()) || userRepository.existsByUserName(signUp.getUsername()) || adminRepository.existsByUserName(signUp.getUsername())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Username is already taken!"));
@@ -241,7 +241,7 @@ public class AuthController {
     @PostMapping("/admin/signup")
     public ResponseEntity<?> registerUser(@RequestBody AdminSignUp signUp) {
 
-        if (adminRepository.existsByUserName(signUp.getUsername()) && doctorRepository.existsByUserName(signUp.getUsername()) && userRepository.existsByUserName(signUp.getUsername())) {
+        if (adminRepository.existsByUserName(signUp.getUsername()) || doctorRepository.existsByUserName(signUp.getUsername()) || userRepository.existsByUserName(signUp.getUsername())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Username is already taken!"));

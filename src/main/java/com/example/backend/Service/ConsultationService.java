@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
+import java.time.ZoneId;
+import java.time.Duration;
 
 @Service
 public class ConsultationService {
@@ -34,11 +37,12 @@ public class ConsultationService {
         for(Documents d : docs){
             Integer document_id = d.getId();
             String document_name = d.getName();
+            String document_type=d.getDocument_type();
             boolean isAvailible=true;
             if (d.getData()==null){
                 isAvailible=false;
             }
-            DocumentDetails temp = new DocumentDetails(document_id, document_name,isAvailible);
+            DocumentDetails temp = new DocumentDetails(document_id, document_name,isAvailible,document_type);
             consultationDocuments.add(temp);
         }
         return consultationDocuments;
@@ -109,7 +113,8 @@ public class ConsultationService {
             Timestamp start = consult.getStart_time();
             Timestamp end = consult.getEnd_time();
             Integer doctor_id = consult.getDoctor_id();
-            Doctor doc = doctorRepository.findDocById(doctor_id);
+            Doctor doc = doctorRepository.findDocForConsultation(doctor_id);
+            System.out.println("Doctor check"+doctor_id);
             String doc_name = doc.getFname() + " " + doc.getLname();
             Integer consult_id = consult.getId();
             Date followUp = consultationRepository.getFollowUpDate(consult_id);
@@ -231,9 +236,12 @@ public class ConsultationService {
                 Consultation consultation = consultationRepository.findConsultationById(consultationId);
                 Integer doctorId = consultation.getDoctor_id();
                 Doctor d = doctorRepository.findDocById(doctorId);
+
+                Date newDate = new Date(followUpDate.getTime() + 6 * 3600*1000);
+
                 String firstName = d.getFname();
                 String lastName = d.getLname();
-                FollowUp followUp = new FollowUp(consultationId, followUpDate, doctorId, firstName, lastName);
+                FollowUp followUp = new FollowUp(consultationId, newDate, doctorId, firstName, lastName);
                 followUpList.add(followUp);
             }
         }

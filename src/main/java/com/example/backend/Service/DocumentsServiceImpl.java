@@ -58,11 +58,12 @@ public class DocumentsServiceImpl  implements DocumentsService{
         for (Documents patientDocument : patientDocuments) {
             Integer curId = patientDocument.getId();
             String curName = patientDocument.getName();
+            String document_type=patientDocument.getDocument_type();
             boolean isAvailible=true;
             if (patientDocument.getData()==null) {
                 isAvailible=false;
             }
-            DocumentDetails del = new DocumentDetails(curId, curName,isAvailible);
+            DocumentDetails del = new DocumentDetails(curId, curName,isAvailible,document_type);
             patientDocumentsDetails.add(del);
             System.out.println(curId+curName+del);
         }
@@ -75,11 +76,12 @@ public class DocumentsServiceImpl  implements DocumentsService{
         for (Documents patientDocument : patientDocuments) {
             Integer curId = patientDocument.getId();
             String curName = patientDocument.getName();
+            String document_type=patientDocument.getDocument_type();
             boolean isAvailible=true;
             if (patientDocument.getData()==null) {
                 isAvailible=false;
             }
-            DocumentDetails del = new DocumentDetails(curId, curName,isAvailible);
+            DocumentDetails del = new DocumentDetails(curId, curName,isAvailible,document_type);
             patientDocumentsDetails.add(del);
             System.out.println(curId+curName+del);
         }

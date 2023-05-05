@@ -23,6 +23,9 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     @Query(value="select * from doctor a where a.id= :doctor_id and active=true", nativeQuery=true)
     Doctor findDocById (Integer doctor_id);
 
+    @Query(value="select * from doctor a where a.id= :doctor_id", nativeQuery=true)
+    Doctor findDocForConsultation (Integer doctor_id);
+
     @Query(value="select online_status from doctor a where a.id= :doctor_id and active=true", nativeQuery=true)
     Boolean getOnlineStatus (Integer doctor_id);
 
